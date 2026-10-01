@@ -1,4 +1,4 @@
-export type IconName = 'grid' | 'wave' | 'sliders' | 'search' | 'plus' | 'check' | 'arrow' | 'back' | 'download' | 'file' | 'shield' | 'star' | 'close' | 'message' | 'help' | 'menu'
+export type IconName = 'grid' | 'wave' | 'sliders' | 'search' | 'plus' | 'check' | 'arrow' | 'back' | 'download' | 'file' | 'shield' | 'star' | 'close' | 'message' | 'help'
 const paths: Record<IconName, string> = {
   grid: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
   wave: 'M2 12h3l3-8 4 16 4-16 3 8h3',
@@ -15,7 +15,6 @@ const paths: Record<IconName, string> = {
   close: 'm6 6 12 12M6 18 18 6',
   message: 'M4 4h16v13H9l-5 4z',
   help: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM9 9a3 3 0 1 1 5 2.2c-1.2.8-2 1.1-2 2.8m0 3h.01',
-  menu: 'M4 7h16M4 12h16M4 17h16',
 }
 export function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
   return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d={paths[name]} /></svg>

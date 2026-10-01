@@ -27,7 +27,7 @@ export function MobileMenu({ route, selectedCount, admin }: { route: string; sel
   ]
   return (
     <div className="mobile-menu">
-      <button ref={buttonRef} type="button" className="mobile-menu-button" aria-label="Menu" aria-expanded={open} aria-controls="mobile-menu-panel" onClick={() => setOpen(value => !value)}><Icon name={open ? 'close' : 'menu'} size={20} /></button>
+      <button ref={buttonRef} type="button" className="mobile-menu-button" aria-label="Menu" aria-expanded={open} aria-controls="mobile-menu-panel" onClick={() => setOpen(value => !value)}>{open ? <Icon name="close" size={20} /> : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>}</button>
       {open && <>
         <div className="mobile-menu-scrim" aria-hidden="true" onClick={() => setOpen(false)} />
         <nav id="mobile-menu-panel" className="mobile-menu-panel" aria-label="Menu">
