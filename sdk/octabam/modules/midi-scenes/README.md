@@ -41,8 +41,8 @@ Not carried into this Octamod package: MIDI → CONTROL CC48/55/56 tick rows
 ## Open
 
 - Relocatable MIDISC2.0 packaging for Octamod composition (native gas still
-  8.2-derived). Octamod builds use the verified 8.2-derived packages; standalone
-  MIDISC2.0 behaviour is documented from the author line.
+  8.2-derived). Firmware builds remain pending for this 0.2.0 catalog version;
+  standalone MIDISC2.0 behaviour is documented from the author line.
 - The apply_part entry (`0x40009094`) stays stock since his 1.40MSCN6, so
   Octakit owns it alone and nothing bridges the two.
 - His MIDI CONTROL tick rows, if wanted, need a menu-table mechanism.

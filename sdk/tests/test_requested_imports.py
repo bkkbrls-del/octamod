@@ -10,20 +10,12 @@ SDK = APP / 'sdk/octabam'
 REPORT = json.loads((APP / 'sdk/imports/octabam-363861e.json').read_text())
 
 
-def vendored_digest(path: Path) -> str:
-    """Hash file bytes; treat CRLF working copies as LF so Windows matches recorded Ubuntu pins."""
-    data = path.read_bytes()
-    if b'\0' not in data[:1024]:
-        data = data.replace(b'\r\n', b'\n')
-    return hashlib.sha256(data).hexdigest()
-
-
 class RequestedImports(unittest.TestCase):
     def test_sources_match_the_recorded_import_without_gitlinks_or_binaries(self):
         for item in REPORT['files']:
             path = SDK / item['path']
             self.assertFalse(path.is_symlink())
-            self.assertEqual(vendored_digest(path), item['vendoredSha256'], item['path'])
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), item['vendoredSha256'], item['path'])
             self.assertRegex(item['revision'], r'^[a-f0-9]{40}$')
         roots = [SDK / 'modules' / id for id in REPORT['modules']] + [SDK / 'platform/usb-midi']
         for root in roots:
@@ -60,7 +52,7 @@ class RequestedImports(unittest.TestCase):
             self.assertTrue((SDK / 'modules' / id / 'LICENSE').is_file())
             if id == 'midi-scenes':
                 self.assertEqual(doc['version'], '0.2.0-experimental')
-                self.assertNotIn('build', doc)
+                self.assertEqual(doc['build']['status'], 'pending')
             else:
                 self.assertNotIn('build', doc)
                 self.assertEqual(doc['version'], '0.1.1-experimental')
@@ -72,11 +64,14 @@ class RequestedImports(unittest.TestCase):
             assembly = [item for item in sources if item['path'] != doc_path]
             self.assertTrue(assembly)
             self.assertEqual({item['revision'] for item in assembly}, {pin['revision']})
+            self.assertEqual({item['repository'] for item in sources}, {pin['repository']})
             if doc:
                 matches = [item for item in sources if item['path'] == doc['path']]
                 self.assertEqual(len(matches), 1)
                 self.assertEqual(matches[0]['revision'], doc['revision'])
                 self.assertEqual(matches[0].get('assemblyPinRevision'), pin['revision'])
+                self.assertEqual(matches[0]['sourcePath'], 'README.md')
+                self.assertEqual(matches[0]['sourceSha256'], matches[0]['vendoredSha256'])
         self.assertEqual(REPORT['dependencies']['usb-audio-out-tracks-main-cue'], ['platform/usb-midi'])
         self.assertTrue((SDK / 'platform/usb-midi/descriptors.py').is_file())
         self.assertIn('platform/usb-midi/', (SDK / 'platform/usb-midi/manifest.py').read_text())

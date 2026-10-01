@@ -9,10 +9,11 @@ import { validateCompiledPackage } from '../engine/module-build'
 import { configurationVersionError, newConfiguration, validateConfiguration } from '../config/workspace'
 
 const imported = ['analog-bassdrum', 'midi-scenes', 'usb-audio-out-tracks-main-cue', 'quantizer']
+const verified = imported.filter(id => id !== 'midi-scenes')
 
 describe('reviewed imports with verified loader-free composition', () => {
   it('unlocks verified versions while rejecting changed base firmware', async () => {
-    for (const id of imported) {
+    for (const id of verified) {
       expect(moduleBuildPending(id)).toBe(false)
       expect(checkSelection(['repitch', id])).toMatchObject({ checked: true })
       expect(moduleBuildError([id])).toBe('')
@@ -27,7 +28,7 @@ describe('reviewed imports with verified loader-free composition', () => {
 
   it('exports and imports MIDI Scenes at 0.2.0-experimental', () => {
     expect(MODULE_DOCUMENTS_BY_ID['midi-scenes'].version).toBe('0.2.0-experimental')
-    expect(MODULE_DOCUMENTS_BY_ID['midi-scenes'].build).toBeUndefined()
+    expect(newConfiguration('MIDI Scenes', ['midi-scenes']).moduleVersions).toEqual({ 'midi-scenes': '0.2.0-experimental' })
     const selection = { ...createSelection(['midi-scenes'], null), name: 'MIDI Scenes 2.0' }
     expect(selection.modules).toEqual([{ id: 'midi-scenes', key: 'MIDI SCENES', version: '0.2.0-experimental' }])
     expect(parseSelection(JSON.stringify(selection))).toEqual({
@@ -38,24 +39,26 @@ describe('reviewed imports with verified loader-free composition', () => {
     })
   })
 
-  it('preserves an older explicit MIDI Scenes pin with an update-review message', () => {
-    const old = validateConfiguration({
-      ...newConfiguration('Older MIDI Scenes', ['midi-scenes'], true, { 'midi-scenes': '0.1.1-experimental' }),
-    })
-    expect(old.moduleVersions['midi-scenes']).toBe('0.1.1-experimental')
-    expect(configurationVersionError(old)).toContain('MIDI Scenes 0.1.1-experimental → 0.2.0-experimental')
+  it.each(['0.1.0-experimental', '0.1.1-experimental'])('preserves the explicit %s MIDI Scenes pin with an update-review message', version => {
+    const selection = { ...createSelection(['midi-scenes'], null), name: 'Older MIDI Scenes' }
+    selection.modules[0].version = version
+    const imported = parseSelection(JSON.stringify(selection))
+    const old = validateConfiguration(newConfiguration('Older MIDI Scenes', imported.moduleIds, imported.keepStockFx2, imported.moduleVersions))
+    expect(old.moduleVersions['midi-scenes']).toBe(version)
+    expect(configurationVersionError(old)).toContain('MIDI Scenes ' + version + ' → 0.2.0-experimental')
     expect(configurationVersionError(old)).toContain('Use current module versions')
   })
 
-  it('allows MIDI Scenes in single and mixed build selections', async () => {
-    expect(moduleBuildPending('midi-scenes')).toBe(false)
-    expect(moduleBuildError(['midi-scenes'])).toBe('')
-    expect(checkSelection(['midi-scenes']).checked).toBe(true)
-    expect(checkSelection(['repitch', 'midi-scenes']).checked).toBe(true)
-    expect(() => validateCompiledPackage('midi-scenes', '0.2.0-experimental')).not.toThrow()
+  it('rejects pending MIDI Scenes in single and mixed build selections', async () => {
+    expect(moduleBuildPending('midi-scenes')).toBe(true)
+    expect(moduleBuildError(['midi-scenes'])).toContain('awaiting Octamod verification')
+    expect(checkSelection(['midi-scenes']).checked).toBe(false)
+    expect(checkSelection(['repitch', 'midi-scenes']).checked).toBe(false)
+    expect(checkSelection(['repitch', 'midi-scenes']).notes.join(' ')).toContain('MIDI Scenes')
+    expect(() => validateCompiledPackage('midi-scenes', '0.2.0-experimental')).toThrow('awaiting')
     const original = new Uint8Array(64)
-    await expect(composeOs(original, ['midi-scenes'])).rejects.toThrow('unmodified')
-    await expect(composeOs(original, ['repitch', 'midi-scenes'])).rejects.toThrow('unmodified')
+    await expect(composeOs(original, ['midi-scenes'])).rejects.toThrow('awaiting Octamod verification')
+    await expect(composeOs(original, ['repitch', 'midi-scenes'])).rejects.toThrow('awaiting Octamod verification')
     expect(original.every(byte => byte === 0)).toBe(true)
   })
 
@@ -64,7 +67,7 @@ describe('reviewed imports with verified loader-free composition', () => {
     expect(selection.validation).toBe('pending')
     expect(parseSelection(JSON.stringify(selection)).moduleIds).toEqual(imported)
     expect(selection.modules.find(module => module.id === 'midi-scenes')?.version).toBe('0.2.0-experimental')
-    for (const id of imported.filter(id => id !== 'midi-scenes')) {
+    for (const id of verified) {
       expect(selection.modules.find(module => module.id === id)?.version).toBe('0.1.1-experimental')
     }
   })
