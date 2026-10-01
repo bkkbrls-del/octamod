@@ -42,14 +42,15 @@ class RequestedImports(unittest.TestCase):
         canonical = lambda rows: sorted((row['path'], row['address'], row['bytes'], row['sha256']) for row in rows)
         self.assertEqual(canonical(declared), canonical(REPORT['stockGuards']))
 
-    def test_catalog_and_author_dependencies_are_exact_and_pending(self):
+    def test_catalog_and_author_dependencies_remain_exact(self):
         catalog = json.loads((APP / 'sdk/catalog.json').read_text())
         pins = {item['id']: item['version'] for item in catalog['modules']}
         for id in REPORT['modules']:
             doc = json.loads((SDK / 'modules' / id / 'octamod.module.json').read_text())
             self.assertEqual(pins[id], doc['version'])
             self.assertEqual(doc['source']['revision'], REPORT['revision'])
-            self.assertEqual(doc['build']['status'], 'pending')
+            self.assertNotIn('build', doc)
+            self.assertEqual(doc['version'], '0.1.1-experimental')
             self.assertTrue((SDK / 'modules' / id / 'LICENSE').is_file())
         for id, pin in REPORT['authorPins'].items():
             sources = [item for item in REPORT['files'] if item['path'].startswith('modules/' + id + '/upstream/')]

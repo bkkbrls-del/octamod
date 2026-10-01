@@ -31,7 +31,12 @@ function mergeStrings(parts: readonly InputSection[]): Merge {
   const offsets: Merge['offsets'] = new Map(parts.map(part => [part.section, []]))
   for (const string of strings) {
     const owners = survivors.filter(other => other.key.endsWith(string.key))
-    if (owners.length !== 1) fail('has an ambiguous string-suffix merge which needs a native placement proof')
+    if (owners.length !== 1 && string.bytes.length !== 1) fail('has an ambiguous string-suffix merge which needs a native placement proof')
+    // GNU's suffix sort puts the empty string on the first reversed-byte owner.
+    if (string.bytes.length === 1) owners.sort((a, b) => {
+      for (let i = 2; i <= Math.min(a.bytes.length, b.bytes.length); i++) if (a.bytes[a.bytes.length - i] !== b.bytes[b.bytes.length - i]) return a.bytes[a.bytes.length - i] - b.bytes[b.bytes.length - i]
+      return a.bytes.length - b.bytes.length
+    })
     const owner = owners[0], destination = destinations.get(owner.key)! + owner.bytes.length - string.bytes.length
     offsets.get(string.section)!.push({ source: string.offset, count: string.bytes.length, destination })
   }
@@ -40,11 +45,13 @@ function mergeStrings(parts: readonly InputSection[]): Merge {
 
 export function linkColdFireRuntime(inputs: readonly CfLinkInput[], base: number, externals: ReadonlyMap<string, number> = new Map()): CfRuntimeLink {
   if (!inputs.length || inputs.length > 32 || !Number.isInteger(base) || base < 0 || base > 0xffffffff || base % 4) fail('has an invalid base or input count')
+  // GNU treats a zero architecture flag as neutral (data-only assembly).
+  const architectures = new Set(inputs.map(input => input.object.flags).filter(flags => flags !== 0))
+  if (architectures.size > 1) fail('mixes incompatible CPU object flags')
   const placements = new Map<string, Map<number, CfPlacement>>()
   const allocated: InputSection[] = []
   for (const input of inputs) {
     if (!input.label || placements.has(input.label)) fail('has duplicate or empty unit labels')
-    if (input.object.flags !== inputs[0].object.flags) fail('mixes incompatible CPU object flags')
     placements.set(input.label, new Map())
     for (const section of input.object.sections) if (section.flags & 2) {
       if (!Number.isInteger(section.size) || section.size < 0 || section.size > MAX_IMAGE || !Number.isInteger(section.alignment) || section.alignment < 1 || section.alignment > PAGE || (section.alignment & (section.alignment - 1))) fail('has invalid section dimensions')

@@ -4,23 +4,24 @@ import { selectionConflicts, selectionConflictError } from './selection-conflict
 
 const seven = ['miniverb', 'tapeecho', 'euclid', 'repitch', 'midi-scenes', 'usb-audio-out-tracks-main-cue', 'quantizer']
 describe('native selection conflicts', () => {
-  it('shows Analog BD conflicts before pending verification and offers both explicit choices', () => {
+  it('shows verified Analog BD conflicts and offers both explicit choices', () => {
     const ids = [...seven, 'analog-bassdrum']
     const result = checkSelection(ids)
     expect(result.checked).toBe(false)
     expect(result.conflicts[0].moduleIds).toEqual(['analog-bassdrum', 'miniverb', 'tapeecho', 'euclid'])
     expect(result.conflicts[0].fixes[0]).toEqual({label:'Remove Analog BD & Euclid',removeIds:['analog-bassdrum','euclid']})
     expect(result.conflicts[0].fixes[1].removeIds).toEqual(['miniverb', 'tapeecho', 'euclid'])
-    expect(result.notes[0]).toContain('awaiting Octamod verification')
+    expect(result.notes).toEqual([])
     const analogChoice = ids.filter(id => !result.conflicts[0].fixes[1].removeIds?.includes(id))
     expect(selectionConflicts(analogChoice)).toEqual([])
-    expect(checkSelection(analogChoice).checked).toBe(false)
+    expect(checkSelection(analogChoice).checked).toBe(true)
   })
-  it('reports the measured seven-module menu limit without applying it to smaller unmeasured sets', () => {
-    expect(selectionConflicts(seven)[0].id).toBe('seven-module-menu-space')
+  it('reports the verified minimal menu collision regardless of additional runtime modules', () => {
+    expect(selectionConflicts(seven)[0].id).toBe('module-menu-space')
     expect(selectionConflictError(seven)).toContain('menu space')
     expect(selectionConflicts(seven.filter(id => id !== 'euclid'))).toEqual([])
-    expect(selectionConflicts(seven.filter(id => id !== 'midi-scenes'))).toEqual([])
+    expect(selectionConflicts(seven.filter(id => id !== 'midi-scenes'))[0].id).toBe('module-menu-space')
+    expect(selectionConflicts(['miniverb', 'tapeecho', 'euclid', 'repitch', 'quantizer'])[0].fixes[0].removeIds).toEqual(['euclid'])
   })
   it('keeps original-effects conflicts actionable when the chooser option is available', () => {
     expect(selectionConflicts(['miniverb'], true)[0].fixes).toEqual([{ label: 'Turn off stock FX2', keepStockFx2: false }])

@@ -1,3 +1,5 @@
+import { requestedRom, requestedTables, requestedHooks } from './requested-modules.ts'
+import type { CfRuntimeLink } from './coldfire-link.ts'
 import recipes from './assets/menu-recipes.json' with { type: 'json' }
 import { CATALOG_SOURCE, resolveSelection } from '../catalog/modules.ts'
 import { composeDescriptors } from './descriptors.ts'
@@ -15,7 +17,7 @@ function pointer(value: number) {
   if (!Number.isInteger(value) || value < 0 || value > 0xffffffff) throw new Error('A module menu pointer is outside its address range.')
   const bytes = new Uint8Array(4); new DataView(bytes.buffer).setUint32(0, value); return bytes
 }
-export async function composeModuleMenus(original: Uint8Array, ids: readonly string[], caveLimit = MENU_CAVE_END) {
+export async function composeModuleMenus(original: Uint8Array, ids: readonly string[], caveLimit = MENU_CAVE_END, runtime: CfRuntimeLink | null = null) {
   const modules = resolveSelection(ids), baseline = await composeDescriptors(original, ids)
   if (recipes.schema !== 1 || recipes.revision !== CATALOG_SOURCE.revision || ![MENU_CAVE_END, MENU_LONG_LIST].includes(caveLimit)) throw new Error('The module menus do not match the pinned placement profile.')
   if (baseline.caveCursor > caveLimit) throw new Error('The descriptor clones run into the chooser list.')
@@ -47,6 +49,9 @@ export async function composeModuleMenus(original: Uint8Array, ids: readonly str
       writes.push({ address: patch.address, guardLength: patch.guardLength, guardSha256: patch.guardSha256, bytes, note: patch.note }); regions.push({ address: patch.address, bytes: bytes.length, note: patch.note })
     }
   }
+  const rom = await requestedRom(ids, cursor, overflow, caveLimit, cave)
+  cursor = rom.cursor; overflow = rom.overflow
+  const requestedSymbols = new Map([...(runtime?.symbols ?? []), ...rom.symbols])
   if (modules.some(module => module.id === 'spectrum')) {
     const descriptor = baseline.descriptors.find(descriptor => descriptor.id === 'spectrum')!
     const address = 0x400c45b0, linked = linkRomText(await readRomPackage('spectrum-shape'), address, new Map([['CLONE_SPECTRUM', descriptor.address]]))
@@ -63,6 +68,9 @@ export async function composeModuleMenus(original: Uint8Array, ids: readonly str
     if (inside) cursor = address + linked.bytes.length
     else overflow = align(address + linked.bytes.length, 4)
   }
+  const tables = await requestedTables(original, ids, cursor, cave, requestedSymbols)
+  cursor = tables.cursor; writes.push(...tables.writes)
+  writes.push(...await requestedHooks(original, ids, requestedSymbols, runtime))
   for (const descriptor of baseline.descriptors) {
     const module = modules.find(module => module.id === descriptor.id)!
     for (const recipe of recipes.recipes.filter(recipe => recipe.id === descriptor.id)) {

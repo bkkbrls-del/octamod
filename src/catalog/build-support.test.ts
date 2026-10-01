@@ -8,15 +8,15 @@ import { composeOs } from '../engine/compose-os'
 import { validateCompiledPackage } from '../engine/module-build'
 
 const imported = ['analog-bassdrum', 'midi-scenes', 'usb-audio-out-tracks-main-cue', 'quantizer']
-describe('imported modules awaiting composition verification', () => {
-  it('keeps discoverable source imports out of firmware composition, including mixed selections', async () => {
+describe('reviewed imports with verified loader-free composition', () => {
+  it('unlocks verified versions while rejecting changed base firmware', async () => {
     for (const id of imported) {
-      expect(moduleBuildPending(id)).toBe(true)
-      expect(checkSelection(['repitch',id])).toMatchObject({checked:false})
-      expect(moduleBuildError([id])).toContain('awaiting Octamod verification')
-      expect(()=>validateCompiledPackage(id,'0.1.0-experimental')).toThrow('awaiting')
+      expect(moduleBuildPending(id)).toBe(false)
+      expect(checkSelection(['repitch',id])).toMatchObject({checked:true})
+      expect(moduleBuildError([id])).toBe('')
+      expect(()=>validateCompiledPackage(id,'0.1.1-experimental')).not.toThrow()
       const original = new Uint8Array(64)
-      await expect(composeOs(original,['repitch',id])).rejects.toThrow('awaiting Octamod verification')
+      await expect(composeOs(original,['repitch',id])).rejects.toThrow('unmodified')
       expect(original.every(byte=>byte===0)).toBe(true)
     }
     expect(moduleBuildError(['repitch'])).toBe('')
@@ -26,7 +26,7 @@ describe('imported modules awaiting composition verification', () => {
     const selection={...createSelection(imported,null),name:'New modules'}
     expect(selection.validation).toBe('pending')
     expect(parseSelection(JSON.stringify(selection)).moduleIds).toEqual(imported)
-    for(const module of selection.modules)expect(module.version).toBe('0.1.0-experimental')
+    for(const module of selection.modules)expect(module.version).toBe('0.1.1-experimental')
   })
   it('links each import to its pinned upstream source and retains historical qualification limits', () => {
     for(const module of resolveSelection(imported)) {

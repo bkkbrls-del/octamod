@@ -19,7 +19,7 @@ export type EngineResponse =
 // in the actual browser. See docs/VERIFICATION.md for the supported profiles.
 export const ENGINE_AVAILABLE = true
 // The owner approved downloads after loader-free native and browser parity verification.
-// Pending imports remain blocked; the failed dynamic DSP loader stays disabled separately.
+// The four requested modules passed renewed native and actual-browser parity and rejection checks.
 export const DOWNLOADS_ENABLED = true
 // The dynamic DSP loader (stock effects and modules uploaded on demand) has not been proven on hardware.
 // Off: stock DSP code stays built in and modules use the space of stock effects left off both menus.

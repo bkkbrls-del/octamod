@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "version": "0.1.0-experimental",
+  "version": "0.1.1-experimental",
   "nativeManifest": "manifest.py",
   "media": [],
   "id": "midi-scenes",
@@ -37,7 +37,6 @@
     "location": "MIDI tracks",
     "conflicts": [],
     "limitations": [
-      "Source imported. Firmware builds for this module are awaiting Octamod verification.",
       "MIDI CONTROL CC48/55/56 filter rows are not included.",
       "Composition with Octakit requires its KITS RELOAD bridge; Octakit is outside this catalog."
     ]
@@ -65,7 +64,7 @@
   },
   "tests": {
     "report": "TESTING.md",
-    "summary": "The octabam port records hardware operation in OKMS1 with Octakit on 14 September. This import pins 1.40MIDISC8.2 and its regenerated GNU assembly. That earlier hardware result does not qualify this later pin or an Octamod composition.",
+    "summary": "The octabam port records hardware operation in OKMS1 with Octakit on 14 September. This import pins 1.40MIDISC8.2 and its regenerated GNU assembly. That earlier hardware result does not qualify this later pin or an Octamod composition. Octamod native and actual-browser composition/packaging parity and rejection checks passed on 1 October 2026. The owner reported both combined test images working; this is a smoke report, not full feature/load qualification.",
     "hardwareStatus": "historical",
     "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
     "gates": [
@@ -76,10 +75,6 @@
     "repository": "https://github.com/sambanks/octabam",
     "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
     "path": "modules/midi-scenes"
-  },
-  "build": {
-    "status": "pending",
-    "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
   },
   "license": {
     "spdx": "MIT",

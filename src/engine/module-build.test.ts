@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { compiledModuleSource, validateCompiledModules } from './module-build'
 describe('source-built module identity', () => {
-  it('binds all seven compiled modules to the displayed catalog versions', () => {
+  it('binds all eleven compiled modules to the displayed catalog versions', () => {
     const source = compiledModuleSource()
-    expect(Object.keys(source.moduleVersions)).toHaveLength(7)
+    expect(Object.keys(source.moduleVersions)).toHaveLength(11)
     expect(source.sourceTreeSha256).toMatch(/^[a-f0-9]{64}$/)
   })
   it('rejects stale or missing compiled versions before firmware composition', () => {
