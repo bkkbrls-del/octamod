@@ -1,14 +1,14 @@
-import { readFile, readdir, lstat, realpath, copyFile, writeFile } from 'node:fs/promises'
+import { readFile, lstat, realpath, copyFile, writeFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 import { execFileSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { fetchOwnerApproval } from '../src/release/approval.ts'
 import { parseModuleDocument } from '../src/catalog/module-contract.ts'
+import { PACKAGE_FILES as expected, moduleSourcePaths } from './module-source.mjs'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const args = process.argv.slice(2), folder = args[0] && resolve(args[0]), development = args.includes('--development'), checkOnly = args.includes('--check-only')
 if (!folder) throw new Error('Usage: node scripts/import-module-build.mjs artifact-directory [--development] [--check-only]')
-const expected = ['dsp-packages.json','coldfire-packages.json','resident-dsp.json','rom-packages.json','bootstrap-package.json','menu-recipes.json','descriptor-recipes.json','platform-writes.json']
 const sha = bytes => createHash('sha256').update(bytes).digest('hex')
 const json = async path => JSON.parse(await readFile(path, 'utf8'))
 const hash = value => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value)
@@ -34,8 +34,7 @@ for (const [id,version] of Object.entries(versions)) {
 }
 if (JSON.stringify(Object.keys(report.files).sort()) !== JSON.stringify([...expected].sort()) || !report.sources || typeof report.sources !== 'object' || !Object.keys(report.sources).length) throw new Error('Invalid compiled artifact inventory')
 const native = resolve(root,'sdk/octabam')
-async function inventory(folder,prefix) { const files=[];for(const item of await readdir(folder,{withFileTypes:true})){if(item.name==='__pycache__'||item.name.endsWith('.pyc'))continue;if(item.isSymbolicLink())throw new Error('Source symlinks are prohibited.');const path=prefix+'/'+item.name;if(item.isDirectory())files.push(...await inventory(resolve(folder,item.name),path));else if(item.isFile())files.push(path);else throw new Error('Source must be a regular file.')}return files }
-const actual=[];for(const group of ['modules','platform','tools','dsp'])actual.push(...await inventory(resolve(native,group),group))
+const actual=await moduleSourcePaths(root)
 if(JSON.stringify(actual.sort())!==JSON.stringify(Object.keys(report.sources).sort()))throw new Error('Compiled source inventory is incomplete or stale.')
 for (const [path, fingerprint] of Object.entries(report.sources)) {
   if (!/^(modules|platform|tools|dsp)\/[A-Za-z0-9._/-]+$/.test(path) || path.split('/').some(part => part === '..' || part === '.') || !hash(fingerprint) || /\.(bin|syx|exe|dll|dylib|zip)$/i.test(path)) throw new Error('Invalid source inventory path: ' + path)

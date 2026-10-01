@@ -40,7 +40,8 @@ def source_hashes(root):
     for group in ['modules', 'platform', 'tools', 'dsp']:
         for path in sorted((root / group).rglob('*')):
             if path.is_symlink(): raise ValueError('Source symlinks are not allowed: ' + str(path))
-            if not path.is_file() or '__pycache__' in path.parts or path.suffix == '.pyc': continue
+            # Finder metadata is never source; the release checkout never contains it.
+            if not path.is_file() or '__pycache__' in path.parts or path.suffix == '.pyc' or path.name == '.DS_Store': continue
             if path.suffix.lower() in ('.bin', '.syx', '.exe', '.dll', '.dylib', '.zip') or path.name == 'stock_labels.json':
                 raise ValueError('Firmware/binary input is not allowed in source compilation')
             files[path.relative_to(root).as_posix()] = HASH(path.read_bytes())
@@ -88,7 +89,7 @@ def main():
     with tempfile.TemporaryDirectory(prefix='octamod-source-build.') as temporary:
         root = Path(temporary)
         for group in ['modules', 'platform', 'tools', 'dsp']:
-            shutil.copytree(sdk / group, root / group, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+            shutil.copytree(sdk / group, root / group, ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.DS_Store'))
         sys.path[:0] = [str(root / 'tools'), str(root / 'tools/build')]
         os.chdir(root)
         for flag in ('NOSHIM', 'MARKER', 'PROBE', 'XPROBE', 'TPROBE', 'DELAYPROBE', 'RVSRC', 'DLSRC', 'NOROUNDTRIP'):
