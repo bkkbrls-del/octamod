@@ -26,6 +26,7 @@ import { Icon } from './components/Icon'
 import { ModulePreview } from './components/ModulePreview'
 import { ModuleDetail } from './components/ModuleDetail'
 import { FaqPage } from './components/FaqPage'
+import { MobileMenu } from './components/MobileMenu'
 
 import { useWorkspace } from './hooks/useWorkspace'
 import { ConfigurationDialog } from './components/ConfigurationDialog'
@@ -63,6 +64,13 @@ export default function App() {
   const [configDialog, setConfigDialog] = useState<'create' | 'rename' | 'duplicate' | 'delete' | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const mainRef = useRef<HTMLElement>(null)
+  const libraryNavRef = useRef<HTMLElement>(null)
+  // On phones the library nav is a horizontal strip; keep the current section in view.
+  useEffect(() => {
+    const active = libraryNavRef.current?.querySelector('a.active')
+    if (active) active.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    else libraryNavRef.current?.scrollTo({ left: 0 })
+  }, [route])
   useEffect(() => { mainRef.current?.scrollTo({ top: 0 });document.title=(detailModule?.name??(route==='faq'?'FAQ':route==='privacy'?'Privacy':route==='configuration'?'Configuration':route.startsWith('submit')?'Submit a module':route==='activity'?'Your activity':(route==='review'||route==='admin')?'Admin workspace':route.startsWith('module-set')?'Module sets':'Module library'))+' · Octamod' }, [route,detailModule?.name])
   const selection = resolveSelection(selectedIds)
   const availabilityError = moduleAvailabilityError(selectedIds)
@@ -114,7 +122,7 @@ export default function App() {
       <aside className="sidebar" aria-label="App sidebar">
         <a className="app-brand" href="#library"><img src={import.meta.env.BASE_URL + 'favicon.svg'} width="34" height="34" alt="" /><span>Octamod<small>Firmware configurator</small></span></a>
         <div className="sidebar-section-label">Library</div>
-        <nav className="sidebar-nav" aria-label="Module library">
+        <nav className="sidebar-nav" aria-label="Module library" ref={libraryNavRef}>
           <a href="#library" className={route === 'library' ? 'active' : ''} aria-current={route === 'library' ? 'page' : undefined}><Icon name="grid" /><span>All modules</span><small>{AVAILABLE_MODULES.length}</small></a>
           <a href="#effects" onClick={()=>setFamily('all')} className={!detailModule && filter === 'effects' ? 'active' : ''} aria-current={!detailModule && filter === 'effects' ? 'page' : undefined}><Icon name="wave" /><span>Effects</span><small>{AVAILABLE_MODULES.filter((module) => module.category === 'effects').length}</small></a>
           <a href="#playback" onClick={()=>setFamily('all')} className={!detailModule && filter === 'playback' ? 'active' : ''} aria-current={!detailModule && filter === 'playback' ? 'page' : undefined}><Icon name="sliders" /><span>Playback</span><small>{AVAILABLE_MODULES.filter(module=>module.category==='playback').length}</small></a>
@@ -138,9 +146,11 @@ export default function App() {
       {configDialog && <ConfigurationDialog mode={configDialog} initialName={configDialog === 'create' ? '' : configDialog === 'duplicate' ? (active?.name ?? '') + ' copy' : active?.name ?? ''} onSubmit={submitConfigurationDialog} onClose={() => setConfigDialog(null)} />}
       <div className="workspace">
         <header className="app-toolbar">
+          <a className="toolbar-brand" href="#library"><img src={import.meta.env.BASE_URL + 'favicon.svg'} width="30" height="30" alt="" /><span>Octamod</span></a>
           <div className="toolbar-title"><Icon name={route === 'faq' ? 'help' : configuration ? 'file' : 'grid'} size={17} /><span>{route === 'faq' ? 'FAQ & flashing guide' : configuration ? 'Configuration' : route === 'privacy' ? 'Privacy' : communityRoute ? 'Community' : route.startsWith('module-set') ? 'Module sets' : 'Modules'}</span>{detailModule && <><span className="breadcrumb-divider">/</span><strong>{detailModule.name}</strong></>}<span className="preview-badge">Preview</span></div>
-          {['library',...MODULE_CATEGORIES,'module-sets'].includes(route) && <label className="search"><Icon name="search" size={15} /><input type="search" aria-label={route==='module-sets'?'Search module sets':'Search modules'} placeholder={route==='module-sets'?'Search module sets':'Search modules'} value={query} onChange={(event) => setQuery(event.target.value)} /></label>}
-          <a className="mobile-account-link" href="#submit" aria-label="Submit a module"><Icon name="plus" size={17}/></a><a className="mobile-account-link" href="#activity" aria-label="Your activity"><Icon name="message" size={17}/></a><a className="configuration-button" href="#configuration" aria-label={"Open configuration, " + selection.length + " modules selected"}><Icon name="sliders" size={16} /><span>Configuration</span><span className="toolbar-count">{selection.length}</span></a>
+          {['library',...MODULE_CATEGORIES,'module-sets'].includes(route) && <label className="search"><Icon name="search" size={15} /><input type="search" aria-label={route==='module-sets'?'Search module sets':'Search modules'} placeholder={route==='module-sets'?'Search sets':'Search modules'} value={query} onChange={(event) => setQuery(event.target.value)} /></label>}
+          <MobileMenu route={route} selectedCount={selection.length} admin={session.admin} />
+          <a className="configuration-button" href="#configuration" aria-label={"Open configuration, " + selection.length + " modules selected"}><Icon name="sliders" size={16} /><span>Configuration</span><span className="toolbar-count">{selection.length}</span></a>
         </header>
         <main className="workspace-content" id="main-content" ref={mainRef} tabIndex={-1}>
           {workspace.storageError && <div className="file-error" role="alert">{workspace.storageError} Export important configurations before closing this tab.</div>}
@@ -173,8 +183,8 @@ export default function App() {
             <div className="library-page">
               <div className="page-heading"><div><p className="page-kicker">OCTAMOD / COLLECTION</p><h1>{filter === 'all' ? 'Module library' : categoryLabels[filter]}</h1><p>A different way to play your Octatrack.</p></div><span className="library-total">{visibleModules.length} modules</span></div>
               {!!conflicts.length && <a className="selection-conflict-link" href="#configuration"><Icon name="sliders" size={18}/><span><strong>Your selection needs a change</strong><small>Some modules cannot run together. Choose a compatible set in your configuration.</small></span><Icon name="arrow" size={18}/></a>}
-              <div className="library-subheading"><span>{query.trim() ? 'Results for “' + query.trim() + '”' : filter === 'all' ? 'Explore the collection' : filter === 'effects' ? 'Filters, texture & space' : 'New ways to play'}</span><span className="subtle">Octatrack · OS 1.40C</span></div>
-              <div className="discovery-tools"><label>Type<select value={family} onChange={event=>setFamily(event.target.value)}><option value="all">All types</option>{Array.from(new Set(AVAILABLE_MODULES.map(m=>DETAILS[m.id].family))).map(value=><option key={value}>{value}</option>)}</select></label><label>Sort<select value={sort} onChange={event=>setSort(event.target.value)}><option value="collection">Collection order</option><option value="name">Name A–Z</option><option value="author">Author</option><option value="rated">Highest rated</option></select></label><button className="button button-quiet" disabled={comparison.length<2} onClick={()=>setCompareOpen(true)}>Compare{comparison.length?' ('+comparison.length+')':''}</button></div>
+              <div className={'library-subheading' + (query.trim() ? ' is-results' : '')}><span>{query.trim() ? 'Results for “' + query.trim() + '”' : filter === 'all' ? 'Explore the collection' : filter === 'effects' ? 'Filters, texture & space' : 'New ways to play'}</span><span className="subtle">Octatrack · OS 1.40C</span></div>
+              <div className="discovery-tools"><label><span className="field-label">Type</span><select value={family} onChange={event=>setFamily(event.target.value)}><option value="all">All types</option>{Array.from(new Set(AVAILABLE_MODULES.map(m=>DETAILS[m.id].family))).map(value=><option key={value}>{value}</option>)}</select></label><label><span className="field-label">Sort</span><select value={sort} onChange={event=>setSort(event.target.value)}><option value="collection">Collection order</option><option value="name">Name A–Z</option><option value="author">Author</option><option value="rated">Highest rated</option></select></label><button className={'button button-quiet compare-button' + (comparison.length ? ' has-selection' : '')} disabled={comparison.length<2} onClick={()=>setCompareOpen(true)}>Compare{comparison.length?' ('+comparison.length+')':''}</button></div>
               <div className="module-grid">{visibleModules.map((module) => {
                 const selected = selectedIds.includes(module.id)
                 const stats=statistics.find(item=>item.module_id===module.id),record=MODULE_DOCUMENTS_BY_ID[module.id]
