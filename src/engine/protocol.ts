@@ -22,4 +22,7 @@ export const ENGINE_AVAILABLE = true
 // contains it) showed DSP LOAD FAILED, no audio and a stopped sequencer. Re-enable only after a fix
 // is verified on hardware. See docs/VERIFICATION.md.
 export const DOWNLOADS_ENABLED = false
+// The dynamic DSP loader (stock effects and modules uploaded on demand) has not been proven on hardware.
+// Off: stock DSP code stays built in and modules use the space of stock effects left off both menus.
+export const DSP_LOADER = false
 export const FIRMWARE_VERSION = 'OCTAMOD79'

@@ -110,7 +110,10 @@ export function linkColdFireRuntime(inputs: readonly CfLinkInput[], base: number
     }
   }
   // BSS is zero length in this profile. Nonempty BSS is deliberately refused.
-  const bytes = new Uint8Array(cursor - base)
+  // `objcopy -O binary` ends the image with the last section that has contents: an empty section adds
+  // nothing, not even the page-aligned gap in front of it (a runtime that ends in a module's .rodata).
+  const end = Math.max(base, ...sections.filter(section => section.name !== '.bss' && section.size > 0).map(section => section.address + section.size))
+  const bytes = new Uint8Array(end - base)
   for (const fill of fills) for (let address = fill.start; address < fill.end; address++) bytes[address - base] = (address - fill.start) % 2 ? 0x71 : 0x4e
   for (const copy of copies) bytes.set(copy.bytes, copy.address - base)
   for (const input of inputs) {

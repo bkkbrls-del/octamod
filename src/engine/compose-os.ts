@@ -4,13 +4,25 @@ import { compiledModuleSource } from './module-build.ts'
 import { composeChoosers, type ChooserProfile } from './choosers.ts'
 import { recoverStockDsp } from './stock-dsp.ts'
 import { composeDynamicDsp } from './resident-dsp.ts'
-import { createColdFireRuntime } from './coldfire-runtime.ts'
+import { composeStaticDsp } from './static-dsp.ts'
+import { createColdFireRuntime, createStaticColdFireRuntime } from './coldfire-runtime.ts'
 import { createRuntimeBootstrap, BOOTSTRAP_ADDRESS } from './bootstrap.ts'
 import { createPlatformOsWrites } from './platform-writes.ts'
 import { applyGuardedOsWrites, OS_LOAD_ADDRESS } from './os-patches.ts'
-export async function composeOs(original: Uint8Array, ids: readonly string[], profile?: ChooserProfile) {
+import { DSP_LOADER } from './protocol.ts'
+export async function composeOs(original: Uint8Array, ids: readonly string[], profile?: ChooserProfile, { loader = DSP_LOADER }: { loader?: boolean } = {}) {
   compiledModuleSource()
   const menus = await composeChoosers(original, ids, profile), cores = await recoverStockDsp(original)
+  if (!loader) {
+    const dsp = await composeStaticDsp(cores, ids, menus.chooser), runtime = await createStaticColdFireRuntime(ids)
+    const patched = await applyGuardedOsWrites(original, [...menus.writes, ...dsp.writes, ...(runtime ? createPlatformOsWrites(runtime, ids, { loader: false }) : [])])
+    // Without ColdFire modules there is no runtime: the image keeps the original OS extent.
+    if (!runtime) return { bytes: patched, chooser: menus.chooser, dsp: dsp.layouts, runtime: { bytes: 0, stage: 0, stageEnd: 0 }, caveCursor: menus.caveCursor, overflowCursor: menus.overflowCursor }
+    const bootstrap = await createRuntimeBootstrap(runtime.bytes)
+    if (OS_LOAD_ADDRESS + original.length !== BOOTSTRAP_ADDRESS) throw new Error('The runtime loader does not follow the original OS extent.')
+    const bytes = new Uint8Array(patched.length + bootstrap.append.length); bytes.set(patched); bytes.set(bootstrap.append, patched.length)
+    return { bytes, chooser: menus.chooser, dsp: dsp.layouts, runtime: { bytes: runtime.bytes.length, stage: bootstrap.layout.stage, stageEnd: bootstrap.layout.stageEnd }, caveCursor: menus.caveCursor, overflowCursor: menus.overflowCursor }
+  }
   const dsp = await composeDynamicDsp(cores, ids), runtime = await createColdFireRuntime(cores, ids)
   const bootstrap = await createRuntimeBootstrap(runtime.bytes)
   if (OS_LOAD_ADDRESS + original.length !== BOOTSTRAP_ADDRESS) throw new Error('The runtime loader does not follow the original OS extent.')

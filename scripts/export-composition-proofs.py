@@ -3,7 +3,7 @@ import argparse,contextlib,hashlib,importlib,io,json,os,pathlib,shutil,subproces
 
 def sha(data):return hashlib.sha256(data).hexdigest()
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('worktree',type=pathlib.Path);p.add_argument('destination',type=pathlib.Path);p.add_argument('--app',type=pathlib.Path,required=True);p.add_argument('--stock-bin',type=pathlib.Path)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('worktree',type=pathlib.Path);p.add_argument('destination',type=pathlib.Path);p.add_argument('--app',type=pathlib.Path,required=True);p.add_argument('--stock-bin',type=pathlib.Path);p.add_argument('--static-stock',action='store_true',help='Loader-free builds: stock DSP code stays built in; every module subset with and without stock FX2')
     a=p.parse_args();root=a.worktree.resolve();app=a.app.resolve();dest=a.destination.resolve();dest.mkdir(parents=True,exist_ok=True)
     revision=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip()
     if revision!=json.loads((app/'src/catalog/native-metadata.json').read_text())['revision']:p.error('Use the pinned worktree.')
@@ -11,7 +11,7 @@ def main():
     original=(root/'out/raw/section_3_MAIN_OS.bin').read_bytes();sourceHash=json.loads((app/'src/engine/assets/stock-dsp-metadata.json').read_text())['sourceSha256']
     if sha(original)!=sourceHash:p.error('Original OS fingerprint mismatch.')
     sys.path[:0]=[str(root/'tools/build'),str(root/'tools')];os.chdir(root)
-    os.environ.update(REMIX='miniverb',XBUS='1',SPEC='1',DEV='0',NOROUNDTRIP='0',OCTABAM_STATIC_STOCK='0',OCTABAM_NO_CACHE='1',BUILD='79')
+    os.environ.update(REMIX='miniverb',XBUS='1',SPEC='1',DEV='0',NOROUNDTRIP='0',OCTABAM_STATIC_STOCK='1' if a.static_stock else '0',OCTABAM_NO_CACHE='1',BUILD='79')
     import toolpath,dsp_modmap as dm
     dm.IMG=root/'out/raw/section_3_MAIN_OS.bin'
     from remix import registry,stock
@@ -33,7 +33,17 @@ def main():
         hidden=[m.key for m in selected if m.key in fx1 and m.claims and m.claims.fx1_only]
         fx2=stockFx2+[m.key for m in selected if m.menu and m.key not in hidden] if default else [m.key for m in selected if m.menu and m.key not in hidden]
         return {'fx1':fx1,'fx2':fx2,'hidden':hidden}
+    if a.static_stock:
+        # The site's own chooser rule (choosers.ts defaultChoosers): stock FX1 plus FX1-capable modules, and
+        # stock FX2 only when kept. Every subset, both ways, so each selection a visitor can make has an oracle.
+        def profile(ids,keep):
+            selected=[byid[id] for id in order if id in ids]
+            fx1=stockFx1+[m.key for m in selected if m.name in fx1Capable and m.menu and fx1_hazard(m) is None]
+            hidden=[m.key for m in selected if m.key in fx1 and m.claims and m.claims.fx1_only]
+            fx2=(stockFx2 if keep else [])+[m.key for m in selected if m.menu and m.key not in hidden]
+            return {'fx1':fx1,'fx2':fx2,'hidden':hidden}
     cases=[([],False),(['repitch'],False),(['tapeecho','euclid'],False),(order,False),([],True),(['spectrum','modulation','character','euclid'],True),(order[:-1],True),(['miniverb','tapeecho','euclid','repitch'],True),(order,True)]
+    if a.static_stock:cases=[([id for bit,id in enumerate(order) if mask>>bit&1],keep) for mask in range(1<<len(order)) for keep in (True,False)]
     proofs=[];originalRemix=registry.remix
     packTemp=None;packing=None
     if a.stock_bin:
@@ -62,7 +72,7 @@ def main():
                 if build.ORDER!=menu['fx2']:raise ValueError('Native carried / hidden order does not match the declared FX2 chooser.')
                 try:
                     with contextlib.redirect_stdout(log):build.main()
-                    image=build.OUT.read_bytes();proof={'moduleIds':ids,'default':default,'menu':menu,'bytes':len(image),'sha256':sha(image),'osSha256':sha(image[:len(original)]),'appendSha256':sha(image[len(original):])}
+                    image=build.OUT.read_bytes();proof={'moduleIds':ids,**({'keepStockFx2':default} if a.static_stock else {'default':default}),'menu':menu,'bytes':len(image),'sha256':sha(image),'osSha256':sha(image[:len(original)]),'appendSha256':sha(image[len(original):])}
                     if packing:
                         container=work/'out/container.bin';update=work/'out/update.bin';version=packing['version']
                         subprocess.run([str(executable),str(stockContainer),str(build.OUT),version,str(container)],check=True,capture_output=True)
@@ -71,7 +81,9 @@ def main():
                     proofs.append(proof)
                     print(f"{ids or ['stock']} default={default}: {len(image)} bytes, full native identity captured.")
                 except SystemExit as error:
-                    if ids==order and default and ('does not fit' in str(error) or 'do not fit' in str(error)):
+                    if a.static_stock and any(word in str(error) for word in ('overruns the region','nowhere to place','does not fit')):
+                        proofs.append({'moduleIds':ids,'keepStockFx2':default,'menu':menu,'error':str(error)});print(f"{ids or ['stock']} keep={default}: refused: {str(error)[:90]}")
+                    elif ids==order and default and ('does not fit' in str(error) or 'do not fit' in str(error)):
                         proofs.append({'moduleIds':ids,'default':default,'menu':menu,'error':str(error)});print('Crowded all-module / stock-chooser selection rejects placement, as expected.')
                     else:print(log.getvalue()[-8000:]);raise
                 finally:
@@ -83,6 +95,6 @@ def main():
     # Address, id and membership facts; no descriptor, list or instruction bytes.
     metadata={'schema':1,'revision':revision,'sourceSha256':sourceHash,'curveReaders':sorted({key for keys in stock.curve_bank_readers().values() for key in keys}),'stockFx1':stockFx1,'stockFx2':stockFx2,'stockEffects':[{'key':m.key,'fxId':m.menu.fx2_id} for m in known.values() if m.is_stock and m.menu is not None],'modules':modules,'customIds':sorted({m.menu.fx2_id for m in known.values() if m.menu and not m.is_stock and not m.menu.replaces}),'layout':{k:getattr(build,k) for k in ['FX1_IDS','FX1_LIST','FX1_NONE','FX1_ID2POS','FX1_ROWCOUNT_INSN','FX1_ROWCOUNT_AT','FX2_IDS','FX2_LIST','ID2POS','ROWCOUNT_INSN','ROWCOUNT_AT','NEW_LIST','LONG_LIST','ZERO_RUN_END','OVERFLOW_RUN','OVERFLOW_RUN_END']},'fx1References':build.FX1_LIST_REFS,'fx2References':build.LIST_REFS}
     (dest/'chooser-metadata.json').write_text(json.dumps(metadata,indent=2)+'\n')
-    (dest/'composition-proofs.json').write_text(json.dumps({'schema':1,'revision':revision,'sourceSha256':sourceHash,'packing':packing,'proofs':proofs},indent=2)+'\n')
+    (dest/('static-composition-proofs.json' if a.static_stock else 'composition-proofs.json')).write_text(json.dumps({'schema':1,'revision':revision,'sourceSha256':sourceHash,'staticStock':bool(a.static_stock),'packing':packing,'proofs':proofs},indent=2)+'\n')
     print('Only fingerprints and chooser format facts retained; temporary native files removed. No stress, render or emulator gates run.')
 if __name__=='__main__':main()
