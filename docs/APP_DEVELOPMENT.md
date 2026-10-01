@@ -4,7 +4,9 @@ For module development, start with the [repository quickstart](../README.md) and
 
 A React / TypeScript web configurator for octabam, with a GitHub Pages frontend and a separate Cloudflare community API. Firmware stays on the user's device.
 
-The frontend, backend and octabam-derived developer SDK belong in one repository. The owner may self-host the backend later; storage adapters for that option remain pending. See [accepted decisions](DECISIONS.md) and the complete [active project goal](../GOAL.md).
+The frontend, backend and octabam-derived developer SDK belong in one repository. The owner may self-host the backend later; storage adapters for that option remain pending. See [architecture decisions](DECISIONS.md).
+
+The configurator supports module discovery, filtering, comparisons and module sets, plus multiple named configurations with import/export. Module pages describe controls, compatibility, authorship and resource evidence. Keep first-time selection and build status clear, preserve the dark app design, and support mobile, touch and keyboard use across loading, empty, error and success states. Use “modules,” “module configuration” and “module set” in public copy; retain upstream command names where required for SDK compatibility.
 
 The browser composes real firmware with the dynamic DSP loader disabled. **Downloads are available for verified loader-free selections**, including Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer at `0.1.1-experimental`. Spectrum, Modulation and Character remain temporarily paused in the public library. The original 256 profiles retain 74 byte-identical images and 182 matching refusals; the requested 288 profiles add 156 byte identities and 132 matching refusals. Actual-browser full-file identities and altered-firmware rejection passed for the supported six- and five-module combinations. Read [verification and remaining work](VERIFICATION.md) for evidence and hardware limits. Approved releases rebuild authored packages in isolation and require them to reproduce the locally verified packages.
 
@@ -223,4 +225,4 @@ public/licenses/  licenses for adapted source and documentation
 sdk/              pinned native source, eleven module folders, internal dependencies, templates and SDK guide
 ```
 
-npm run check runs lint, small domain / API tests, type checks and a production build. API tests use an in-memory SQLite database and synthetic media, never real firmware. CPU-heavy octabam checks remain paused.
+`npm run check` runs lint, small domain / API tests, type checks and a production build. API tests use an in-memory SQLite database and synthetic media, never real firmware. Native emulator, stress and audio-render checks require separate qualification and are not part of this command or the configuration flow.
