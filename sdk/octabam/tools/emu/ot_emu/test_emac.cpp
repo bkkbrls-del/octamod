@@ -1,0 +1,510 @@
+// THE EMAC GATE. Run this before trusting anything this emulator computes.
+//
+// WHY IT EXISTS, and why it is the first test in the port rather than a later
+// nicety: three defects in *Unicorn's* ColdFire EMAC cost a week this month
+// (`docs/firmware/RTOS_FORK.md` §10.16). Each produced a confident wrong finding that
+// was investigated as firmware behaviour for a day --
+//
+//   * fractional products came back HALVED (unsigned >> 32 where the chip does
+//     signed >> 31), so the recorder wrote a length of 10,336 for Bryan's
+//     20,672 and it was explained away as "2-sample units";
+//   * `msac` ADDED where it must subtract (the MAC/MSAC bit was read from the
+//     opcode word; the chip keeps it in the extension word), so every trig's
+//     sub-frame offset came out 0;
+//   * a harness trampoline was served stale, so a shimmed `msacl ..,%acc1` ran
+//     as the previous `msacl ..,%acc0`.
+//
+// The firmware's own reciprocal tables (`0x80003c20` = 2^31 / block size) are
+// what finally said which side was wrong. So: the expected values below are
+// HARDWARE's, taken from `tools/emu/emu_bringup.py::emac_selftest`, which is the
+// same gate route A refuses to run without.
+//
+// ⚠️ EVERY ENCODING HERE CAME OUT OF `m68k-elf-as -mcpu=5475`, not out of a
+// reading of the manual. The assembler listing is in the comments beside each
+// program so a future reader can re-run it in one command.
+#include <cstdio>
+#include <cstring>
+#include <vector>
+
+#include "machine.h"
+
+#include "mc68k/Musashi/m68k.h"
+#include "mc68k/cpuState.h"
+
+namespace
+{
+	int g_failures = 0;
+
+	// Build a machine whose "image" is a program at the load base, run it for
+	// `_instructions`, and return D0.
+	uint32_t runProgram(const std::vector<uint8_t>& _code, const uint32_t _d0, const uint32_t _d1,
+		const uint32_t _instructions)
+	{
+		std::vector<uint8_t> image(_code);
+		ot::Machine m(image);
+		m68k_set_reg(m.getCpuState(), M68K_REG_D0, _d0);
+		m68k_set_reg(m.getCpuState(), M68K_REG_D1, _d1);
+		const auto stop = m.run(_instructions);
+		if(stop != ot::Machine::Stop::Budget)
+			std::printf("     (run stopped early: %s)\n", m.why().c_str());
+		return m68k_get_reg(m.getCpuState(), M68K_REG_D0);
+	}
+
+	void check(const char* _what, const uint32_t _got, const uint32_t _want)
+	{
+		const bool ok = _got == _want;
+		if(!ok)
+			++g_failures;
+		std::printf("  [%s] %-52s got %#010x want %#010x\n",
+			ok ? "PASS" : "FAIL", _what, _got, _want);
+	}
+}
+
+int main()
+{
+	std::printf("EMAC gate (hardware semantics, docs/firmware/RTOS_FORK.md section 10.16):\n");
+
+	// The firmware's own block-walk idiom: position x (2^31 / blocksize), in
+	// fractional mode. `movel #0x20,%macsr` selects fractional+signed.
+	//
+	//   7020            moveq #32,%d0        <- loaded by hand below instead
+	//   a900            movel %d0,%macsr
+	//   a200 0800       macl  %d0,%d1,%acc0
+	//   a1c0            movclrl %acc0,%d0
+	const std::vector<uint8_t> macl = {
+		0x70, 0x20,					// moveq #32,%d0   (MACSR = fractional, signed)
+		0xa9, 0x00,					// movel %d0,%macsr
+		0x20, 0x3c, 0, 0, 0x0c, 0x00,	// movel #0xc00,%d0   -- the operands, so the
+		0x22, 0x3c, 0, 0x20, 0, 0,	// movel #0x200000,%d1    program is self-contained
+		0xa2, 0x00, 0x08, 0x00,		// macl %d0,%d1,%acc0
+		0xa1, 0xc0,					// movclrl %acc0,%d0
+		0x4e, 0x71,					// nop
+	};
+	auto negated = macl;
+	negated[6] = 0xff; negated[7] = 0xff; negated[8] = 0xf4; negated[9] = 0x00;	// -0xc00
+
+	//   a200 0900       msacl %d0,%d1,%acc0  -- the extension word's bit 8 is
+	//                                           what makes it a SUBTRACT
+	auto msacl = macl;
+	msacl[18] = 0x09;
+
+	check("macl fractional 0xc00 * 0x200000 (signed >> 31)",
+		runProgram(macl, 0, 0, 32), 3);
+	check("macl fractional -0xc00 * 0x200000",
+		runProgram(negated, 0, 0, 32), 0xfffffffd);
+	check("msacl SUBTRACTS (extension word bit 8)",
+		runProgram(msacl, 0, 0, 32), 0xfffffffd);
+
+	// ---- THE FOUR FIELDS THE FIRST DECODER GOT WRONG ---------------------
+	// ⚠️ Every case above passes with all four defects in place, because each
+	// uses acc0, two DATA registers, the long form and no parallel load --
+	// the one combination in which none of them shows (found 8 Sep 2026 when
+	// the frame handler's own MAC block stopped the port dead, O6). The
+	// expected values below are ROUTE A's, measured by running the same
+	// opcodes in its engine, except where noted.
+	//
+	//   .venv/bin/python3 -c "... macl %a2,%d1,%acc0 -> acc0 = 3 ..."
+	std::printf("EMAC field gate (the four the first decoder got wrong):\n");
+	{
+		// A run that ends by draining all four accumulators into d4..d7:
+		//   a1c4 a3c5 a5c6 a7c7   movclrl %acc0..3,%d4..%d7
+		const auto runEmac = [](const uint32_t _macsr, const std::vector<uint8_t>& _instr,
+			const std::vector<std::pair<m68k_register_t, uint32_t>>& _regs)
+		{
+			std::vector<uint8_t> image = {0xa9, 0x3c,
+				static_cast<uint8_t>(_macsr >> 24), static_cast<uint8_t>(_macsr >> 16),
+				static_cast<uint8_t>(_macsr >> 8), static_cast<uint8_t>(_macsr)};
+			image.insert(image.end(), _instr.begin(), _instr.end());
+			for(const uint8_t b : {0xa1, 0xc4, 0xa3, 0xc5, 0xa5, 0xc6, 0xa7, 0xc7, 0x4e, 0x71})
+				image.push_back(b);
+			const auto codeLen = image.size();
+			image.resize(0x400, 0);				// room for the load forms' data
+			image[0x201] = 0x11; image[0x202] = 0x22; image[0x203] = 0x33;	// at 0x40000600
+			image[0x209] = 0x44; image[0x20a] = 0x55; image[0x20b] = 0x66;	// at 0x40000608
+			ot::Machine m(image);
+			for(const auto& [r, v] : _regs)
+				m68k_set_reg(m.getCpuState(), r, v);
+			const auto stop = m.run(static_cast<uint64_t>(codeLen));	// one per two bytes is plenty
+			if(stop == ot::Machine::Stop::Illegal)
+				std::printf("     (stopped: %s)\n", m.why().c_str());
+			struct Out { uint32_t acc[4]; uint32_t d[8]; uint32_t a[4]; };
+			Out o{};
+			for(int i = 0; i < 4; ++i)
+				o.acc[i] = static_cast<uint32_t>(m68k_get_reg(m.getCpuState(),
+					static_cast<m68k_register_t>(M68K_REG_D4 + i)));
+			for(int i = 0; i < 8; ++i)
+				o.d[i] = static_cast<uint32_t>(m68k_get_reg(m.getCpuState(),
+					static_cast<m68k_register_t>(M68K_REG_D0 + i)));
+			for(int i = 0; i < 4; ++i)
+				o.a[i] = static_cast<uint32_t>(m68k_get_reg(m.getCpuState(),
+					static_cast<m68k_register_t>(M68K_REG_A0 + i)));
+			return o;
+		};
+
+		// 1. AN ADDRESS REGISTER SOURCE. `a20a 0800 macl %a2,%d1,%acc0`: the
+		//    first decoder multiplied d2. ✅ route A: acc0 = 3.
+		check("macl %a2,%d1 multiplies a2, not d2",
+			runEmac(0x20, {0xa2, 0x0a, 0x08, 0x00},
+				{{M68K_REG_A2, 0xc00}, {M68K_REG_D1, 0x200000}}).acc[0], 3);
+
+		// 2. THE ACCUMULATOR NUMBER. `a280 0810 macl %d0,%d1,%acc3` -- opcode
+		//    bit 7 is the LOW bit and ext bit 4 the HIGH one. ✅ route A: the
+		//    product lands in acc3 and acc0 stays zero.
+		{
+			const auto o = runEmac(0x20, {0xa2, 0x80, 0x08, 0x10},
+				{{M68K_REG_D0, 0xc00}, {M68K_REG_D1, 0x200000}});
+			check("macl ...,%acc3 lands in acc3", o.acc[3], 3);
+			check("... and acc0 is untouched", o.acc[0], 0);
+		}
+
+		// 3. WHICH OPERAND'S HALF. In integer mode (MACSR 0) the product is
+		//    accumulated whole, so 3 x 5 = 15 is readable. ✅ route A:
+		//    `macw %d0u,%d1l` (ext 0x0040) = 15, `%d0l,%d1u` (0x0080) = 0,
+		//    `%d0l,%d1l` (0x0000) = 0, with d0 = 0x00030000 and d1 = 5.
+		const std::vector<std::pair<m68k_register_t, uint32_t>> halves =
+			{{M68K_REG_D0, 0x00030000}, {M68K_REG_D1, 0x00000005}};
+		check("macw %d0u,%d1l -- ext bit 6 is the FIRST operand's half",
+			runEmac(0, {0xa2, 0x00, 0x00, 0x40}, halves).acc[0], 15);
+		check("macw %d0l,%d1u -- and bit 7 the second's",
+			runEmac(0, {0xa2, 0x00, 0x00, 0x80}, halves).acc[0], 0);
+		check("macw %d0l,%d1l", runEmac(0, {0xa2, 0x00, 0x00, 0x00}, halves).acc[0], 0);
+
+		// 4. THE PARALLEL LOAD, in the three modes the frame routine uses.
+		//    ⚠️ Route A cannot run these natively -- Unicorn raises
+		//    illegal-instruction and route A SHIMS them
+		//    (`emu_bringup._emac_load_shim`) -- so the expectations here are
+		//    that shim's semantics, which this decoder is a translation of,
+		//    with values chosen so a wrong field is visible:
+		//    the multiply is 3 x 5 in integer mode and the load is a longword
+		//    from the image at 0x40000600 / 0x40000608.
+		//
+		//    `a490 1800  macl %d0,%d1,%a0@,%d2,%acc0`      -- (An)
+		//    `a498 1800  macl %d0,%d1,%a0@+,%d2,%acc0`     -- (An)+
+		//    `a4a8 1800 0008  macl %d0,%d1,%a0@(8),%d2,%acc0` -- (d16,An), SIX bytes
+		const std::vector<std::pair<m68k_register_t, uint32_t>> loadRegs =
+			{{M68K_REG_D0, 3}, {M68K_REG_D1, 5}, {M68K_REG_A0, 0x40000600}};
+		{
+			const auto o = runEmac(0, {0xa4, 0x90, 0x18, 0x00}, loadRegs);
+			check("macl ...,%a0@,%d2 accumulates 3 x 5", o.acc[0], 15);
+			check("... and loads the longword at (a0) into d2", o.d[2], 0x00112233);
+			check("... leaving a0 alone", o.a[0], 0x40000600);
+		}
+		{
+			const auto o = runEmac(0, {0xa4, 0x98, 0x18, 0x00}, loadRegs);
+			check("macl ...,%a0@+,%d2 loads and advances a0 by 4", o.a[0], 0x40000604);
+			check("... with d2 the longword that was at (a0)", o.d[2], 0x00112233);
+		}
+		{
+			// ⚠️ THE SIX-BYTE FORM. Skipping the displacement word is what
+			// desynchronised the stream and invented an opcode two
+			// instructions later; the `movclrl` tail only runs if the PC came
+			// out right, so acc0 reading 15 IS the length check.
+			const auto o = runEmac(0, {0xa4, 0xa8, 0x18, 0x00, 0x00, 0x08}, loadRegs);
+			check("macl ...,%a0@(8),%d2 accumulates (so the PC advanced 6)", o.acc[0], 15);
+			check("... and loads the longword at (a0)+8", o.d[2], 0x00445566);
+		}
+		// 4b. THE ACCUMULATOR'S ALIGNMENT -- the one the M6c gate caught.
+		//    A product whose low 24 bits are NOT zero, subtracted from a
+		//    cleared accumulator. ✅ route A: `msacl %d0,%d1,%acc0` with
+		//    d0 = 46080 and d1 = 745654 in fractional mode gives -16
+		//    (0xfffffff0); `macl` with the same operands gives 15. A model
+		//    that shifts each product to >>32 BEFORE accumulating gives -15
+		//    for the msac -- one LSB, and it is what made the sequencer's
+		//    live nibble read 0x09 where route A reads 0x08 on every frame.
+		//    ⚠️ The two cases must both be here: the `macl` one agrees under
+		//    either model, so only the `msacl` one is evidence.
+		{
+			const std::vector<std::pair<m68k_register_t, uint32_t>> off =
+				{{M68K_REG_D0, 46080}, {M68K_REG_D1, 745654}};
+			check("msacl fractional 46080 x 745654 -> -16, not -15",
+				runEmac(0x20, {0xa2, 0x00, 0x09, 0x00}, off).acc[0], 0xfffffff0);
+			check("macl with the same operands -> 15 (agrees either way)",
+				runEmac(0x20, {0xa2, 0x00, 0x08, 0x00}, off).acc[0], 15);
+		}
+
+		// 5. `movel #imm,%macsr` (a93c) -- the frame handler's own at
+		//    0x4000aeda. The whole runner depends on it: if it were mis-sized
+		//    every case above would run in the wrong MACSR. Read it back with
+		//    `a980 movel %macsr,%d0`.
+		{
+			std::vector<uint8_t> image = {0xa9, 0x3c, 0, 0, 0, 0x20, 0xa9, 0x80, 0x4e, 0x71};
+			ot::Machine m(image);
+			m.run(4);
+			check("movel #32,%macsr then movel %macsr,%d0",
+				static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), M68K_REG_D0)), 0x20);
+		}
+	}
+
+	// ---- the ACCext registers, BOTH layouts ---------------------------------
+	// The frame ISR saves them in INTEGER mode (`clrl %d0; movel %d0,%macsr;
+	// movel %accext01,%d4; movel %accext23,%d5` at 0x4000ac96) and restores
+	// them the same way (`movel #0,%macsr; ... movel %d4,%accext01; movel
+	// %d5,%accext23` at 0x4000d968), every frame. Until 23 Sep 2026 the write
+	// knew only the fractional layout (CFPRM: eight extension + eight low
+	// bits per accumulator) and so put the saved word's low byte into
+	// ACCn[7:0] on every restore: 0x12345678 came back 0x123456ab and the
+	// extensions read back 0xfe008900 for 0xfedc89ab. Found by Jannik
+	// Assfalg's A/B/A of a ColdFire patch whose integer-mode MAC loop the ISR
+	// interrupted mid-accumulation (the stock run repeats exactly because the
+	// corruption is deterministic -- an A/A cannot see it).
+	//
+	//   a93c 0000 0000  movel #0,%macsr        a100  movel %d0,%acc0
+	//   a301  movel %d1,%acc1                  ab02  movel %d2,%accext01
+	//   ab84  movel %accext01,%d4              a186  movel %acc0,%d6
+	//   a387  movel %acc1,%d7
+	//   a500  movel %d0,%acc2                  a701  movel %d1,%acc3
+	//   af03  movel %d3,%accext23              af85  movel %accext23,%d5
+	//   a93c 0000 00c0  movel #0xc0,%macsr     a586  movel %acc2,%d6
+	//   a93c 0000 0080  movel #0x80,%macsr     a787  movel %acc3,%d7
+	std::printf("ACCext gate (integer layout = the frame ISR's save/restore; fractional = the control):\n");
+	{
+		struct Regs { uint32_t d4, d5, d6, d7; };
+		const auto runExt = [](const std::vector<uint8_t>& _code, const uint32_t _d0, const uint32_t _d1,
+			const uint32_t _d2, const uint32_t _d3)
+		{
+			std::vector<uint8_t> image(_code);
+			image.push_back(0x4e); image.push_back(0x71);
+			ot::Machine m(image);
+			m68k_set_reg(m.getCpuState(), M68K_REG_D0, _d0);
+			m68k_set_reg(m.getCpuState(), M68K_REG_D1, _d1);
+			m68k_set_reg(m.getCpuState(), M68K_REG_D2, _d2);
+			m68k_set_reg(m.getCpuState(), M68K_REG_D3, _d3);
+			const auto stop = m.run(static_cast<uint64_t>(image.size() / 2));
+			if(stop == ot::Machine::Stop::Illegal)
+				std::printf("     (stopped: %s)\n", m.why().c_str());
+			return Regs{static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), M68K_REG_D4)),
+				static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), M68K_REG_D5)),
+				static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), M68K_REG_D6)),
+				static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), M68K_REG_D7))};
+		};
+		// 1. Integer mode: the extension word neither disturbs the low 32 bits
+		//    nor reads back changed.
+		const auto i = runExt({0xa9, 0x3c, 0, 0, 0, 0, 0xa1, 0x00, 0xa3, 0x01, 0xab, 0x02,
+			0xab, 0x84, 0xa1, 0x86, 0xa3, 0x87}, 0x12345678, 0x9abcdef0, 0xfedc89ab, 0);
+		check("integer: accext01 reads back what was written", i.d4, 0xfedc89ab);
+		check("integer: accext01 write leaves acc0[31:0] alone", i.d6, 0x12345678);
+		check("integer: accext01 write leaves acc1[31:0] alone", i.d7, 0x9abcdef0);
+		// 2. Integer mode: the sixteen bits land in ACC[47:32], where the
+		//    read-out's saturation sees them (unsigned OMC: any extension bit
+		//    -> 0xffffffff; signed OMC: ACC[47:31] not all-equal -> 0x7fffffff
+		//    for a positive extension).
+		const auto j = runExt({0xa9, 0x3c, 0, 0, 0, 0, 0xa5, 0x00, 0xa7, 0x01, 0xaf, 0x03,
+			0xaf, 0x85, 0xa9, 0x3c, 0, 0, 0, 0xc0, 0xa5, 0x86, 0xa9, 0x3c, 0, 0, 0, 0x80, 0xa7, 0x87},
+			0x12345678, 0x9abcdef0, 0, 0x00017fff);
+		check("integer: accext23 reads back what was written", j.d5, 0x00017fff);
+		check("integer: acc2 extension 0x7fff saturates the unsigned read", j.d6, 0xffffffff);
+		check("integer: acc3 extension 0x0001 saturates the signed read", j.d7, 0x7fffffff);
+		// 3. Fractional mode (the control): the eight-plus-eight layout
+		//    round-trips and the fractional read-out is untouched.
+		const auto f = runExt({0xa9, 0x3c, 0, 0, 0, 0x20, 0xa1, 0x00, 0xab, 0x02, 0xab, 0x84, 0xa1, 0x86},
+			0x12345678, 0, 0x11ab22cd, 0);
+		check("fractional: accext01 reads back what was written", f.d4, 0x11ab22cd);
+		check("fractional: acc0 reads its 32 fraction bits", f.d6, 0x12345678);
+	}
+
+	// ---- MOV3Q to MEMORY (the V4e layer, same dispatch path) -------------
+	// ❌ Retracts v4e.cpp's "only Dn is reached by this firmware": the project
+	// load runs eight `mov3ql #-1,%a0@+` at 0x4009d8d0 and the refusal was a
+	// real line-A exception -- the firmware printed `EXCEPTION VEC:0A
+	// ADDR:4009D8D0` and halted, and it looked like a stall at 1,407 of
+	// 6,189 ATA commands (measured 8 Sep 2026). Route A never needed a shim
+	// (Unicorn has MOV3Q natively), so this gate is the only one that holds
+	// the port's version to the same semantics.
+	//
+	//   207c 4000 0500  moveal #0x40000500,%a0
+	//   a158            mov3ql #-1,%a0@+
+	//   a358            mov3ql #1,%a0@+
+	//   then one of: 2039 4000 0500 movel 0x40000500,%d0
+	//                2039 4000 0504 movel 0x40000504,%d0
+	//                2008           movel %a0,%d0
+	std::printf("MOV3Q gate (memory destinations, v4e.cpp):\n");
+	const std::vector<uint8_t> mov3qHead = {
+		0x20, 0x7c, 0x40, 0x00, 0x05, 0x00,	// moveal #0x40000500,%a0 (inside the image, past the code)
+		0xa1, 0x58,							// mov3ql #-1,%a0@+
+		0xa3, 0x58,							// mov3ql #1,%a0@+
+	};
+	auto readFirst = mov3qHead, readSecond = mov3qHead, readA0 = mov3qHead;
+	for(const uint8_t b : {0x20, 0x39, 0x40, 0x00, 0x05, 0x00}) readFirst.push_back(b);
+	for(const uint8_t b : {0x20, 0x39, 0x40, 0x00, 0x05, 0x04}) readSecond.push_back(b);
+	for(const uint8_t b : {0x20, 0x08}) readA0.push_back(b);
+	for(auto* prog : {&readFirst, &readSecond, &readA0})
+	{
+		prog->push_back(0x4e); prog->push_back(0x71);	// nop
+		prog->resize(0x200, 0);							// room for the data at +0x100
+	}
+	check("mov3ql #-1,%a0@+ writes 0xffffffff", runProgram(readFirst, 0, 0, 4), 0xffffffff);
+	check("mov3ql #1,%a0@+ writes 1 at the next long", runProgram(readSecond, 0, 0, 4), 1);
+	check("(An)+ advanced a0 by 8 over the pair", runProgram(readA0, 0, 0, 4), 0x40000508);
+
+	// ---- SATS (the V4e layer, same dispatch path) ------------------------
+	// ✅ The firmware reaches `satsl %d0` at 0x4000346a, inside the per-frame
+	// EMAC routine the frame handler's state 5 calls -- so it is on the M6c
+	// path and nowhere near the boot, which is why O1..O5 never met it. With
+	// it unimplemented the port stopped there with "unimplemented opcode 4c80"
+	// and delivered ZERO frames (measured 8 Sep 2026, O6).
+	//
+	// ✅ Encoding from `m68k-elf-as -mcpu=5475`: 4c80 / 4c81 / 4c87 for
+	// %d0 / %d1 / %d7 -- `0x4c80 | Dn`.
+	//
+	// ✅ SEMANTICS MEASURED IN ROUTE A'S OWN ENGINE, not read from the manual
+	// (the values below are what Unicorn returns for each case):
+	//     V set,   d0 = 0x00000001 -> 0x80000000
+	//     V set,   d0 = 0x80000001 -> 0x7fffffff
+	//     V clear, d0 = 0x12345678 -> unchanged
+	// i.e. a saturate that only fires on overflow, to the end of the range the
+	// sign bit says the result WRAPPED away from.
+	//
+	// ⚠️ AND ONE MEASURED DISAGREEMENT WITH THE MANUAL, carried rather than
+	// resolved. The CFPRM says SATS sets N and Z from the result and CLEARS V
+	// and C. Route A's engine updates **N only**: a pre-set Z survives a
+	// non-zero result, and V and C are left exactly as they were (measured
+	// 8 Sep 2026, six cases). This port matches ROUTE A, because route A is
+	// the oracle and the two emulators being comparable is the point of the
+	// milestone -- and because at the only site the firmware reaches, the four
+	// instructions after the `sats` are three `movclrl`s and a `movel`, with
+	// no conditional branch between the `sats` and the next instruction that
+	// redefines the flags. WHAT WOULD FALSIFY IT: a firmware site that
+	// branches on Z or V after a SATS. If one turns up, the manual wins and
+	// this is a defect in both emulators.
+	std::printf("SATS gate (v4e.cpp; semantics measured in route A's engine):\n");
+	const std::vector<uint8_t> satsBody = {
+		0x4c, 0x80,					// satsl %d0
+		0x4e, 0x71,					// nop
+	};
+	// The CCR cannot be set by a program here (`move #imm,%sr` is privileged
+	// and route A's own probe could not run it either), so it is written into
+	// the machine's SR before the run, the way D0 is.
+	const auto runSats = [](const uint32_t _sr, const uint32_t _d0)
+	{
+		std::vector<uint8_t> image = {0x4c, 0x80, 0x4e, 0x71};
+		ot::Machine m(image);
+		m68k_set_reg(m.getCpuState(), M68K_REG_SR, _sr);
+		m68k_set_reg(m.getCpuState(), M68K_REG_D0, _d0);
+		m.run(2);
+		return std::make_pair(static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), M68K_REG_D0)),
+			static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), M68K_REG_SR)) & 0x1fu);
+	};
+	{
+		constexpr uint32_t sup = 0x2700, V = 0x02, C = 0x01, Z = 0x04, N = 0x08;
+		check("sats V set, positive-looking -> 0x80000000", runSats(sup | V, 1).first, 0x80000000);
+		check("sats V set, negative-looking -> 0x7fffffff", runSats(sup | V, 0x80000001).first, 0x7fffffff);
+		check("sats V clear leaves the value alone", runSats(sup, 0x12345678).first, 0x12345678);
+		// The flags, exactly as route A's engine leaves them.
+		check("sats sets N from the result", runSats(sup | V, 1).second, N | V);
+		check("sats clears N from the result", runSats(sup | N, 5).second, 0u);
+		check("sats leaves Z, V and C untouched (route A, NOT the CFPRM)",
+			runSats(sup | N | Z | V | C, 1).second, N | Z | V | C);
+	}
+
+	// ---- THE ECHO FREEZE DELAY'S COEFFICIENT WRITER (O21, 13 Sep 2026) ---
+	// The frame routine at 0x400031a0 turns the delay's Part bytes into the
+	// mix loop's four gains at 0x40003452-0x4000346c, in MACSR 0xa0 (OMC|F/I):
+	//
+	//   ae07 0000   macw %d7l,%d7l,%acc0     d7 = dry level byte << 8
+	//   acce 0000   macw %a6l,%a6l,%acc1     a6 = VOL word  (an ADDRESS register, both halves)
+	//   ac06 0010   macw %d6l,%d6l,%acc2     d6 = SEND word
+	//   203c fffe fdfc  movel #-66052,%d0
+	//   4c01 0800   mulsl %d1,%d0            d1 = FB word
+	//   9081        subl %d1,%d0             -> -66053 * FB
+	//   4c80        satsl %d0
+	//   a1c7 a3ce a5c6  movclrl %acc0,%d7 / %acc1,%fp / %acc2,%d6
+	//
+	// CFPRM semantics, fractional mode: a 16-bit half is the HIGH half of a
+	// 1.31 operand, the 32x32 signed product is shifted LEFT one (2.62) and
+	// the accumulator holds its upper 40 bits; `movclrl` reads ACC[47:8] --
+	// so a word w squares to (w << 16)^2 * 2 / 2^32 = w^2 << 1, i.e. the
+	// square law the firmware uses for its gains: VOL 127 (0x7f00) ->
+	// 0x7e020000, SEND 100 (0x6400) -> 0x4e200000, FB 70 (0x4600) ->
+	// 0x26480000; and -66053 * 0x4600 = -1,183,669,760 = 0xb972a200 with V
+	// clear (the feedback gain the mix loop subtracts), while FB 0x7f00
+	// overflows the subtraction and the `sats` pins it to 0x80000000.
+	//
+	// ✅ These are the values read back from the coefficient record of a
+	// track with SEND 100 / FB 70 / VOL 127 in the interactive run of O21
+	// (0x800060f8: 7e020000 7e020000 b972a200 4e200000) -- the writer was
+	// right all along; O20's "the record holds no gains" had read the
+	// pointer cell 0x80006180 + 68 t instead of the records at 0x80005f60 + 68 t.
+	std::printf("EMAC delay-coefficient gate (O21: the square law and the saturating feedback gain):\n");
+	{
+		const auto runEmac2 = [](const uint32_t _macsr, const std::vector<uint8_t>& _instr,
+			const std::vector<std::pair<m68k_register_t, uint32_t>>& _regs)
+		{
+			std::vector<uint8_t> image = {0xa9, 0x3c,
+				static_cast<uint8_t>(_macsr >> 24), static_cast<uint8_t>(_macsr >> 16),
+				static_cast<uint8_t>(_macsr >> 8), static_cast<uint8_t>(_macsr)};
+			// The EMAC state is a process global (v4e.cpp g_emac) that outlives
+			// each Machine, and the ACCext gate above leaves extension bits in
+			// acc0-acc3: clear all four and both extension words first
+			// (clrl %d0; movel %d0,%acc0..3; movel %d0,%accext01/23).
+			for(const uint8_t b : {0x42, 0x80, 0xa1, 0x00, 0xa3, 0x00, 0xa5, 0x00, 0xa7, 0x00, 0xab, 0x00, 0xaf, 0x00})
+				image.push_back(b);
+			image.insert(image.end(), _instr.begin(), _instr.end());
+			for(const uint8_t b : {0xa1, 0xc4, 0xa3, 0xc5, 0xa5, 0xc6, 0xa7, 0xc7, 0x4e, 0x71})
+				image.push_back(b);
+			const auto codeLen = image.size();
+			image.resize(0x400, 0);
+			ot::Machine m(image);
+			for(const auto& [r, v] : _regs)
+				m68k_set_reg(m.getCpuState(), r, v);
+			const auto stop = m.run(static_cast<uint64_t>(codeLen));
+			if(stop == ot::Machine::Stop::Illegal)
+				std::printf("     (stopped: %s)\n", m.why().c_str());
+			uint32_t acc[4];
+			for(int i = 0; i < 4; ++i)
+				acc[i] = static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), static_cast<m68k_register_t>(M68K_REG_D4 + i)));
+			return std::vector<uint32_t>(acc, acc + 4);
+		};
+		// the three squares, each in its own accumulator, as the routine issues them
+		const std::vector<uint8_t> squares = {0xae, 0x07, 0x00, 0x00, 0xac, 0xce, 0x00, 0x00, 0xac, 0x06, 0x00, 0x10};
+		const auto o = runEmac2(0xa0, squares, {{M68K_REG_D7, 0x7f00}, {M68K_REG_A6, 0x6400}, {M68K_REG_D6, 0x4600}});
+		check("macw %d7l,%d7l,%acc0 in OMC|F/I: 0x7f00 -> 0x7e020000", o[0], 0x7e020000);
+		check("macw %a6l,%a6l,%acc1 (address register): 0x6400 -> 0x4e200000", o[1], 0x4e200000);
+		check("macw %d6l,%d6l,%acc2: 0x4600 -> 0x26480000", o[2], 0x26480000);
+		const auto z = runEmac2(0xa0, squares, {{M68K_REG_D7, 0x0100}, {M68K_REG_A6, 0x8000}, {M68K_REG_D6, 0}});
+		check("... 0x0100 -> 0x00020000 (the square law's LSB)", z[0], 0x00020000);
+		// ⚠️ -1.0 x -1.0 = +1.0 IS representable in the 48-bit accumulator
+		// (+2^39, extension byte 0) -- CFPRM, the MAC unit's fractional mode
+		// -- and only the read-out saturates: 0x7fffffff with OMC set, the
+		// wrapped 0x80000000 with OMC clear. The first O21 model computed
+		// (product << 1) in an int64 and this one product (2^62) overflowed
+		// it into -1.0; the shift is one step now (v4e.cpp).
+		check("... 0x8000 (-1.0 as a half) squares to +1.0: an OMC read saturates to 0x7fffffff", z[1], 0x7fffffff);
+		{
+			const auto w = runEmac2(0x20, squares, {{M68K_REG_D7, 0x8000}, {M68K_REG_A6, 0}, {M68K_REG_D6, 0}});
+			check("... and with OMC clear the same +1.0 reads back wrapped, 0x80000000", w[0], 0x80000000);
+		}
+		check("... 0 -> 0", z[2], 0);
+		// the mix loop's own fractional mac with a parallel (An) load, SEND x dry:
+		//   a090 080a  macl %a2,%d0,%a0@,%d0,%acc0  (the loaded word replaces d0 AFTER the multiply)
+		{
+			std::vector<uint8_t> image = {0xa9, 0x3c, 0, 0, 0, 0xa0, 0xa0, 0x90, 0x08, 0x0a, 0xa1, 0xc4, 0x4e, 0x71};
+			const auto codeLen = image.size();
+			image.resize(0x400, 0);
+			image[0x200] = 0x00; image[0x201] = 0x11; image[0x202] = 0x22; image[0x203] = 0x33;
+			ot::Machine m(image);
+			m68k_set_reg(m.getCpuState(), M68K_REG_A2, 0x4e200000);
+			m68k_set_reg(m.getCpuState(), M68K_REG_D0, 0x03aa1800);
+			m68k_set_reg(m.getCpuState(), M68K_REG_A0, 0x40000600);
+			m.run(static_cast<uint64_t>(codeLen));
+			check("macl %a2,%d0,%a0@,%d0,%acc0 fractional: 0x4e200000 x 0x03aa1800 -> 0x023c9126",
+				static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), M68K_REG_D4)), 0x023c9126);
+			check("... and the parallel load put (a0) into d0", static_cast<uint32_t>(m68k_get_reg(m.getCpuState(), M68K_REG_D0)), 0x00112233);
+		}
+		// the feedback gain: mulsl + subl + satsl, V from the SUBTRACTION
+		const std::vector<uint8_t> fb = {
+			0x20, 0x3c, 0xff, 0xfe, 0xfd, 0xfc,	// movel #-66052,%d0
+			0x4c, 0x01, 0x08, 0x00,				// mulsl %d1,%d0
+			0x90, 0x81,							// subl %d1,%d0
+			0x4c, 0x80,							// satsl %d0
+			0x4e, 0x71,							// nop
+		};
+		check("(-66052 * FB) - FB, FB = 0x4600 -> 0xb972a200 (no overflow, sats leaves it)", runProgram(fb, 0, 0x4600, 8), 0xb972a200);
+		check("... FB = 0x7f00 overflows the subl -> sats pins 0x80000000", runProgram(fb, 0, 0x7f00, 8), 0x80000000);
+		check("... FB = 0 -> 0", runProgram(fb, 0, 0, 8), 0);
+		check("... FB = 1 -> 0xfffefdfb", runProgram(fb, 0, 1, 8), 0xfffefdfb);
+	}
+
+	std::printf("%s\n", g_failures ? "EMAC GATE FAILED -- nothing this emulator computes can be trusted"
+									: "EMAC gate passed.");
+	return g_failures ? 1 : 0;
+}

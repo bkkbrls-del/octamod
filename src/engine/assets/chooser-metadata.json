@@ -1,0 +1,185 @@
+{
+  "schema": 1,
+  "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "sourceSha256": "164f31224bf61181e3f50e7dec40df9afcae5b16dbf6e4c0d0cc5e986af0a84e",
+  "curveReaders": [
+    "DJ EQ"
+  ],
+  "stockFx1": [
+    "FILTER",
+    "EQUALIZER",
+    "DJ EQ",
+    "PHASER",
+    "FLANGER",
+    "CHORUS",
+    "SPATIALIZER",
+    "COMB FILTER",
+    "COMPRESSOR",
+    "LO-FI"
+  ],
+  "stockFx2": [
+    "FILTER",
+    "EQUALIZER",
+    "DJ EQ",
+    "PHASER",
+    "FLANGER",
+    "CHORUS",
+    "SPATIALIZER",
+    "COMB FILTER",
+    "COMPRESSOR",
+    "LO-FI",
+    "DELAY",
+    "PLATE REV",
+    "SPRING REV",
+    "DARK REV"
+  ],
+  "stockEffects": [
+    {
+      "key": "FILTER",
+      "fxId": 4
+    },
+    {
+      "key": "EQUALIZER",
+      "fxId": 12
+    },
+    {
+      "key": "DJ EQ",
+      "fxId": 13
+    },
+    {
+      "key": "PHASER",
+      "fxId": 16
+    },
+    {
+      "key": "FLANGER",
+      "fxId": 17
+    },
+    {
+      "key": "CHORUS",
+      "fxId": 18
+    },
+    {
+      "key": "SPATIALIZER",
+      "fxId": 5
+    },
+    {
+      "key": "COMB FILTER",
+      "fxId": 19
+    },
+    {
+      "key": "COMPRESSOR",
+      "fxId": 24
+    },
+    {
+      "key": "LO-FI",
+      "fxId": 28
+    },
+    {
+      "key": "DELAY",
+      "fxId": 8
+    },
+    {
+      "key": "PLATE REV",
+      "fxId": 20
+    },
+    {
+      "key": "SPRING REV",
+      "fxId": 21
+    },
+    {
+      "key": "DARK REV",
+      "fxId": 22
+    }
+  ],
+  "modules": [
+    {
+      "id": "spectrum",
+      "key": "SPECTRUM",
+      "fxId": 10,
+      "fx1": true,
+      "fx1Only": true
+    },
+    {
+      "id": "modulation",
+      "key": "MODULATION",
+      "fxId": 11,
+      "fx1": true,
+      "fx1Only": true
+    },
+    {
+      "id": "character",
+      "key": "CHARACTER",
+      "fxId": 26,
+      "fx1": true,
+      "fx1Only": true
+    },
+    {
+      "id": "miniverb",
+      "key": "MINIVERB",
+      "fxId": 23,
+      "fx1": false,
+      "fx1Only": false
+    },
+    {
+      "id": "tapeecho",
+      "key": "TAPE ECHO",
+      "fxId": 15,
+      "fx1": false,
+      "fx1Only": false
+    },
+    {
+      "id": "euclid",
+      "key": "EUCLID",
+      "fxId": 29,
+      "fx1": true,
+      "fx1Only": false
+    },
+    {
+      "id": "repitch",
+      "key": "REPITCH",
+      "fxId": null,
+      "fx1": false,
+      "fx1Only": false
+    }
+  ],
+  "customIds": [
+    6,
+    7,
+    9,
+    10,
+    11,
+    14,
+    15,
+    23,
+    26,
+    29
+  ],
+  "layout": {
+    "FX1_IDS": 1074618200,
+    "FX1_LIST": 1074618464,
+    "FX1_NONE": 1074611736,
+    "FX1_ID2POS": 1074618576,
+    "FX1_ROWCOUNT_INSN": 1074109412,
+    "FX1_ROWCOUNT_AT": 1074109414,
+    "FX2_IDS": 1074618332,
+    "FX2_LIST": 1074618512,
+    "ID2POS": 1074618704,
+    "ROWCOUNT_INSN": 1074109012,
+    "ROWCOUNT_AT": 1074109014,
+    "NEW_LIST": 1074621184,
+    "LONG_LIST": 1074625468,
+    "ZERO_RUN_END": 1074625596,
+    "OVERFLOW_RUN": 1074603216,
+    "OVERFLOW_RUN_END": 1074605280
+  },
+  "fx1References": [
+    1073969552,
+    1074079494,
+    1074109394
+  ],
+  "fx2References": [
+    1073968628,
+    1074078870,
+    1074108994
+  ]
+}

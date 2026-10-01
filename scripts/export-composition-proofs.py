@@ -1,0 +1,88 @@
+"""Native complete-image identities and chooser facts. Never retain stock bytes."""
+import argparse,contextlib,hashlib,importlib,io,json,os,pathlib,shutil,subprocess,sys,tempfile
+
+def sha(data):return hashlib.sha256(data).hexdigest()
+def main():
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('worktree',type=pathlib.Path);p.add_argument('destination',type=pathlib.Path);p.add_argument('--app',type=pathlib.Path,required=True);p.add_argument('--stock-bin',type=pathlib.Path)
+    a=p.parse_args();root=a.worktree.resolve();app=a.app.resolve();dest=a.destination.resolve();dest.mkdir(parents=True,exist_ok=True)
+    revision=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip()
+    if revision!=json.loads((app/'src/catalog/native-metadata.json').read_text())['revision']:p.error('Use the pinned worktree.')
+    if subprocess.run(['git','-C',str(root),'diff','--quiet','HEAD']).returncode:p.error('Native tracked sources must be clean.')
+    original=(root/'out/raw/section_3_MAIN_OS.bin').read_bytes();sourceHash=json.loads((app/'src/engine/assets/stock-dsp-metadata.json').read_text())['sourceSha256']
+    if sha(original)!=sourceHash:p.error('Original OS fingerprint mismatch.')
+    sys.path[:0]=[str(root/'tools/build'),str(root/'tools')];os.chdir(root)
+    os.environ.update(REMIX='miniverb',XBUS='1',SPEC='1',DEV='0',NOROUNDTRIP='0',OCTABAM_STATIC_STOCK='0',OCTABAM_NO_CACHE='1',BUILD='79')
+    import toolpath,dsp_modmap as dm
+    dm.IMG=root/'out/raw/section_3_MAIN_OS.bin'
+    from remix import registry,stock
+    from remix.schema import Remix
+    from build_bus import fx1_hazard
+    known=registry.modules();order=['spectrum','modulation','character','miniverb','tapeecho','euclid','repitch'];byid={m.name:m for m in known.values()}
+    stockKeys={m.menu.fx2_id:m.key for m in known.values() if m.is_stock and m.menu is not None}
+    stockFx1=[stockKeys[id] for id in stock.fx1_order() if id];stockFx2=[stockKeys[id] for id in stock._chooser_order(stock.FX2_CHOOSER) if id]
+    # CPU Tape Echo is a post-FX2 contribution; a hazard-free DSP shim alone
+    # does not establish that its ColdFire effect runs on FX1.
+    fx1Capable={'spectrum','modulation','character','euclid'}
+    modules=[]
+    for id in order:
+        m=byid[id]
+        modules.append({'id':id,'key':m.key,'fxId':m.menu.fx2_id if m.menu else None,'fx1':m.name in fx1Capable and m.menu is not None and fx1_hazard(m) is None,'fx1Only':bool(m.claims and m.claims.fx1_only)})
+    def profile(ids,default):
+        selected=[byid[id] for id in order if id in ids]
+        fx1=stockFx1+[m.key for m in selected if m.name in fx1Capable and m.menu and fx1_hazard(m) is None] if default or ids==order else []
+        hidden=[m.key for m in selected if m.key in fx1 and m.claims and m.claims.fx1_only]
+        fx2=stockFx2+[m.key for m in selected if m.menu and m.key not in hidden] if default else [m.key for m in selected if m.menu and m.key not in hidden]
+        return {'fx1':fx1,'fx2':fx2,'hidden':hidden}
+    cases=[([],False),(['repitch'],False),(['tapeecho','euclid'],False),(order,False),([],True),(['spectrum','modulation','character','euclid'],True),(order[:-1],True),(['miniverb','tapeecho','euclid','repitch'],True),(order,True)]
+    proofs=[];originalRemix=registry.remix
+    packTemp=None;packing=None
+    if a.stock_bin:
+        packTemp=tempfile.TemporaryDirectory(prefix='octamod-native-pack.')
+        try:
+            packRoot=pathlib.Path(packTemp.name);payload=packRoot/'payload.bin'
+            subprocess.run([sys.executable,str(root/'tools/build/bin_decode.py'),str(a.stock_bin.resolve()),'-o',str(payload)],check=True,capture_output=True)
+            data=payload.read_bytes();size=int.from_bytes(data[:4],'big')
+            if size<26 or size+4>len(data) or len(data)-size-4>3 or any(data[size+4:]):raise ValueError('Native decoded container length / padding invalid.')
+            stockContainer=packRoot/'stock-container.bin';stockContainer.write_bytes(data[4:4+size]);payload.unlink()
+            oracle=packRoot/'oracle.c';oracle.write_text((pathlib.Path(__file__).resolve().parent/'native-container-oracle.c').read_text());executable=packRoot/'oracle'
+            vendor=root/'vendor/elektron-firmware-tool'
+            subprocess.run(['cc','-O2','-I',str(vendor),str(oracle),*[str(vendor/name) for name in ['compress.c','decompress.c','integrity.c']],'-o',str(executable)],check=True,capture_output=True)
+            seed=int.from_bytes(a.stock_bin.read_bytes()[4:8],'big')
+            packing={'version':'OCTAMOD79','sourceUpgradeSha256':sha(a.stock_bin.read_bytes()),'oracleSha256':sha(oracle.read_bytes()),'sources':{str(path.relative_to(root)):sha(path.read_bytes()) for path in [vendor/name for name in ['main.c','compress.c','decompress.c','integrity.c']]+[root/'tools/build/bin_decode.py',root/'tools/build/make_bin.py']}}
+        except BaseException:packTemp.cleanup();raise
+    try:
+        for ids,default in cases:
+            menu=profile(ids,default);keys=[k for k in menu['fx2'] if known[k].is_stock]+[byid[id].key for id in order if id in ids]
+            remix=registry.with_platform(Remix(name='octamod-composition-proof',doc='Disposable local full-image identity; never flashed.',modules=tuple(keys),fx1=tuple(menu['fx1']),hidden=tuple(menu['hidden']),fallback='NONE'),known)
+            registry.remix=lambda _:remix
+            with tempfile.TemporaryDirectory(prefix='octamod-composition.') as tmp:
+                work=pathlib.Path(tmp)
+                for name in ['modules','dsp','vendor']:os.symlink(root/name,work/name,target_is_directory=True)
+                (work/'out').mkdir();os.chdir(work);sys.modules.pop('build_bus',None);build=importlib.import_module('build_bus');build.IMG=root/'out/raw/section_3_MAIN_OS.bin';build.OUT=work/'out/image.bin';log=io.StringIO()
+                if build.ORDER!=menu['fx2']:raise ValueError('Native carried / hidden order does not match the declared FX2 chooser.')
+                try:
+                    with contextlib.redirect_stdout(log):build.main()
+                    image=build.OUT.read_bytes();proof={'moduleIds':ids,'default':default,'menu':menu,'bytes':len(image),'sha256':sha(image),'osSha256':sha(image[:len(original)]),'appendSha256':sha(image[len(original):])}
+                    if packing:
+                        container=work/'out/container.bin';update=work/'out/update.bin';version=packing['version']
+                        subprocess.run([str(executable),str(stockContainer),str(build.OUT),version,str(container)],check=True,capture_output=True)
+                        subprocess.run([sys.executable,str(root/'tools/build/make_bin.py'),str(container),'--seed',hex(seed),'-o',str(update)],check=True,capture_output=True)
+                        c=container.read_bytes();f=update.read_bytes();proof['firmware']={'version':version,'containerBytes':len(c),'containerSha256':sha(c),'bytes':len(f),'sha256':sha(f)}
+                    proofs.append(proof)
+                    print(f"{ids or ['stock']} default={default}: {len(image)} bytes, full native identity captured.")
+                except SystemExit as error:
+                    if ids==order and default and ('does not fit' in str(error) or 'do not fit' in str(error)):
+                        proofs.append({'moduleIds':ids,'default':default,'menu':menu,'error':str(error)});print('Crowded all-module / stock-chooser selection rejects placement, as expected.')
+                    else:print(log.getvalue()[-8000:]);raise
+                finally:
+                    if build._SCRATCH is not None:shutil.rmtree(build._SCRATCH,ignore_errors=True)
+                    os.chdir(root)
+    finally:
+        registry.remix=originalRemix
+        if packTemp is not None:packTemp.cleanup()
+    # Address, id and membership facts; no descriptor, list or instruction bytes.
+    metadata={'schema':1,'revision':revision,'sourceSha256':sourceHash,'curveReaders':sorted({key for keys in stock.curve_bank_readers().values() for key in keys}),'stockFx1':stockFx1,'stockFx2':stockFx2,'stockEffects':[{'key':m.key,'fxId':m.menu.fx2_id} for m in known.values() if m.is_stock and m.menu is not None],'modules':modules,'customIds':sorted({m.menu.fx2_id for m in known.values() if m.menu and not m.is_stock and not m.menu.replaces}),'layout':{k:getattr(build,k) for k in ['FX1_IDS','FX1_LIST','FX1_NONE','FX1_ID2POS','FX1_ROWCOUNT_INSN','FX1_ROWCOUNT_AT','FX2_IDS','FX2_LIST','ID2POS','ROWCOUNT_INSN','ROWCOUNT_AT','NEW_LIST','LONG_LIST','ZERO_RUN_END','OVERFLOW_RUN','OVERFLOW_RUN_END']},'fx1References':build.FX1_LIST_REFS,'fx2References':build.LIST_REFS}
+    (dest/'chooser-metadata.json').write_text(json.dumps(metadata,indent=2)+'\n')
+    (dest/'composition-proofs.json').write_text(json.dumps({'schema':1,'revision':revision,'sourceSha256':sourceHash,'packing':packing,'proofs':proofs},indent=2)+'\n')
+    print('Only fingerprints and chooser format facts retained; temporary native files removed. No stress, render or emulator gates run.')
+if __name__=='__main__':main()

@@ -1,0 +1,1233 @@
+{
+  "schema": 1,
+  "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "sourceSha256": "164f31224bf61181e3f50e7dec40df9afcae5b16dbf6e4c0d0cc5e986af0a84e",
+  "license": "/licenses/octabam.txt",
+  "recipes": [
+    {
+      "id": "spectrum",
+      "key": "SPECTRUM",
+      "author": "sambanks",
+      "slot": 6,
+      "name": "MODE",
+      "labels": [
+        "LADR",
+        "SEM",
+        "ISO",
+        "VOWL"
+      ],
+      "renames": {
+        "0": {
+          "0": "FREQ",
+          "1": "RES",
+          "7": "---",
+          "6": "LADR"
+        },
+        "1": {
+          "0": "FREQ",
+          "1": "RES",
+          "7": "SHPE",
+          "6": "SEM"
+        },
+        "2": {
+          "0": "LOW",
+          "1": "COLR",
+          "7": "---",
+          "6": "ISO"
+        },
+        "3": {
+          "0": "VOWL",
+          "1": "SHRP",
+          "7": "---",
+          "6": "VOWL"
+        }
+      },
+      "wideMaximum": null,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 284,
+          "sha256": "11b2e0dfa27214a886a8c9eb41c2684a3ae21790c342932b154916f0e29616c1"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 284,
+          "sha256": "c4416adb0a7632935edd4b332c3c52991d46057ceeb078ffd712749c3ee646de"
+        }
+      ]
+    },
+    {
+      "id": "modulation",
+      "key": "MODULATION",
+      "author": "sambanks",
+      "slot": 6,
+      "name": "MODE",
+      "labels": [
+        "JUNO",
+        "DIM",
+        "FLNG",
+        "COMB",
+        "PHSR"
+      ],
+      "renames": {
+        "0": {
+          "0": "RATE",
+          "1": "DPTH",
+          "2": "DLY",
+          "3": "FDBK",
+          "7": "TONE",
+          "8": "WDTH",
+          "6": "JUNO"
+        },
+        "1": {
+          "0": "RATE",
+          "1": "DPTH",
+          "2": "DLY",
+          "3": "FDBK",
+          "7": "TONE",
+          "8": "WDTH",
+          "6": "DIM"
+        },
+        "2": {
+          "0": "RATE",
+          "1": "DPTH",
+          "2": "MANL",
+          "3": "FDBK",
+          "7": "TONE",
+          "8": "WDTH",
+          "6": "FLNG"
+        },
+        "3": {
+          "0": "---",
+          "1": "---",
+          "2": "PTCH",
+          "3": "DCAY",
+          "7": "BRIT",
+          "8": "---",
+          "6": "COMB"
+        },
+        "4": {
+          "0": "RATE",
+          "1": "DPTH",
+          "2": "STGS",
+          "3": "FDBK",
+          "7": "---",
+          "8": "WDTH",
+          "6": "PHSR"
+        }
+      },
+      "wideMaximum": null,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 454,
+          "sha256": "4f5031a1591acd7bcc4791e49a10af0e9e7f86945eea22abe082959efd7520e6"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 454,
+          "sha256": "494c241fca3fcd9b65726a2e89102765d640a73e55558b772f03b02390ac5105"
+        }
+      ]
+    },
+    {
+      "id": "character",
+      "key": "CHARACTER",
+      "author": "sambanks",
+      "slot": 6,
+      "name": "SAT",
+      "labels": [
+        "TAPE",
+        "TUBE",
+        "INFL"
+      ],
+      "renames": {
+        "0": {
+          "6": "TAPE"
+        },
+        "1": {
+          "6": "TUBE"
+        },
+        "2": {
+          "6": "INFL"
+        }
+      },
+      "wideMaximum": null,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 166,
+          "sha256": "c613d9abdebe3fe848a84ca4acda1a461a7f2a527662578a030611fbc180b84f"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 166,
+          "sha256": "351f1b81a4e073d848e2941e602d0a39a9f758b1f1c9793ef66cf7e3247c143f"
+        }
+      ]
+    },
+    {
+      "id": "character",
+      "key": "CHARACTER",
+      "author": "sambanks",
+      "slot": 7,
+      "name": "KEY",
+      "labels": [
+        "SELF",
+        "T1"
+      ],
+      "renames": {},
+      "wideMaximum": null,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 52,
+          "sha256": "2f2b5457065c4546c7b579c26a008c7da85cc84dcb151241488bb96449390aef"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 52,
+          "sha256": "2f2b5457065c4546c7b579c26a008c7da85cc84dcb151241488bb96449390aef"
+        }
+      ]
+    },
+    {
+      "id": "miniverb",
+      "key": "MINIVERB",
+      "author": "repeat98",
+      "slot": 4,
+      "name": "RATE",
+      "labels": [
+        "0.34",
+        "0.67",
+        "1.01",
+        "1.35",
+        "1.68",
+        "2.02",
+        "2.36",
+        "2.69"
+      ],
+      "renames": {},
+      "wideMaximum": null,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 96,
+          "sha256": "ba5c19ddb5e6040a4dbdfa2cb60edc5e8a7176a0002c77115a2ad5f4a83ce422"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 96,
+          "sha256": "ba5c19ddb5e6040a4dbdfa2cb60edc5e8a7176a0002c77115a2ad5f4a83ce422"
+        }
+      ]
+    },
+    {
+      "id": "tapeecho",
+      "key": "TAPE ECHO",
+      "author": "repeat98",
+      "slot": 4,
+      "name": "SYNC",
+      "labels": [
+        "FREE",
+        "BEAT"
+      ],
+      "renames": {},
+      "wideMaximum": null,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 54,
+          "sha256": "e25daa4000b2eb33d43d1847a27acb4794d66e2f6813d645faa9d7b9a97fb3e4"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 54,
+          "sha256": "e25daa4000b2eb33d43d1847a27acb4794d66e2f6813d645faa9d7b9a97fb3e4"
+        }
+      ]
+    },
+    {
+      "id": "euclid",
+      "key": "EUCLID",
+      "author": "repeat98",
+      "slot": 4,
+      "name": "STEPS",
+      "labels": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "49",
+        "50",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57",
+        "58",
+        "59",
+        "60",
+        "61",
+        "62",
+        "63",
+        "64"
+      ],
+      "renames": {},
+      "wideMaximum": 63,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 352,
+          "sha256": "5d5023bfda06b668743d9245dee3f60c5d0ad178c28c725c843307f9cec372c4"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 352,
+          "sha256": "5d5023bfda06b668743d9245dee3f60c5d0ad178c28c725c843307f9cec372c4"
+        }
+      ]
+    },
+    {
+      "id": "euclid",
+      "key": "EUCLID",
+      "author": "repeat98",
+      "slot": 5,
+      "name": "PULSE",
+      "labels": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "49",
+        "50",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57",
+        "58",
+        "59",
+        "60",
+        "61",
+        "62",
+        "63",
+        "64"
+      ],
+      "renames": {},
+      "wideMaximum": 64,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 356,
+          "sha256": "1e02e29db0b74143092fca8ca001ad62a392b90cef1d54b2b2136f2f83370962"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 356,
+          "sha256": "1e02e29db0b74143092fca8ca001ad62a392b90cef1d54b2b2136f2f83370962"
+        }
+      ]
+    },
+    {
+      "id": "euclid",
+      "key": "EUCLID",
+      "author": "repeat98",
+      "slot": 6,
+      "name": "ROT",
+      "labels": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40",
+        "41",
+        "42",
+        "43",
+        "44",
+        "45",
+        "46",
+        "47",
+        "48",
+        "49",
+        "50",
+        "51",
+        "52",
+        "53",
+        "54",
+        "55",
+        "56",
+        "57",
+        "58",
+        "59",
+        "60",
+        "61",
+        "62",
+        "63"
+      ],
+      "renames": {},
+      "wideMaximum": 63,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 350,
+          "sha256": "3dfc58ef5f3e40ae06d2206a50d23f5f8ad398caa1c2d11f268872550b2cb4e5"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 350,
+          "sha256": "3dfc58ef5f3e40ae06d2206a50d23f5f8ad398caa1c2d11f268872550b2cb4e5"
+        }
+      ]
+    },
+    {
+      "id": "euclid",
+      "key": "EUCLID",
+      "author": "repeat98",
+      "slot": 7,
+      "name": "RATE",
+      "labels": [
+        "1/32",
+        "1/16",
+        "1/8",
+        "1/4",
+        "1/2"
+      ],
+      "renames": {},
+      "wideMaximum": null,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 72,
+          "sha256": "2f0b2a6aa567537cbe61ef5f68542ce67189fc65d4c4ec0436ff93d5544ae000"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 72,
+          "sha256": "2f0b2a6aa567537cbe61ef5f68542ce67189fc65d4c4ec0436ff93d5544ae000"
+        }
+      ]
+    },
+    {
+      "id": "euclid",
+      "key": "EUCLID",
+      "author": "repeat98",
+      "slot": 8,
+      "name": "TYPE",
+      "labels": [
+        "LP",
+        "BP",
+        "HP",
+        "AMP",
+        "NOTCH"
+      ],
+      "renames": {
+        "0": {
+          "0": "FREQ",
+          "1": "RES",
+          "2": "DEPTH"
+        },
+        "1": {
+          "0": "FREQ",
+          "1": "RES",
+          "2": "DEPTH"
+        },
+        "2": {
+          "0": "FREQ",
+          "1": "RES",
+          "2": "DEPTH"
+        },
+        "3": {
+          "0": "LEVEL",
+          "1": "--",
+          "2": "AMT"
+        },
+        "4": {
+          "0": "FREQ",
+          "1": "RES",
+          "2": "DEPTH"
+        }
+      },
+      "wideMaximum": null,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 290,
+          "sha256": "a675e3fd802b2f131beffcd06c6827752f28ee4fd312f0334d7fd7a9c1c92ea2"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 290,
+          "sha256": "1d62e03f397a3666a80c4f31943205f22b2e2598290a1731c481e0353e8c05e1"
+        }
+      ]
+    },
+    {
+      "id": "euclid",
+      "key": "EUCLID",
+      "author": "repeat98",
+      "slot": 10,
+      "name": "OUT",
+      "labels": [
+        "ENV",
+        "GATE",
+        "RAND",
+        "LOOP"
+      ],
+      "renames": {
+        "0": {
+          "3": "DEC",
+          "9": "ATK",
+          "10": "ENV"
+        },
+        "1": {
+          "3": "LEN",
+          "9": "EDGE",
+          "10": "GATE"
+        },
+        "2": {
+          "3": "--",
+          "9": "SLEW",
+          "10": "RAND"
+        },
+        "3": {
+          "3": "--",
+          "9": "SLEW",
+          "10": "LOOP"
+        }
+      },
+      "wideMaximum": null,
+      "proofs": [
+        {
+          "namesAddress": 1074621238,
+          "bytes": 254,
+          "sha256": "1a4a5ce9f36485e0819f480c9cf217fa7c1c87f2645048904b5f799d79669bf3"
+        },
+        {
+          "namesAddress": 1074623350,
+          "bytes": 254,
+          "sha256": "65d4f443032d8da83b35300ab182e417334eef978534a88ac86e1868d22a1292"
+        }
+      ]
+    }
+  ],
+  "repitchPatches": [
+    {
+      "address": 1073758314,
+      "guardLength": 8,
+      "guardSha256": "421c09bf6657197a8b4ebc95e327dcd230d4509c7a1a6703a918101c2a44d5ac",
+      "kind": "detour",
+      "symbol": "rate_gate",
+      "bytes": 8,
+      "note": "resolve REPITCH for the track the increment is built for"
+    },
+    {
+      "address": 1073758366,
+      "guardLength": 8,
+      "guardSha256": "9982b6d4cc8edcabba720802078541d3c677c7e1383544e53b88db927d816814",
+      "kind": "detour",
+      "symbol": "pitch_gate",
+      "bytes": 8,
+      "note": "REPITCH: PTCH not applied"
+    },
+    {
+      "address": 1073758464,
+      "guardLength": 8,
+      "guardSha256": "cfb51026afa59069c37a05dce3ec521567135c112d210e4a0f29129e3e353df7",
+      "kind": "detour",
+      "symbol": "rate_hook",
+      "bytes": 8,
+      "note": "scale the shared CPU/DSP playback increment"
+    },
+    {
+      "address": 1073773974,
+      "guardLength": 6,
+      "guardSha256": "ff2ae4a919e2e8850a9180cf2d7e53ce07e728ad9dac7e6c3f8eee3027951fbf",
+      "kind": "detour",
+      "symbol": "tstr_resolve",
+      "bytes": 6,
+      "note": "the voice renderer resolves REPITCH to OFF: dry, forwards and back"
+    },
+    {
+      "address": 1074194204,
+      "guardLength": 10,
+      "guardSha256": "45cf9363cc868dea350fb606f94041c365d08ba8a23a49ee707aabf1f7382f88",
+      "kind": "detour",
+      "symbol": "attr_label",
+      "bytes": 10,
+      "note": "audio editor ATTR: TIMESTRETCH prints REPITCH"
+    },
+    {
+      "address": 1074196054,
+      "guardLength": 8,
+      "guardSha256": "3579f297a903662f1577e307da394a680c0a847098bde766b10d0c4e77bc5b23",
+      "kind": "detour",
+      "symbol": "attr_up",
+      "bytes": 8,
+      "note": "audio editor ATTR: TIMESTRETCH up, BEAT -> REPITCH"
+    },
+    {
+      "address": 1074196348,
+      "guardLength": 8,
+      "guardSha256": "4695532f6a5b8ec36fcbff91f5b4bf24ac84e1def253b8b678c20c2e754b7b5f",
+      "kind": "detour",
+      "symbol": "attr_down",
+      "bytes": 8,
+      "note": "audio editor ATTR: TIMESTRETCH down, REPITCH -> BEAT"
+    },
+    {
+      "address": 1074606350,
+      "guardLength": 4,
+      "guardSha256": "5a6d670806496094839c260dbcab4b510b7f1d3bd1c91ba8e85fd42be4617df0",
+      "kind": "pointer",
+      "symbol": "tstr_fmt",
+      "addend": 0,
+      "note": "STATIC TSTR formatter"
+    },
+    {
+      "address": 1074606752,
+      "guardLength": 4,
+      "guardSha256": "5a6d670806496094839c260dbcab4b510b7f1d3bd1c91ba8e85fd42be4617df0",
+      "kind": "pointer",
+      "symbol": "tstr_fmt",
+      "addend": 0,
+      "note": "FLEX TSTR formatter"
+    },
+    {
+      "address": 1074606358,
+      "guardLength": 4,
+      "guardSha256": "1b003aa5d0dd76ca26c5c00918ec125b45cc1c3115740763d6139a09ff16e57b",
+      "kind": "pointer",
+      "symbol": "ptch_widget",
+      "addend": 0,
+      "note": "STATIC PTCH knob"
+    },
+    {
+      "address": 1074606760,
+      "guardLength": 4,
+      "guardSha256": "1b003aa5d0dd76ca26c5c00918ec125b45cc1c3115740763d6139a09ff16e57b",
+      "kind": "pointer",
+      "symbol": "ptch_widget",
+      "addend": 0,
+      "note": "FLEX PTCH knob"
+    },
+    {
+      "address": 1074606302,
+      "guardLength": 4,
+      "guardSha256": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+      "kind": "poke",
+      "code": "00000005",
+      "note": "STATIC TSTR count 4 -> 5"
+    },
+    {
+      "address": 1074606704,
+      "guardLength": 4,
+      "guardSha256": "1bc5d0e3df0ea12c4d0078668d14924f95106bbe173e196de50fe13a900b0937",
+      "kind": "poke",
+      "code": "00000005",
+      "note": "FLEX TSTR count 4 -> 5"
+    },
+    {
+      "address": 1074606398,
+      "guardLength": 4,
+      "guardSha256": "fa8462bfa8fe5c0ba11a44685e09db5e11061ea578b33480b0c77cfe2ac77165",
+      "kind": "poke",
+      "code": "40046ab4",
+      "note": "STATIC TSTR widget 4 -> 5 positions"
+    },
+    {
+      "address": 1074606800,
+      "guardLength": 4,
+      "guardSha256": "fa8462bfa8fe5c0ba11a44685e09db5e11061ea578b33480b0c77cfe2ac77165",
+      "kind": "poke",
+      "code": "40046ab4",
+      "note": "FLEX TSTR widget 4 -> 5 positions"
+    }
+  ],
+  "wideGuard": {
+    "address": 1074035260,
+    "guardLength": 6,
+    "guardSha256": "9b2c003ba4d776237ad71bef15451bfea4447f2acca77ef6922dcea6ac52ca78"
+  },
+  "proofs": [
+    {
+      "moduleIds": [],
+      "regions": [],
+      "caveCursor": 1074621216,
+      "overflowCursor": 1074603216,
+      "caveLimit": 1074625596
+    },
+    {
+      "moduleIds": [
+        "repitch"
+      ],
+      "regions": [
+        {
+          "address": 1074621312,
+          "bytes": 576,
+          "sha256": "cbf8ce918648f752731e22538ef4f88f7e3766bcc1f4f293f2697535ba824326",
+          "note": "repitch"
+        },
+        {
+          "address": 1073758314,
+          "bytes": 8,
+          "sha256": "111f0a13c800e69791caa423b32a3a2f0e3c1e331f53097b9911a7955e731a35",
+          "note": "resolve REPITCH for the track the increment is built for"
+        },
+        {
+          "address": 1073758366,
+          "bytes": 8,
+          "sha256": "758fe368d007fd2a1d623143b41c923e112d91eeb6c399d320c4e8cdbafa4af3",
+          "note": "REPITCH: PTCH not applied"
+        },
+        {
+          "address": 1073758464,
+          "bytes": 8,
+          "sha256": "c583c034751198ffd8f3fb3efe9ff7eb5c28a97633524aae5e9df8f062f5c0d1",
+          "note": "scale the shared CPU/DSP playback increment"
+        },
+        {
+          "address": 1073773974,
+          "bytes": 6,
+          "sha256": "6b40f5c5ee854529d4378807416296c454b56d698996624d526ce174a67e6506",
+          "note": "the voice renderer resolves REPITCH to OFF: dry, forwards and back"
+        },
+        {
+          "address": 1074194204,
+          "bytes": 10,
+          "sha256": "0239e130ddef79f106374ea4bfba16410d58834a68f3353ebd4c7a7f2adddc2d",
+          "note": "audio editor ATTR: TIMESTRETCH prints REPITCH"
+        },
+        {
+          "address": 1074196054,
+          "bytes": 8,
+          "sha256": "959240ca26a51e812e6cdf4412caa817845370988f69af130e12f136ed6229cf",
+          "note": "audio editor ATTR: TIMESTRETCH up, BEAT -> REPITCH"
+        },
+        {
+          "address": 1074196348,
+          "bytes": 8,
+          "sha256": "fc328ea198e7d4c0c43ab9c9aa809ade6dedeee59de282d661ed4497f684c2d8",
+          "note": "audio editor ATTR: TIMESTRETCH down, REPITCH -> BEAT"
+        },
+        {
+          "address": 1074606350,
+          "bytes": 4,
+          "sha256": "0e3157d54a6cc12d647a832c12f609d65e7142596fb0b1798f2fe6af72b960a7",
+          "note": "STATIC TSTR formatter"
+        },
+        {
+          "address": 1074606752,
+          "bytes": 4,
+          "sha256": "0e3157d54a6cc12d647a832c12f609d65e7142596fb0b1798f2fe6af72b960a7",
+          "note": "FLEX TSTR formatter"
+        },
+        {
+          "address": 1074606358,
+          "bytes": 4,
+          "sha256": "5f97ef45eb8ca1a87def5fbf87078c71b7f8e6abe5b9f1ffef2b97f71d464f8f",
+          "note": "STATIC PTCH knob"
+        },
+        {
+          "address": 1074606760,
+          "bytes": 4,
+          "sha256": "5f97ef45eb8ca1a87def5fbf87078c71b7f8e6abe5b9f1ffef2b97f71d464f8f",
+          "note": "FLEX PTCH knob"
+        },
+        {
+          "address": 1074606302,
+          "bytes": 4,
+          "sha256": "221f8af2372a95064f2ef7d7712216a9ab46e7ef98482fd237e106f83eaa7569",
+          "note": "STATIC TSTR count 4 -> 5"
+        },
+        {
+          "address": 1074606704,
+          "bytes": 4,
+          "sha256": "221f8af2372a95064f2ef7d7712216a9ab46e7ef98482fd237e106f83eaa7569",
+          "note": "FLEX TSTR count 4 -> 5"
+        },
+        {
+          "address": 1074606398,
+          "bytes": 4,
+          "sha256": "279feda7fcd8ba4b216d6757498a71cd2d2a3439efc4511d9b65876f5d9f9cd9",
+          "note": "STATIC TSTR widget 4 -> 5 positions"
+        },
+        {
+          "address": 1074606800,
+          "bytes": 4,
+          "sha256": "279feda7fcd8ba4b216d6757498a71cd2d2a3439efc4511d9b65876f5d9f9cd9",
+          "note": "FLEX TSTR widget 4 -> 5 positions"
+        }
+      ],
+      "caveCursor": 1074621888,
+      "overflowCursor": 1074603216,
+      "caveLimit": 1074625596
+    },
+    {
+      "moduleIds": [
+        "tapeecho",
+        "euclid"
+      ],
+      "regions": [
+        {
+          "address": 1074621216,
+          "bytes": 402,
+          "sha256": "d647b8d030a93ee5a2b31f7507bb2ed38fc72d8bd3c30ffbef2e0e833cbed4f4",
+          "note": "TAPE ECHO descriptor"
+        },
+        {
+          "address": 1074621632,
+          "bytes": 402,
+          "sha256": "32691512d755cf561eedca9b97129fecbc5ae559ca7210e16871f940fc2eaf2c",
+          "note": "EUCLID descriptor"
+        },
+        {
+          "address": 1074622080,
+          "bytes": 244,
+          "sha256": "80e3ddeb52937d8fca9c89b01d638f523df2a089820602578e0896b509a3beba",
+          "note": "Tape TIME formatter"
+        },
+        {
+          "address": 1074622324,
+          "bytes": 54,
+          "sha256": "e25daa4000b2eb33d43d1847a27acb4794d66e2f6813d645faa9d7b9a97fb3e4",
+          "note": "TAPE ECHO SYNC"
+        },
+        {
+          "address": 1074622378,
+          "bytes": 352,
+          "sha256": "5d5023bfda06b668743d9245dee3f60c5d0ad178c28c725c843307f9cec372c4",
+          "note": "EUCLID STEPS"
+        },
+        {
+          "address": 1074622730,
+          "bytes": 356,
+          "sha256": "1e02e29db0b74143092fca8ca001ad62a392b90cef1d54b2b2136f2f83370962",
+          "note": "EUCLID PULSE"
+        },
+        {
+          "address": 1074623086,
+          "bytes": 350,
+          "sha256": "3dfc58ef5f3e40ae06d2206a50d23f5f8ad398caa1c2d11f268872550b2cb4e5",
+          "note": "EUCLID ROT"
+        },
+        {
+          "address": 1074623436,
+          "bytes": 72,
+          "sha256": "2f0b2a6aa567537cbe61ef5f68542ce67189fc65d4c4ec0436ff93d5544ae000",
+          "note": "EUCLID RATE"
+        },
+        {
+          "address": 1074623508,
+          "bytes": 290,
+          "sha256": "7ad46ce8d893040f388a992a38a0e0c611ab2f23ab7276e7f9f168435be81dc6",
+          "note": "EUCLID TYPE"
+        },
+        {
+          "address": 1074623798,
+          "bytes": 254,
+          "sha256": "19db4293d4cc6773a7bb72a4e4f690d67baef2c4c34e21a1b28795ffb9547ce1",
+          "note": "EUCLID OUT"
+        },
+        {
+          "address": 1074624052,
+          "bytes": 116,
+          "sha256": "6e3237adcdebee85b8ea6dc465596b61a9805e522824628360fc0b799148d543",
+          "note": "wide dial"
+        },
+        {
+          "address": 1074035260,
+          "bytes": 6,
+          "sha256": "99487b66c7651f1818e9383f229c91075764e1928cf191f159ec8e8b801775bc",
+          "note": "wide dial hook"
+        }
+      ],
+      "caveCursor": 1074624168,
+      "overflowCursor": 1074603216,
+      "caveLimit": 1074625596
+    },
+    {
+      "moduleIds": [
+        "spectrum",
+        "modulation",
+        "character",
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch"
+      ],
+      "regions": [
+        {
+          "address": 1074621216,
+          "bytes": 402,
+          "sha256": "6de3a2a3550bb74055c39881a4e0c2cd6e01e51d48d1a2c88fd1f62c5a587716",
+          "note": "SPECTRUM descriptor"
+        },
+        {
+          "address": 1074621632,
+          "bytes": 402,
+          "sha256": "bb9705c7577cc275f35ae68c63a1615719faf68f3266e63fee35f8d9f6f59d07",
+          "note": "MODULATION descriptor"
+        },
+        {
+          "address": 1074622048,
+          "bytes": 402,
+          "sha256": "5b1701362acbb5c868df77db6659b6ae556b25a5544544e159578ce2f0819528",
+          "note": "CHARACTER descriptor"
+        },
+        {
+          "address": 1074622464,
+          "bytes": 402,
+          "sha256": "8956cad785cb4f20bdf0108d7783e90d056235617b569cd0b1d46d0070f3e885",
+          "note": "MINIVERB descriptor"
+        },
+        {
+          "address": 1074622880,
+          "bytes": 402,
+          "sha256": "1d2c265931341282eea1482cbd44e0b7a266554973d8bcdcb4ad2eb44970c936",
+          "note": "TAPE ECHO descriptor"
+        },
+        {
+          "address": 1074623296,
+          "bytes": 402,
+          "sha256": "51a4844d0819b1d557d700b96ff1606059beb954edf412c63e958366c492c235",
+          "note": "EUCLID descriptor"
+        },
+        {
+          "address": 1074623744,
+          "bytes": 576,
+          "sha256": "cbf8ce918648f752731e22538ef4f88f7e3766bcc1f4f293f2697535ba824326",
+          "note": "repitch"
+        },
+        {
+          "address": 1074546096,
+          "bytes": 89,
+          "sha256": "787fa801a8233860f9a7dc8bcad9fd9d454132c61b59e279498e12c9bead6b34",
+          "note": "SHPE formatter"
+        },
+        {
+          "address": 1074624384,
+          "bytes": 244,
+          "sha256": "80e3ddeb52937d8fca9c89b01d638f523df2a089820602578e0896b509a3beba",
+          "note": "Tape TIME formatter"
+        },
+        {
+          "address": 1074624628,
+          "bytes": 284,
+          "sha256": "11b2e0dfa27214a886a8c9eb41c2684a3ae21790c342932b154916f0e29616c1",
+          "note": "SPECTRUM MODE"
+        },
+        {
+          "address": 1074624912,
+          "bytes": 454,
+          "sha256": "73a6d9976d2eceb33624496635b10e3b8104e4bf2f68d4fe22b12240377d3329",
+          "note": "MODULATION MODE"
+        },
+        {
+          "address": 1074625366,
+          "bytes": 166,
+          "sha256": "5b1fc701da23fcc080cb1bbed65fd42679e09d8993d3e05eb6770decc46c94b9",
+          "note": "CHARACTER SAT"
+        },
+        {
+          "address": 1074625532,
+          "bytes": 52,
+          "sha256": "2f2b5457065c4546c7b579c26a008c7da85cc84dcb151241488bb96449390aef",
+          "note": "CHARACTER KEY"
+        },
+        {
+          "address": 1074603216,
+          "bytes": 96,
+          "sha256": "ba5c19ddb5e6040a4dbdfa2cb60edc5e8a7176a0002c77115a2ad5f4a83ce422",
+          "note": "MINIVERB RATE"
+        },
+        {
+          "address": 1074603312,
+          "bytes": 54,
+          "sha256": "e25daa4000b2eb33d43d1847a27acb4794d66e2f6813d645faa9d7b9a97fb3e4",
+          "note": "TAPE ECHO SYNC"
+        },
+        {
+          "address": 1074603368,
+          "bytes": 352,
+          "sha256": "5d5023bfda06b668743d9245dee3f60c5d0ad178c28c725c843307f9cec372c4",
+          "note": "EUCLID STEPS"
+        },
+        {
+          "address": 1074603720,
+          "bytes": 356,
+          "sha256": "1e02e29db0b74143092fca8ca001ad62a392b90cef1d54b2b2136f2f83370962",
+          "note": "EUCLID PULSE"
+        },
+        {
+          "address": 1074604076,
+          "bytes": 350,
+          "sha256": "3dfc58ef5f3e40ae06d2206a50d23f5f8ad398caa1c2d11f268872550b2cb4e5",
+          "note": "EUCLID ROT"
+        },
+        {
+          "address": 1074604428,
+          "bytes": 72,
+          "sha256": "2f0b2a6aa567537cbe61ef5f68542ce67189fc65d4c4ec0436ff93d5544ae000",
+          "note": "EUCLID RATE"
+        },
+        {
+          "address": 1074604500,
+          "bytes": 290,
+          "sha256": "db479c6c15f74955e9e633679664b34b90e12961be185c9db758173ffffed293",
+          "note": "EUCLID TYPE"
+        },
+        {
+          "address": 1074604792,
+          "bytes": 254,
+          "sha256": "ae839f7b6141399efa8d0b770349fe434a50c3c4df223d6dae873783e99edda0",
+          "note": "EUCLID OUT"
+        },
+        {
+          "address": 1074605048,
+          "bytes": 116,
+          "sha256": "61bf0e3756102b91d0af5e20da54ceebb93aec9790dc424d7d483a26b7b16ed1",
+          "note": "wide dial"
+        },
+        {
+          "address": 1073758314,
+          "bytes": 8,
+          "sha256": "7950156c06270f62bcf27fd0808736f22e4275174aa61a11de0cad9c125ecb1c",
+          "note": "resolve REPITCH for the track the increment is built for"
+        },
+        {
+          "address": 1073758366,
+          "bytes": 8,
+          "sha256": "29d2875cd4ccffa87ca1ccfe8266293f0fcec9ced5481f2296c4553be4ec00ce",
+          "note": "REPITCH: PTCH not applied"
+        },
+        {
+          "address": 1073758464,
+          "bytes": 8,
+          "sha256": "c40fe856ad7533a66b808ff6510681065157fd69bb94f56c0afd54bc9ec162c6",
+          "note": "scale the shared CPU/DSP playback increment"
+        },
+        {
+          "address": 1073773974,
+          "bytes": 6,
+          "sha256": "b0e4042b09fbb71bad55858de853a70f018b272c7a0f6fec48ee87d5f472b30e",
+          "note": "the voice renderer resolves REPITCH to OFF: dry, forwards and back"
+        },
+        {
+          "address": 1074194204,
+          "bytes": 10,
+          "sha256": "1688f654fca2c79111edfdb34e94be80e4ab61c88476dcff78a0304bcd753344",
+          "note": "audio editor ATTR: TIMESTRETCH prints REPITCH"
+        },
+        {
+          "address": 1074196054,
+          "bytes": 8,
+          "sha256": "4c8b6b9befd900d07f3afb054ef663fe8bb142932b42c4a9f2bbe5e556638316",
+          "note": "audio editor ATTR: TIMESTRETCH up, BEAT -> REPITCH"
+        },
+        {
+          "address": 1074196348,
+          "bytes": 8,
+          "sha256": "3e234f5e17deb77f3970ee510776461fdc1a62105b3ca4547277f707be0ae5e2",
+          "note": "audio editor ATTR: TIMESTRETCH down, REPITCH -> BEAT"
+        },
+        {
+          "address": 1074606350,
+          "bytes": 4,
+          "sha256": "a3c756910a3338c296a88f22c86857b94258af6f1ac089caf99fca0a2935e2fa",
+          "note": "STATIC TSTR formatter"
+        },
+        {
+          "address": 1074606752,
+          "bytes": 4,
+          "sha256": "a3c756910a3338c296a88f22c86857b94258af6f1ac089caf99fca0a2935e2fa",
+          "note": "FLEX TSTR formatter"
+        },
+        {
+          "address": 1074606358,
+          "bytes": 4,
+          "sha256": "41f91a3d5c01ce8822bc3150c798d630103a4ab88edbbc51f0881c186a4c83e6",
+          "note": "STATIC PTCH knob"
+        },
+        {
+          "address": 1074606760,
+          "bytes": 4,
+          "sha256": "41f91a3d5c01ce8822bc3150c798d630103a4ab88edbbc51f0881c186a4c83e6",
+          "note": "FLEX PTCH knob"
+        },
+        {
+          "address": 1074606302,
+          "bytes": 4,
+          "sha256": "221f8af2372a95064f2ef7d7712216a9ab46e7ef98482fd237e106f83eaa7569",
+          "note": "STATIC TSTR count 4 -> 5"
+        },
+        {
+          "address": 1074606704,
+          "bytes": 4,
+          "sha256": "221f8af2372a95064f2ef7d7712216a9ab46e7ef98482fd237e106f83eaa7569",
+          "note": "FLEX TSTR count 4 -> 5"
+        },
+        {
+          "address": 1074606398,
+          "bytes": 4,
+          "sha256": "279feda7fcd8ba4b216d6757498a71cd2d2a3439efc4511d9b65876f5d9f9cd9",
+          "note": "STATIC TSTR widget 4 -> 5 positions"
+        },
+        {
+          "address": 1074606800,
+          "bytes": 4,
+          "sha256": "279feda7fcd8ba4b216d6757498a71cd2d2a3439efc4511d9b65876f5d9f9cd9",
+          "note": "FLEX TSTR widget 4 -> 5 positions"
+        },
+        {
+          "address": 1074035260,
+          "bytes": 6,
+          "sha256": "86c7da9dfd774c52fb7b5e0401055b7f7ef2b73415e78b5ab9a87f8f0829846e",
+          "note": "wide dial hook"
+        }
+      ],
+      "caveCursor": 1074625584,
+      "overflowCursor": 1074605164,
+      "caveLimit": 1074625596
+    }
+  ],
+  "sourceCommit": null,
+  "moduleVersions": {
+    "spectrum": "0.1.0-experimental",
+    "modulation": "0.1.0-experimental",
+    "character": "0.1.0-experimental",
+    "miniverb": "0.1.0-experimental",
+    "tapeecho": "0.1.0-experimental",
+    "euclid": "0.1.0-experimental",
+    "repitch": "0.1.0-experimental"
+  }
+}

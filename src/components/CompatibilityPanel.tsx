@@ -1,0 +1,5 @@
+import { checkSelection } from '../catalog/compatibility'
+export function CompatibilityPanel({ids,buildState}:{ids:readonly string[];buildState?:string}){
+ const result=checkSelection(ids)
+ return <section className="compatibility-panel" aria-live="polite"><span className={'status-dot '+(result.checked&&!result.issues.length&&buildState!=='error'?'verified':'')}/><div><strong>{!ids.length?'Choose your modules':result.issues.length?'Selection needs attention':buildState==='error'?'Configuration needs attention':['valid','building','built'].includes(buildState??'')?'Configuration fits':'No declared conflicts'}</strong>{result.issues.length?<ul>{result.issues.map(issue=><li key={issue}>{issue}</li>)}</ul>:<p>{ids.length?['valid','building','built'].includes(buildState??'')?'Module claims and memory placement passed local checks. This configuration has not been qualified on hardware.':'Module claims were checked. Verify your base firmware for complete placement checks; read build errors below.':'Add an effect from the library. Compatibility updates as you make changes.'}</p>}</div></section>
+}

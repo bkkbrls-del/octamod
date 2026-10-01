@@ -1,0 +1,335 @@
+"""Discovery of remix modules: the index.
+
+Every directory under `modules/` holding a `manifest.py` that exports a
+`MODULE` is a contribution; there is no central list. The registry refuses
+duplicate keys and ids. Directories whose name starts with `_` or `.` are
+skipped (`modules/_template/`).
+
+The stock FX2 effects (tools/remix/stock.py) are registered alongside under
+their own keys ("FILTER", "CHORUS", ...), so a remix keeps one in the
+chooser by listing it as it lists a module. They are Kind.STOCK: no code,
+no clone, no words; the build writes only their chooser row.
+"""
+
+from __future__ import annotations
+
+import os
+import pathlib
+import dataclasses
+import sys
+import types
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1])); import toolpath  # noqa: E402,F401  (every tools/ dir on sys.path)
+
+from remix.schema import NO_FALLBACK, on_the_bus  # noqa: E402
+MODULES_DIR = ROOT / "modules"
+PLATFORM_DIR = ROOT / "platform"
+PLATFORM_NAMES = ("dsp-dynload-stock", "dsp-dynload-stock-b")
+
+_cache: dict[str, object] | None = None
+
+
+def _exec(path: pathlib.Path, modname: str):
+    """Execute a manifest or remix file, ALWAYS from the source on disk.
+
+    Deliberately not importlib's file loader. That one caches bytecode and
+    validates the cache on the source's size and its mtime IN WHOLE SECONDS,
+    so an edit that lands in the same second and does not change the file's
+    length is ignored -- and "change one hex digit in a manifest" is exactly
+    that edit. The build then silently uses the previous declaration.
+
+    Found here by flipping an fx2 id to 0x06 to test the ledger, flipping it
+    back, and watching the build keep refusing. On a manifest that is not a
+    stale cache, it is a firmware image that does not match its own source.
+    """
+    ns = types.ModuleType(modname)
+    ns.__file__ = str(path)
+    exec(compile(path.read_text(), str(path), "exec"), ns.__dict__)
+    return ns
+
+
+def _load_one(manifest: pathlib.Path):
+    # Manifests say `from remix.schema import ...`, so tools/ must be
+    # importable no matter who called us -- the build script, a verify tool
+    # run standalone, or `python3 -m`.
+    tools = str(ROOT / "tools")
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+    mod = _exec(manifest, f"remix_manifest_{manifest.parent.name}")
+    if not hasattr(mod, "MODULE"):
+        raise SystemExit(f"{manifest} defines no MODULE")
+    return mod.MODULE
+
+
+def modules() -> dict[str, object]:
+    """Every discovered module, keyed by its build key (e.g. "REVERB SERVER")."""
+    global _cache
+    if _cache is not None:
+        return _cache
+    found: dict[str, object] = {}
+    seen_dirs: dict[str, str] = {}
+    seen_ids: dict[int, str] = {}
+    directories = list(sorted(MODULES_DIR.iterdir())) if MODULES_DIR.is_dir() else []
+    directories += [PLATFORM_DIR / name for name in PLATFORM_NAMES]
+    for d in directories:
+        if not d.is_dir() or d.name.startswith(("_", ".")):
+            continue
+        manifest = d / "manifest.py"
+        if not manifest.exists():
+            continue
+        m = _load_one(manifest)
+        if m.name != d.name:
+            raise SystemExit(f"{manifest}: declares name {m.name!r} but lives "
+                             f"in modules/{d.name}/")
+        if m.key in found:
+            raise SystemExit(f"two modules claim the key {m.key!r}: "
+                             f"{seen_dirs[m.key]} and {d.name}")
+        if m.menu is not None:
+            if m.menu.fx2_id in seen_ids:
+                raise SystemExit(
+                    f"two modules claim FX2 id 0x{m.menu.fx2_id:02x}: "
+                    f"{seen_ids[m.menu.fx2_id]} and {d.name}")
+            seen_ids[m.menu.fx2_id] = d.name
+        seen_dirs[m.key] = d.name
+        found[m.key] = m
+    from remix import stock
+    for m in stock.MODULES:
+        if m.key in found:
+            raise SystemExit(f"module {seen_dirs[m.key]} claims the key "
+                             f"{m.key!r}, which is a stock effect's")
+        if m.menu.fx2_id in seen_ids:
+            # A DECLARED replacement is allowed to share the id -- that is
+            # what it declared. It must name THIS effect, though: replacing
+            # LO-FI while sitting on PHASER's id is a typo that would
+            # otherwise ship.
+            other = found.get(seen_ids[m.menu.fx2_id]) or \
+                next((x for x in found.values()
+                      if x.menu is not None
+                      and x.menu.fx2_id == m.menu.fx2_id), None)
+            rep = other.menu.replaces if (other is not None
+                                          and other.menu is not None) else None
+            if rep != m.key:
+                raise SystemExit(
+                    f"module {seen_ids[m.menu.fx2_id]} claims FX2 id "
+                    f"0x{m.menu.fx2_id:02x}, which is stock {m.key}'s -- the "
+                    f"dispatch tables are shared with FX1, so it would hijack "
+                    f"that effect on both menus"
+                    + (f" (it declares replaces={rep!r}, not {m.key!r})"
+                       if rep else ""))
+            found[m.key] = m
+            continue
+        seen_ids[m.menu.fx2_id] = m.key
+        found[m.key] = m
+    _cache = found
+    return found
+
+
+def by_key(key: str):
+    try:
+        return modules()[key]
+    except KeyError:
+        raise SystemExit(f"no module with key {key!r} -- have "
+                         f"{sorted(modules())}")
+
+
+def by_name(name: str):
+    for m in modules().values():
+        if m.name == name:
+            return m
+    raise SystemExit(f"no module named {name!r}")
+
+
+def asm(key_or_name: str) -> str:
+    """A module's DSP source, repo-relative.
+
+    Tools ask for this rather than spelling the path, so moving a module's
+    source is a one-line change in its manifest instead of a sweep through
+    every wrapper -- which is how those paths went stale before.
+    """
+    for m in modules().values():
+        if key_or_name in (m.key, m.name):
+            if m.dsp is None:
+                raise SystemExit(f"module {key_or_name!r} has no DSP source")
+            return m.dsp.asm
+    raise SystemExit(f"no module {key_or_name!r}")
+
+
+def asm_by_stem() -> dict[str, pathlib.Path]:
+    """Source filename stem -> absolute path, for tools that key by filename."""
+    return {pathlib.Path(m.dsp.asm).stem: ROOT / m.dsp.asm
+            for m in modules().values() if m.dsp is not None}
+
+
+def by_id(fx2_id: int):
+    for m in modules().values():
+        if m.menu is not None and m.menu.fx2_id == fx2_id:
+            return m
+    return None
+
+
+REMIXES_DIR = ROOT / "remixes"
+# Two roots. remixes/<name>/ is a remix for a card; remixes/test/<name>/
+# carries one module for that module's gates (`make check REMIX=<name>`).
+# A name is unique across both, and every tool takes it bare.
+TEST_DIR = REMIXES_DIR / "test"
+REMIX_ROOTS = (REMIXES_DIR, TEST_DIR)
+# There is no default remix. Every tool takes the selection from its
+# argument or $REMIX and refuses without one (`remix(None)` below); a gate
+# that needs a particular image asks for it by requirement (`fixture`).
+# Until 27 Sep 2026 `make` defaulted to the rig and `tools/*.py` to `bus`.
+NO_REMIX = ("no remix selected: pass REMIX=<name> (or the remix argument); "
+            "`make modules` lists them")
+
+
+def remix_dir(name: str) -> pathlib.Path | None:
+    """The directory holding remixes/<name>/remix.py or
+    remixes/test/<name>/remix.py; None for a flat scratch file. Refuses a
+    name present under both roots."""
+    hits = [r / name for r in REMIX_ROOTS if (r / name / "remix.py").exists()]
+    if len(hits) > 1:
+        raise SystemExit(f"remix {name!r} exists under both roots: "
+                         + " and ".join(str(h.relative_to(ROOT)) for h in hits))
+    return hits[0] if hits else None
+
+
+def is_test(name: str) -> bool:
+    """True for a remix under remixes/test/."""
+    d = remix_dir(name)
+    return d is not None and d.parent == TEST_DIR
+
+
+def remix_path(name: str) -> pathlib.Path:
+    """The remix.py under either root (remix_dir); or the flat
+    remixes/<name>.py the TUI and the selftest write as scratch."""
+    d = remix_dir(name)
+    return d / "remix.py" if d is not None else REMIXES_DIR / f"{name}.py"
+
+
+def remix(name: str | None):
+    """Load the remix's remix.py (remix_path) and return its REMIX. None refuses."""
+    if not name:
+        raise SystemExit(NO_REMIX)
+    f = remix_path(name)
+    if not f.exists():
+        raise SystemExit(f"no remix {name!r} -- have {sorted(remix_names())}")
+    tools = str(ROOT / "tools")
+    if tools not in sys.path:
+        sys.path.insert(0, tools)
+    mod = _exec(f, f"remix_sel_{name}")
+    if not hasattr(mod, "REMIX"):
+        raise SystemExit(f"{f} defines no REMIX")
+    r = mod.REMIX
+    known = modules()
+    for k in r.modules:
+        if k not in known:
+            raise SystemExit(f"remix {name!r} selects unknown module {k!r} -- "
+                             f"have {sorted(known)}")
+    # ⚠️ THE FIRMWARE'S OWN NONE IS ONLY SAFE WHEN THERE IS NO BUS. An
+    # unassigned track then runs nothing at all -- including the housekeeping
+    # block -- and a remix with a server on one core and no participant on
+    # core 0 would leave the rotation frozen and the accumulators uncleared.
+    # With neither a server nor a client in the image there is no bus to
+    # keep, so the question does not arise. See schema.NO_FALLBACK for the
+    # whole argument and for why it cannot be settled by a local test.
+    if r.fallback == NO_FALLBACK:
+        on_bus = [k for k in r.modules if on_the_bus(known[k])]
+        if on_bus:
+            raise SystemExit(
+                f"remix {name!r}: fallback {NO_FALLBACK!r} is only for a remix "
+                f"with no bus participant, and this one has "
+                f"{', '.join(sorted(on_bus))} -- an unassigned track would run "
+                f"nothing, so nobody would flip the rotation or clear the "
+                f"accumulators. Use fallback=\"SEND\".")
+    # AN FX1-ONLY MODULE ON THE FX1 CHOOSER TAKES NO FX2 ROW.
+    # Claims.fx1_only is the module's promise that an FX2 instance runs dry,
+    # so an FX2 row for it would be a row that does nothing; the build's
+    # `hidden` mechanism already removes a row while keeping the names of a
+    # module that is on FX1 (schema.Remix.blanked). Derived here, once, so
+    # every remix that lists a station gets it without spelling it out.
+    auto = tuple(k for k in r.modules
+                 if k in r.fx1 and k not in r.hidden
+                 and known[k].claims is not None and known[k].claims.fx1_only)
+    if auto:
+        r = dataclasses.replace(r, hidden=r.hidden + auto)
+    return with_platform(r, known)
+
+
+# The stock loader, both cores (schema.Remix.static_stock). A remix that
+# already carries a DSP loader of its own keeps it.
+PLATFORM_DSP = ("DSP DYNLOAD STOCK", "DSP DYNLOAD STOCK B")
+
+
+def with_platform(r, known=None):
+    """The remix as it is built: the stock loader added unless the remix
+    (or OCTABAM_STATIC_STOCK=1) keeps the stock code built in."""
+    known = known or modules()
+    if (r.static_stock or os.environ.get("OCTABAM_STATIC_STOCK") == "1"
+            or any(k.startswith("DSP DYNLOAD") for k in r.modules)
+            or not all(k in known for k in PLATFORM_DSP)):
+        return r
+    # A module that owns a site the loader hooks (USB AUDIO IN's frame
+    # transfer state, Octakit's pattern setter) keeps the stock code built
+    # in until the two compose; the build prints why (PLATFORM_SKIPPED).
+    from remix import ledger
+    mine = set(ledger.check([known[k] for k in r.modules]))
+    new = [p for p in ledger.check([known[k] for k in r.modules + PLATFORM_DSP])
+           if p not in mine]
+    if new:
+        PLATFORM_SKIPPED[r.name] = new
+        return r
+    return dataclasses.replace(r, modules=r.modules + PLATFORM_DSP)
+
+
+PLATFORM_SKIPPED: dict[str, list[str]] = {}
+
+
+def remix_names() -> list[str]:
+    """Every remix under both roots, plus the flat scratch files at the top
+    level. remixes/test/ itself has no remix.py, so the top-level walk skips
+    it; a name under both roots is refused."""
+    if not REMIXES_DIR.is_dir():
+        return []
+    names: set[str] = set()
+    for root in REMIX_ROOTS:
+        if not root.is_dir():
+            continue
+        for d in root.iterdir():
+            if not d.is_dir() or d.name.startswith(("_", ".")) or not (d / "remix.py").exists():
+                continue
+            if d.name in names:
+                remix_dir(d.name)   # raises, naming both
+            names.add(d.name)
+    names |= {f.stem for f in REMIXES_DIR.glob("*.py")
+              if not f.name.startswith("_")}
+    return sorted(names)
+
+
+def selected(r) -> list:
+    """The remix's modules, in its declared order."""
+    return [modules()[k] for k in r.modules]
+
+
+def fixture(*keys: str, without_runtime: bool = False, grains: int | None = None) -> str:
+    """The name of the smallest remix carrying every module in `keys` (fewest
+    modules, then name), for a gate that needs a particular image rather
+    than the selected one: the one-aux rig for the bus gates, the plain
+    two-server image for the two-core gate. `without_runtime` excludes a
+    remix with a DRAM runtime (a gate under unicorn); `grains` pins
+    Remix.grains. Refuses, naming the requirement, when no remix fits."""
+    known = modules()
+    fits = []
+    for name in remix_names():
+        r = remix(name)
+        if not set(keys) <= set(r.modules):
+            continue
+        if without_runtime and any(known[k].runtime is not None for k in r.modules):
+            continue
+        if grains is not None and r.grains != grains:
+            continue
+        fits.append((len(r.modules), name))
+    if not fits:
+        raise SystemExit(f"no remix carries {', '.join(keys)}"
+                         + (" without a DRAM runtime" if without_runtime else "")
+                         + (f" at {grains} grains" if grains is not None else ""))
+    return min(fits)[1]

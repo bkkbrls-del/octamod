@@ -1,0 +1,761 @@
+{
+  "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "checks": {
+    "spectrum": [],
+    "modulation": [],
+    "modulation+spectrum": [],
+    "character": [],
+    "character+spectrum": [],
+    "character+modulation": [],
+    "character+modulation+spectrum": [],
+    "miniverb": [],
+    "miniverb+spectrum": [],
+    "miniverb+modulation": [],
+    "miniverb+modulation+spectrum": [],
+    "character+miniverb": [],
+    "character+miniverb+spectrum": [],
+    "character+miniverb+modulation": [],
+    "character+miniverb+modulation+spectrum": [],
+    "tapeecho": [],
+    "spectrum+tapeecho": [],
+    "modulation+tapeecho": [],
+    "modulation+spectrum+tapeecho": [],
+    "character+tapeecho": [],
+    "character+spectrum+tapeecho": [],
+    "character+modulation+tapeecho": [],
+    "character+modulation+spectrum+tapeecho": [],
+    "miniverb+tapeecho": [],
+    "miniverb+spectrum+tapeecho": [],
+    "miniverb+modulation+tapeecho": [],
+    "miniverb+modulation+spectrum+tapeecho": [],
+    "character+miniverb+tapeecho": [],
+    "character+miniverb+spectrum+tapeecho": [],
+    "character+miniverb+modulation+tapeecho": [],
+    "character+miniverb+modulation+spectrum+tapeecho": [],
+    "euclid": [],
+    "euclid+spectrum": [],
+    "euclid+modulation": [],
+    "euclid+modulation+spectrum": [],
+    "character+euclid": [],
+    "character+euclid+spectrum": [],
+    "character+euclid+modulation": [],
+    "character+euclid+modulation+spectrum": [],
+    "euclid+miniverb": [],
+    "euclid+miniverb+spectrum": [],
+    "euclid+miniverb+modulation": [],
+    "euclid+miniverb+modulation+spectrum": [],
+    "character+euclid+miniverb": [],
+    "character+euclid+miniverb+spectrum": [],
+    "character+euclid+miniverb+modulation": [],
+    "character+euclid+miniverb+modulation+spectrum": [],
+    "euclid+tapeecho": [],
+    "euclid+spectrum+tapeecho": [],
+    "euclid+modulation+tapeecho": [],
+    "euclid+modulation+spectrum+tapeecho": [],
+    "character+euclid+tapeecho": [],
+    "character+euclid+spectrum+tapeecho": [],
+    "character+euclid+modulation+tapeecho": [],
+    "character+euclid+modulation+spectrum+tapeecho": [],
+    "euclid+miniverb+tapeecho": [],
+    "euclid+miniverb+spectrum+tapeecho": [],
+    "euclid+miniverb+modulation+tapeecho": [],
+    "euclid+miniverb+modulation+spectrum+tapeecho": [],
+    "character+euclid+miniverb+tapeecho": [],
+    "character+euclid+miniverb+spectrum+tapeecho": [],
+    "character+euclid+miniverb+modulation+tapeecho": [],
+    "character+euclid+miniverb+modulation+spectrum+tapeecho": [],
+    "repitch": [],
+    "repitch+spectrum": [],
+    "modulation+repitch": [],
+    "modulation+repitch+spectrum": [],
+    "character+repitch": [],
+    "character+repitch+spectrum": [],
+    "character+modulation+repitch": [],
+    "character+modulation+repitch+spectrum": [],
+    "miniverb+repitch": [],
+    "miniverb+repitch+spectrum": [],
+    "miniverb+modulation+repitch": [],
+    "miniverb+modulation+repitch+spectrum": [],
+    "character+miniverb+repitch": [],
+    "character+miniverb+repitch+spectrum": [],
+    "character+miniverb+modulation+repitch": [],
+    "character+miniverb+modulation+repitch+spectrum": [],
+    "repitch+tapeecho": [],
+    "repitch+spectrum+tapeecho": [],
+    "modulation+repitch+tapeecho": [],
+    "modulation+repitch+spectrum+tapeecho": [],
+    "character+repitch+tapeecho": [],
+    "character+repitch+spectrum+tapeecho": [],
+    "character+modulation+repitch+tapeecho": [],
+    "character+modulation+repitch+spectrum+tapeecho": [],
+    "miniverb+repitch+tapeecho": [],
+    "miniverb+repitch+spectrum+tapeecho": [],
+    "miniverb+modulation+repitch+tapeecho": [],
+    "miniverb+modulation+repitch+spectrum+tapeecho": [],
+    "character+miniverb+repitch+tapeecho": [],
+    "character+miniverb+repitch+spectrum+tapeecho": [],
+    "character+miniverb+modulation+repitch+tapeecho": [],
+    "character+miniverb+modulation+repitch+spectrum+tapeecho": [],
+    "euclid+repitch": [],
+    "euclid+repitch+spectrum": [],
+    "euclid+modulation+repitch": [],
+    "euclid+modulation+repitch+spectrum": [],
+    "character+euclid+repitch": [],
+    "character+euclid+repitch+spectrum": [],
+    "character+euclid+modulation+repitch": [],
+    "character+euclid+modulation+repitch+spectrum": [],
+    "euclid+miniverb+repitch": [],
+    "euclid+miniverb+repitch+spectrum": [],
+    "euclid+miniverb+modulation+repitch": [],
+    "euclid+miniverb+modulation+repitch+spectrum": [],
+    "character+euclid+miniverb+repitch": [],
+    "character+euclid+miniverb+repitch+spectrum": [],
+    "character+euclid+miniverb+modulation+repitch": [],
+    "character+euclid+miniverb+modulation+repitch+spectrum": [],
+    "euclid+repitch+tapeecho": [],
+    "euclid+repitch+spectrum+tapeecho": [],
+    "euclid+modulation+repitch+tapeecho": [],
+    "euclid+modulation+repitch+spectrum+tapeecho": [],
+    "character+euclid+repitch+tapeecho": [],
+    "character+euclid+repitch+spectrum+tapeecho": [],
+    "character+euclid+modulation+repitch+tapeecho": [],
+    "character+euclid+modulation+repitch+spectrum+tapeecho": [],
+    "euclid+miniverb+repitch+tapeecho": [],
+    "euclid+miniverb+repitch+spectrum+tapeecho": [],
+    "euclid+miniverb+modulation+repitch+tapeecho": [],
+    "euclid+miniverb+modulation+repitch+spectrum+tapeecho": [],
+    "character+euclid+miniverb+repitch+tapeecho": [],
+    "character+euclid+miniverb+repitch+spectrum+tapeecho": [],
+    "character+euclid+miniverb+modulation+repitch+tapeecho": [],
+    "character+euclid+miniverb+modulation+repitch+spectrum+tapeecho": []
+  },
+  "modules": {
+    "character": {
+      "proof": "hardware",
+      "proofNote": "Sam's MKII",
+      "controls": [
+        {
+          "name": "DRV",
+          "default": 0,
+          "count": 128,
+          "doc": "drive into the curve, +12 dB at 127 (TUBE/INFL output-compensated); 0 skips",
+          "labels": null
+        },
+        {
+          "name": "FOLD",
+          "default": 0,
+          "count": 128,
+          "doc": "wavefolder drive, 1x..48x into the fold at a held level; 0 = no folding",
+          "labels": null
+        },
+        {
+          "name": "WDTH",
+          "default": 64,
+          "count": 128,
+          "doc": "mid/side width, drawn -64..+63: 0 = untouched, -64 = mono, +63 = double the sides",
+          "labels": null
+        },
+        {
+          "name": "COMP",
+          "default": 0,
+          "count": 128,
+          "doc": "compression amount; 0 = no gain reduction at any level",
+          "labels": null
+        },
+        {
+          "name": "TONE",
+          "default": 64,
+          "count": 128,
+          "doc": "a tilt after the saturator in every mode: 64 flat, 127 bright, 0 dark",
+          "labels": null
+        },
+        {
+          "name": "MIX",
+          "default": 127,
+          "count": 128,
+          "doc": "dry/wet across the whole chain; 0 = exact passthrough",
+          "labels": null
+        },
+        {
+          "name": "SAT",
+          "default": 0,
+          "count": 3,
+          "doc": "character: TAPE (TapeHead), TUBE (DaTube, asymmetric), INFL (OInflator). JClones, MIT",
+          "labels": [
+            "TAPE",
+            "TUBE",
+            "INFL"
+          ]
+        },
+        {
+          "name": "KEY",
+          "default": 0,
+          "count": 2,
+          "doc": "the compressor's key: SELF = this track's input, T1 = T1's level (ignored on the master)",
+          "labels": [
+            "SELF",
+            "T1"
+          ]
+        },
+        {
+          "name": "KLVL",
+          "default": 64,
+          "count": 128,
+          "doc": "how hard T1 drives the compressor with KEY = T1: 64 = unity, 127 = x2",
+          "labels": null
+        }
+      ]
+    },
+    "euclid": {
+      "proof": "render",
+      "proofNote": "its own render gates; not on hardware",
+      "controls": [
+        {
+          "name": "FREQ",
+          "default": 48,
+          "count": 128,
+          "doc": "Base filter cutoff or AMP level; cutoff is 30 Hz..15 kHz logarithmic",
+          "labels": null
+        },
+        {
+          "name": "RES",
+          "default": 48,
+          "count": 128,
+          "doc": "Filter resonance; inert for AMP",
+          "labels": null
+        },
+        {
+          "name": "DEPTH",
+          "default": 100,
+          "count": 128,
+          "doc": "Cutoff or gain modulation: negative/down, zero/static, positive/up",
+          "labels": null
+        },
+        {
+          "name": "DECAY",
+          "default": 48,
+          "count": 128,
+          "doc": "Envelope decay up to eight steps / gate length; inert for random",
+          "labels": null
+        },
+        {
+          "name": "STEPS",
+          "default": 15,
+          "count": 64,
+          "doc": "Euclidean cycle length 1..64 (stored as length minus one)",
+          "labels": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63",
+            "64"
+          ]
+        },
+        {
+          "name": "PULSE",
+          "default": 5,
+          "count": 65,
+          "doc": "Pulse count; values above STEPS are clamped to STEPS",
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63",
+            "64"
+          ]
+        },
+        {
+          "name": "ROT",
+          "default": 0,
+          "count": 64,
+          "doc": "Shift rhythm and captured values right, modulo STEPS",
+          "labels": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63"
+          ]
+        },
+        {
+          "name": "RATE",
+          "default": 1,
+          "count": 5,
+          "doc": "Division relative to the track speed; 1/16 = one track step",
+          "labels": [
+            "1/32",
+            "1/16",
+            "1/8",
+            "1/4",
+            "1/2"
+          ]
+        },
+        {
+          "name": "TYPE",
+          "default": 0,
+          "count": 5,
+          "doc": "Two-pole low/high/band/notch filter response, or amplitude modulation",
+          "labels": [
+            "LP",
+            "BP",
+            "HP",
+            "AMP",
+            "NOTCH"
+          ]
+        },
+        {
+          "name": "ATK",
+          "default": 0,
+          "count": 128,
+          "doc": "Attack / gate edge / random slew, 0..one step",
+          "labels": null
+        },
+        {
+          "name": "OUT",
+          "default": 0,
+          "count": 4,
+          "doc": "Pulse envelope, timed gate, random sample-and-hold, captured random",
+          "labels": [
+            "ENV",
+            "GATE",
+            "RAND",
+            "LOOP"
+          ]
+        },
+        {
+          "name": "MIX",
+          "default": 127,
+          "count": 128,
+          "doc": "Dry/wet; zero is exact passthrough",
+          "labels": null
+        }
+      ]
+    },
+    "miniverb": {
+      "proof": "render",
+      "proofNote": "`make verify-miniverb`; not flashed",
+      "controls": [
+        {
+          "name": "DECAY",
+          "default": 104,
+          "count": 128,
+          "doc": "feedback 0.65..0.97; fixed room size",
+          "labels": null
+        },
+        {
+          "name": "DAMP",
+          "default": 70,
+          "count": 128,
+          "doc": "higher values darken the tail",
+          "labels": null
+        },
+        {
+          "name": "MIX",
+          "default": 40,
+          "count": 128,
+          "doc": "dry/wet, smoothed; 0 dry, 127 wet",
+          "labels": null
+        },
+        {
+          "name": "MOD",
+          "default": 80,
+          "count": 128,
+          "doc": "two in-loop allpasses; smoothed 0..64 sample depth",
+          "labels": null
+        },
+        {
+          "name": "RATE",
+          "default": 2,
+          "count": 8,
+          "doc": "LFO speed: (value+1)*0.33646 Hz, continuous phase",
+          "labels": [
+            "0.34",
+            "0.67",
+            "1.01",
+            "1.35",
+            "1.68",
+            "2.02",
+            "2.36",
+            "2.69"
+          ]
+        }
+      ]
+    },
+    "modulation": {
+      "proof": "hardware",
+      "proofNote": "Sam's MKII",
+      "controls": [
+        {
+          "name": "RATE",
+          "default": 26,
+          "count": 128,
+          "doc": "LFO speed, 0.08 .. 10 Hz on a squared taper (26 = the Juno's 0.5 Hz)",
+          "labels": null
+        },
+        {
+          "name": "DPTH",
+          "default": 21,
+          "count": 128,
+          "doc": "the sweep, 0 .. 480 samples either side of DLY; in PHSR the LFO's reach",
+          "labels": null
+        },
+        {
+          "name": "DLY",
+          "default": 18,
+          "count": 128,
+          "doc": "the sweep's centre, 0.2 .. 23 ms; COMB's pitch; PHSR's stage count (2/4/6/8 by quarters)",
+          "labels": null
+        },
+        {
+          "name": "FDBK",
+          "default": 64,
+          "count": 128,
+          "doc": "bipolar, 64 = none: feedback from the swept tap; PHSR regen; COMB decay time and polarity",
+          "labels": null
+        },
+        {
+          "name": "LOFI",
+          "default": 0,
+          "count": 128,
+          "doc": "the line clocked coarse and quantised: hold 1 + 64 (k/128)^2 samples, 24 bits then 16..5",
+          "labels": null
+        },
+        {
+          "name": "MIX",
+          "default": 0,
+          "count": 128,
+          "doc": "dry/wet; 0 = exact passthrough, 127 = the wet alone",
+          "labels": null
+        },
+        {
+          "name": "MODE",
+          "default": 0,
+          "count": 5,
+          "doc": "which pedal",
+          "labels": [
+            "JUNO",
+            "DIM",
+            "FLNG",
+            "COMB",
+            "PHSR"
+          ]
+        },
+        {
+          "name": "TONE",
+          "default": 80,
+          "count": 128,
+          "doc": "the BBD filters in and out of the line: 0 dark (2 kHz), 127 open; COMB brightness; no PHSR",
+          "labels": null
+        },
+        {
+          "name": "WDTH",
+          "default": 127,
+          "count": 128,
+          "doc": "the right channel LFO lag: 0 mono, 64 quadrature, 127 antiphase (Juno, DIM); not COMB",
+          "labels": null
+        }
+      ]
+    },
+    "repitch": {
+      "proof": "hardware",
+      "proofNote": "an MKII, 16 Sep 2026 (OCTABAM81); `verify_repitch`",
+      "controls": []
+    },
+    "spectrum": {
+      "proof": "hardware",
+      "proofNote": "Sam's MKII",
+      "controls": [
+        {
+          "name": "FREQ",
+          "default": 127,
+          "count": 128,
+          "doc": "the cutoff, 60 Hz..15 kHz exponential; in VOWL the vowel A-E-I-O-U; ENV and LFO move it",
+          "labels": null
+        },
+        {
+          "name": "RES",
+          "default": 0,
+          "count": 128,
+          "doc": "the flavour: resonance in SEM/LADR, sharpness in VOWL, the dielectric colour in ISO",
+          "labels": null
+        },
+        {
+          "name": "ENV",
+          "default": 64,
+          "count": 128,
+          "doc": "the envelope follower onto the cutoff, drawn -64..+63; 0 = none",
+          "labels": null
+        },
+        {
+          "name": "LDP",
+          "default": 0,
+          "count": 128,
+          "doc": "LFO depth onto the cutoff, 0 = none (a negative depth would only flip the phase)",
+          "labels": null
+        },
+        {
+          "name": "LSP",
+          "default": 64,
+          "count": 128,
+          "doc": "LFO speed ~0.08..9 Hz, and the envelope release (0 slow .. 127 fast)",
+          "labels": null
+        },
+        {
+          "name": "WDTH",
+          "default": 64,
+          "count": 128,
+          "doc": "stereo width of the output, drawn -64..+63: 0 untouched, -64 mono, +63 double sides",
+          "labels": null
+        },
+        {
+          "name": "MODE",
+          "default": 0,
+          "count": 4,
+          "doc": "LADR the Moog (first); SEM the SVF (SHPE: LP -> BP -> HP); ISO (Capacitor2); VOWL",
+          "labels": [
+            "LADR",
+            "SEM",
+            "ISO",
+            "VOWL"
+          ]
+        },
+        {
+          "name": "SHPE",
+          "default": 0,
+          "count": 128,
+          "doc": "SEM only: 0 lowpass, 64 bandpass, 127 highpass, crossfaded; --- in the other modes",
+          "labels": null
+        }
+      ]
+    },
+    "tapeecho": {
+      "proof": "hardware",
+      "proofNote": "the author's unit (OCTACLID4): six instances run, a seventh freezes it, open",
+      "controls": [
+        {
+          "name": "TIME",
+          "default": 64,
+          "count": 128,
+          "doc": "FREE: 46..231 ms; BEAT: twelve note divisions from 1/64 to dotted 1/4",
+          "labels": null
+        },
+        {
+          "name": "FDBK",
+          "default": 64,
+          "count": 128,
+          "doc": "repeat intensity; the upper range safely self-oscillates from tape noise",
+          "labels": null
+        },
+        {
+          "name": "WOW",
+          "default": 25,
+          "count": 128,
+          "doc": "0.8 Hz wow plus irregular flutter; about 8 cents at 44, 22 cents at 127",
+          "labels": null
+        },
+        {
+          "name": "AGE",
+          "default": 64,
+          "count": 128,
+          "doc": "repeat bandwidth, flutter and noise; fresh at 0, worn at 127",
+          "labels": null
+        },
+        {
+          "name": "SYNC",
+          "default": 0,
+          "count": 2,
+          "doc": "FREE uses milliseconds; BEAT quantises TIME from stock tempo",
+          "labels": [
+            "FREE",
+            "BEAT"
+          ]
+        },
+        {
+          "name": "MIX",
+          "default": 90,
+          "count": 128,
+          "doc": "dry/wet crossfade; 0 is exact passthrough",
+          "labels": null
+        }
+      ]
+    }
+  }
+}

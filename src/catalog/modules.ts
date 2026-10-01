@@ -1,0 +1,39 @@
+import { MODULE_DOCUMENTS } from './documents.ts'
+export const CATALOG_SOURCE = {
+  repository: 'https://github.com/repeat98/octamad',
+  revision: 'b8deefc88b2c3e5f3c6158e364eb741df1924e1d',
+  branch: 'codex/dsp-dynload',
+} as const
+
+export type ModuleCategory = 'effects' | 'playback'
+export type FirmwareModule = {
+  id: string
+  key: string
+  name: string
+  category: ModuleCategory
+  description: string
+  detail: string
+  author: string
+  authorUrl: string
+  sourcePath: string
+  fxId?: number
+  version: string
+}
+
+export const MODULES: readonly FirmwareModule[] = MODULE_DOCUMENTS.map(document=>({
+  id:document.id,key:document.key,name:document.name,category:document.category,
+  description:document.presentation.summary,detail:document.compatibility.location,
+  author:document.author.github,authorUrl:'https://github.com/'+document.author.github,
+  sourcePath:'sdk/octabam/modules/'+document.id+'/manifest.py',version:document.version,fxId:document.compatibility.effectId??undefined,
+}))
+
+export function getModuleSource(module: FirmwareModule): string {
+  return 'https://github.com/sambanks/octabam/tree/main/modules/' + module.id
+}
+
+export function resolveSelection(ids: readonly string[]): FirmwareModule[] {
+  const unknown = ids.filter((id) => !MODULES.some((module) => module.id === id))
+  if (unknown.length) throw new Error('Unknown module: ' + unknown.join(', '))
+  const selected = new Set(ids)
+  return MODULES.filter((module) => selected.has(module.id))
+}

@@ -1,0 +1,48 @@
+{
+  "sourceRevision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "proofs": [
+    {
+      "modules": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1245104,
+      "sha256": "1dbef0e5646ae3814224b88ca6ebda7fb911840a8ca2aa2af810ed5ef5e0cdac"
+    },
+    {
+      "modules": [
+        "spectrum",
+        "modulation",
+        "character",
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1250126,
+      "sha256": "5162680d8bc342deb623cef00307f2a343f539a90f0bfcef59b59ceb4c60bb83"
+    },
+    {
+      "modules": [
+        "spectrum",
+        "modulation",
+        "character",
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch"
+      ],
+      "keepStockFx2": true,
+      "rejection": "wide dial hook (116 B) does not fit"
+    }
+  ],
+  "notes": [
+    "Local identities only; temporary firmware-containing native outputs removed.",
+    "Two supported configurations and the crowded-selection rejection match the pinned native builder.",
+    "No stress, emulator or audio-render checks run; no new hardware qualification is claimed."
+  ]
+}

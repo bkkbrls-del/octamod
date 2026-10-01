@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 2,
+  "id": "repitch",
+  "key": "REPITCH",
+  "name": "Repitch",
+  "version": "0.1.0-experimental",
+  "category": "playback",
+  "author": {
+    "github": "repeat98",
+    "credits": [
+      "repeat98",
+      "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
+    ]
+  },
+  "nativeManifest": "manifest.py",
+  "presentation": {
+    "label": "TEMPO FOLLOW",
+    "family": "Playback",
+    "summary": "Follow project tempo by changing playback speed.",
+    "overview": "Repitch adds a timestretch option for Flex and Static machines. The sample follows project tempo by changing playback speed, so pitch moves with the tempo.",
+    "highlights": [
+      "Tempo-following playback",
+      "Available for Flex and Static machines",
+      "A new REPITCH timestretch option"
+    ],
+    "usage": [
+      "For a Flex or Static track, open SRC SETUP and choose RPCH in TSTR. Alternatively set the sample attribute to REPITCH and use AUTO on the track.",
+      "Playback speed follows project BPM divided by sample BPM. A 120 BPM loop at 90 BPM plays lower and lasts longer.",
+      "PTCH is disabled for Repitch, but RATE still applies. Pickup machines are not supported; sample tempo must be 30\u2013300 BPM and playback speed is capped at 2\u00d7."
+    ]
+  },
+  "controls": [],
+  "compatibility": {
+    "firmware": "1.40C",
+    "location": "Flex / Static",
+    "conflicts": [],
+    "limitations": [
+      "The README records MKII operation on image OCTABAM81 and emulator checks. MKI, slices and recorder buffers were not measured in that record."
+    ],
+    "effectId": null
+  },
+  "resources": {
+    "recorded": "16 Sep 2026",
+    "storage": {
+      "label": "Module storage",
+      "display": "Not measured",
+      "value": null,
+      "unit": "unknown",
+      "method": "unmeasured",
+      "conditions": "ColdFire playback and UI patch. Final image growth is not published for this catalog revision.",
+      "source": "README.md"
+    },
+    "processing": {
+      "label": "CPU / DSP load",
+      "display": "Not measured",
+      "value": null,
+      "unit": "unknown",
+      "method": "unmeasured",
+      "conditions": "Uses tempo-driven playback speed with timestretch off in the voice renderer. No quantitative load comparison has been published.",
+      "source": "README.md"
+    }
+  },
+  "tests": {
+    "report": "TESTING.md",
+    "summary": "The README records MKII operation on image OCTABAM81 and emulator checks. MKI, slices and recorder buffers were not measured in that record.",
+    "hardwareStatus": "historical",
+    "evidenceRevision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+    "gates": [
+      "tools/verify/verify_repitch.py"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "file": "LICENSE",
+    "declaration": "Original module sources retain upstream authorship and permissive licences. See ../../THIRD_PARTY.md for component-specific credits and terms. No rights or hardware qualification are newly asserted by this import."
+  },
+  "media": []
+}

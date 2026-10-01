@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 2,
+  "id": "tapeecho",
+  "key": "TAPE ECHO",
+  "name": "Tape Echo",
+  "version": "0.1.0-experimental",
+  "category": "effects",
+  "author": {
+    "github": "repeat98",
+    "credits": [
+      "repeat98",
+      "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
+    ]
+  },
+  "nativeManifest": "manifest.py",
+  "presentation": {
+    "label": "SINGLE-HEAD ECHO",
+    "family": "Delay",
+    "summary": "A single-head echo with wow, flutter and tape age.",
+    "overview": "A single-head tape echo with wow, randomized flutter and tape age. Explore drifting repeats, worn tape texture and feedback, with free or beat-synced timing.",
+    "highlights": [
+      "Wow and randomized flutter",
+      "Tape age and regeneration",
+      "Free or beat-synced timing"
+    ],
+    "usage": [
+      "Choose TAPE ECHO in FX2. SYNC selects FREE timing or BEAT divisions; TIME adjusts the delay.",
+      "FDBK controls repeats, WOW adds pitch movement and flutter, and AGE changes bandwidth and tape noise. MIX controls dry/wet balance.",
+      "When migrating older projects, former HEADS locks now address AGE. Back up projects and review old effect defaults and parameter locks."
+    ]
+  },
+  "controls": [
+    {
+      "name": "TIME",
+      "default": 64,
+      "count": 128,
+      "doc": "FREE: 46..231 ms; BEAT: twelve note divisions from 1/64 to dotted 1/4",
+      "labels": null
+    },
+    {
+      "name": "FDBK",
+      "default": 64,
+      "count": 128,
+      "doc": "repeat intensity; the upper range safely self-oscillates from tape noise",
+      "labels": null
+    },
+    {
+      "name": "WOW",
+      "default": 25,
+      "count": 128,
+      "doc": "0.8 Hz wow plus irregular flutter; about 8 cents at 44, 22 cents at 127",
+      "labels": null
+    },
+    {
+      "name": "AGE",
+      "default": 64,
+      "count": 128,
+      "doc": "repeat bandwidth, flutter and noise; fresh at 0, worn at 127",
+      "labels": null
+    },
+    {
+      "name": "SYNC",
+      "default": 0,
+      "count": 2,
+      "doc": "FREE uses milliseconds; BEAT quantises TIME from stock tempo",
+      "labels": [
+        "FREE",
+        "BEAT"
+      ]
+    },
+    {
+      "name": "MIX",
+      "default": 90,
+      "count": 128,
+      "doc": "dry/wet crossfade; 0 is exact passthrough",
+      "labels": null
+    }
+  ],
+  "compatibility": {
+    "firmware": "1.40C",
+    "location": "FX2",
+    "conflicts": [],
+    "limitations": [
+      "The pinned hardware record reports six instances running and a seventh freezing the unit; that limit remains open. Recorded gates cover native arithmetic parity, dirty state, eight-instance stress, moving controls and repeat/feedback behavior. Hardware timing and worst-case CPU headroom remain unqualified."
+    ],
+    "effectId": 15
+  },
+  "resources": {
+    "recorded": "23 Sep 2026",
+    "storage": {
+      "label": "CPU state / shared arena",
+      "display": "200 B per track",
+      "value": null,
+      "unit": "see display",
+      "method": "static",
+      "conditions": "1,600 bytes for eight tracks. Uses the shared 10 MiB DRAM platform reservation and existing stock delay rings; these are not additive per module. No DSP delay buffer.",
+      "source": "README.md"
+    },
+    "processing": {
+      "label": "CPU instruction peak",
+      "display": "21,547 per frame",
+      "value": null,
+      "unit": "see display",
+      "method": "emulator",
+      "conditions": "Eight instances with all controls reversing in BEAT mode. FREE peaked at 18,063. These emulator instruction counts are not hardware cycles or CPU percentages.",
+      "source": "README.md"
+    }
+  },
+  "tests": {
+    "report": "TESTING.md",
+    "summary": "The pinned hardware record reports six instances running and a seventh freezing the unit; that limit remains open. Recorded gates cover native arithmetic parity, dirty state, eight-instance stress, moving controls and repeat/feedback behavior. Hardware timing and worst-case CPU headroom remain unqualified.",
+    "hardwareStatus": "historical",
+    "evidenceRevision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+    "gates": [
+      "tools/verify/verify_tapeecho_cpu.py"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "file": "LICENSE",
+    "declaration": "Original module sources retain upstream authorship and permissive licences. See ../../THIRD_PARTY.md for component-specific credits and terms. No rights or hardware qualification are newly asserted by this import."
+  },
+  "media": []
+}

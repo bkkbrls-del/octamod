@@ -1,0 +1,29 @@
+name: Module PR checks
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: module-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  module-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1, same pin as SDK upstream
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Require version increases against the exact PR base
+        env:
+          OCTAMOD_PR_BASE: ${{ github.event.pull_request.base.sha }}
+        run: npm run modules:check -- --base "$OCTAMOD_PR_BASE"
+      - run: npm run check
+      # Metadata checks never execute submitted Python or run firmware gates.

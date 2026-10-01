@@ -1,0 +1,23 @@
+{
+  "name": "octamod-community",
+  "compatibility_date": "2026-09-30",
+  "vars": {
+    "APP_URL": "http://127.0.0.1:5173",
+    "SESSION_TRANSPORT": "bearer"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "octamod-community",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "octamod-media"
+    }
+  ],
+  "main": "worker.ts"
+}

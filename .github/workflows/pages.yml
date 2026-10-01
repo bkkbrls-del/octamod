@@ -1,0 +1,89 @@
+name: Build approved modules and publish Octamod
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: octamod-pages
+  cancel-in-progress: false
+jobs:
+  source-packages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Verify the owner merged this exact source commit
+        run: node scripts/verify-merge-approval.mjs "$RUNNER_TEMP/octamod-approval.json"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          OCTAMOD_APPROVER_ID: ${{ vars.MODULE_APPROVER_GITHUB_ID }}
+      - run: npm ci
+      - run: npm run modules:check
+      - name: Prepare the pinned patched assembler toolchain
+        run: docker build --file sdk/build/Dockerfile --tag octamod-source-tools .
+      - name: Compile reviewed source without network, credentials or firmware
+        run: |
+          tool_image=$(docker image inspect octamod-source-tools --format '{{.Id}}')
+          bash scripts/build-modules-isolated.sh "$GITHUB_WORKSPACE" "$RUNNER_TEMP/octamod-output" "$tool_image"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: octamod-source-${{ github.sha }}
+          path: ${{ runner.temp }}/octamod-output/packages
+          retention-days: 30
+          if-no-files-found: error
+  frontend:
+    needs: source-packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/download-artifact@v4
+        with:
+          name: octamod-source-${{ github.sha }}
+          path: ${{ runner.temp }}/octamod-packages
+      - name: Independently verify owner merge, versions, sources and artifact hashes
+        run: node scripts/import-module-build.mjs "$RUNNER_TEMP/octamod-packages"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          OCTAMOD_APPROVER_ID: ${{ vars.MODULE_APPROVER_GITHUB_ID }}
+      - run: npm ci
+      - run: npm run check
+        env:
+          VITE_COMMUNITY_API_URL: ${{ vars.COMMUNITY_API_URL }}
+          VITE_REPOSITORY_URL: ${{ github.server_url }}/${{ github.repository }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: frontend
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

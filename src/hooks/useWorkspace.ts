@@ -1,0 +1,155 @@
+import { useEffect, useRef, useState } from 'react'
+import { newConfiguration, cleanName, pinModuleVersions } from '../config/workspace'
+import type { Configuration } from '../config/workspace'
+import { deviceStore, openDeviceDatabase } from '../storage/device'
+import type { DeviceStore } from '../storage/device'
+import { createFirmwareClient } from '../engine/client'
+import type { FirmwareInspection } from '../engine/base'
+
+export function useWorkspace() {
+  const [configurations, setConfigurations] = useState<Configuration[]>([])
+  const [activeId, setActiveId] = useState('')
+  const [ready, setReady] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [storageError, setStorageError] = useState('')
+  const [firmware, setFirmware] = useState<FirmwareInspection | null>(null)
+  const [fileState, setFileState] = useState<'empty' | 'reading' | 'ready' | 'error'>('empty')
+  const [fileError, setFileError] = useState('')
+  const [firmwareSaved, setFirmwareSaved] = useState(false)
+  const storeRef = useRef<DeviceStore | null>(null)
+  const clientRef = useRef<ReturnType<typeof createFirmwareClient> | null>(null)
+  const generation = useRef(0)
+  const saveQueue = useRef<Promise<void>>(Promise.resolve())
+  const alive = useRef(false)
+  const active = configurations.find(item => item.id === activeId)
+  const configsRef = useRef(configurations)
+  const activeRef = useRef(activeId)
+
+  function replaceConfigurations(items: Configuration[]) { configsRef.current = items; setConfigurations(items) }
+  function changeActive(id: string) { activeRef.current = id; setActiveId(id) }
+
+  useEffect(() => {
+    let cancelled = false
+    const requestGeneration = generation
+    alive.current = true
+    const client = createFirmwareClient()
+    clientRef.current = client
+    let database: IDBDatabase | undefined
+    void (async () => {
+      try {
+        const db = await openDeviceDatabase()
+        if (cancelled) { db.close(); return }
+        database = db
+        const store = deviceStore(db)
+        storeRef.current = store
+        let items = await store.listConfigurations()
+        if (!items.length) { const item = newConfiguration('My first configuration'); await store.saveConfiguration(item); items = [item] }
+        const rememberedId = await store.activeConfiguration()
+        if (cancelled) return
+        replaceConfigurations(items)
+        changeActive(items.some(item => item.id === rememberedId) ? rememberedId! : items[0].id)
+        const stored = await store.readFirmware()
+        if (cancelled) return
+        if (stored) {
+          setFileState('reading')
+          try {
+            const verified = await client.inspect(new File([stored.blob], stored.name))
+            if (cancelled) return
+            setFirmware(verified); setFirmwareSaved(true); setFileState('ready')
+          } catch {
+            if (!cancelled) { setFileState('error'); setFileError('The saved firmware could not be verified. Choose the original 1.40C file again.'); await store.forgetFirmware() }
+          }
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setStorageError('Device storage could not be opened. Changes are not saved. ' + (error instanceof Error ? error.message : ''))
+          const fallback = newConfiguration('Unsaved configuration')
+          replaceConfigurations([fallback]); changeActive(fallback.id)
+        }
+      } finally { if (!cancelled) setReady(true) }
+    })()
+    return () => { cancelled = true; alive.current = false; ++requestGeneration.current; client.dispose(); clientRef.current = null; storeRef.current = null; database?.close() }
+  }, [])
+
+  function persist(operation: (store: DeviceStore) => Promise<void>) {
+    setSaving(true)
+    saveQueue.current = saveQueue.current.catch(() => {}).then(async () => {
+      if (!storeRef.current) throw new Error('Browser storage is unavailable.')
+      await operation(storeRef.current)
+    }).catch(error => { if (alive.current) setStorageError('Not saved on this device. ' + (error instanceof Error ? error.message : 'Try exporting your configuration.')) })
+    const latest = saveQueue.current
+    void latest.finally(() => { if (alive.current && saveQueue.current === latest) setSaving(false) })
+  }
+  function selectConfiguration(id: string) {
+    if (!configsRef.current.some(item => item.id === id)) return
+    changeActive(id)
+    persist(store => store.setActiveConfiguration(id))
+  }
+  function createConfiguration(name: string, copy = false) {
+    const original = configsRef.current.find(item => item.id === activeRef.current)
+    const item = newConfiguration(name, copy ? original?.moduleIds : [], copy ? original?.keepStockFx2 : true, copy ? original?.moduleVersions : undefined)
+    replaceConfigurations([...configsRef.current, item]); changeActive(item.id)
+    persist(async store => { await store.saveConfiguration(item); await store.setActiveConfiguration(item.id) })
+    return item
+  }
+  function importConfiguration(name: string, ids: string[], keepStockFx2 = true, moduleVersions?: Record<string,string>) {
+    const item = newConfiguration(name, ids, keepStockFx2, moduleVersions)
+    replaceConfigurations([...configsRef.current,item]);changeActive(item.id)
+    persist(async store => {await store.saveConfiguration(item);await store.setActiveConfiguration(item.id)})
+  }
+  function updateActive(update: Partial<Pick<Configuration, 'name' | 'moduleIds' | 'moduleVersions' | 'keepStockFx2'>>) {
+    const current = configsRef.current.find(item => item.id === activeRef.current)
+    if (!current) return
+    const updated = { ...current, ...update, updatedAt: new Date().toISOString() }
+    replaceConfigurations(configsRef.current.map(item => item.id === updated.id ? updated : item))
+    persist(store => store.saveConfiguration(updated))
+  }
+  function renameConfiguration(name: string) { updateActive({ name: cleanName(name) }) }
+  function toggleModule(id: string) {
+    const current = configsRef.current.find(item => item.id === activeRef.current)
+    if (!current) return
+    const moduleIds = current.moduleIds.includes(id) ? current.moduleIds.filter(value => value !== id) : [...current.moduleIds, id]
+    const moduleVersions = Object.fromEntries(moduleIds.map(selected=>[selected,current.moduleVersions[selected]??pinModuleVersions([selected])[selected]]))
+    updateActive({ moduleIds, moduleVersions })
+  }
+  function deleteConfiguration() {
+    const deleting = activeRef.current
+    const remaining = configsRef.current.filter(item => item.id !== deleting)
+    if (!remaining.length) remaining.push(newConfiguration('My configuration'))
+    replaceConfigurations(remaining); changeActive(remaining[0].id)
+    persist(async store => {
+      await store.saveConfiguration(remaining[0])
+      await store.setActiveConfiguration(remaining[0].id)
+      await store.deleteConfiguration(deleting)
+    })
+  }
+  async function readFile(file: File) {
+    const request = ++generation.current
+    setFileState('reading'); setFirmware(null); setFirmwareSaved(false); setFileError('')
+    try {
+      const client = clientRef.current
+      if (!client) throw new Error('The firmware reader is not ready.')
+      await client.clear()
+      if (request !== generation.current) return
+      // Queue removal first: an invalid replacement must not restore an older file next session.
+      persist(store => store.forgetFirmware())
+      const inspection = await client.inspect(file)
+      if (request !== generation.current) return
+      setFirmware(inspection); setFileState('ready')
+      persist(async store => {
+        await store.saveFirmware(file)
+        if (alive.current && request === generation.current) setFirmwareSaved(true)
+      })
+    } catch (error) {
+      if (request !== generation.current) return
+      setFileState('error'); setFileError(error instanceof Error ? error.message : 'Unable to read this file.')
+    }
+  }
+  function clearFile() {
+    ++generation.current
+    setFirmware(null); setFirmwareSaved(false); setFileState('empty'); setFileError('')
+    persist(store => store.forgetFirmware())
+    void clientRef.current?.clear().catch(() => setFileError('The firmware reader stopped. Reload the page.'))
+  }
+  return { updateModuleVersions: () => { const current=configsRef.current.find(item=>item.id===activeRef.current); if(current)updateActive({moduleVersions:pinModuleVersions(current.moduleIds)}) }, firmwareClient: clientRef, setKeepStockFx2: (keepStockFx2: boolean) => updateActive({ keepStockFx2 }), importConfiguration, configurations, active, ready, saving, storageError, selectConfiguration, createConfiguration, renameConfiguration, deleteConfiguration, toggleModule, firmware, fileState, fileError, setFileError, firmwareSaved, readFile, clearFile }
+}

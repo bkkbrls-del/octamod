@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "modules": [
+    {
+      "id": "spectrum",
+      "version": "0.1.0-experimental"
+    },
+    {
+      "id": "modulation",
+      "version": "0.1.0-experimental"
+    },
+    {
+      "id": "character",
+      "version": "0.1.0-experimental"
+    },
+    {
+      "id": "miniverb",
+      "version": "0.1.0-experimental"
+    },
+    {
+      "id": "tapeecho",
+      "version": "0.1.0-experimental"
+    },
+    {
+      "id": "euclid",
+      "version": "0.1.0-experimental"
+    },
+    {
+      "id": "repitch",
+      "version": "0.1.0-experimental"
+    }
+  ]
+}

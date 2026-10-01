@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "kind": "source-packages",
+  "sourceCommit": null,
+  "nativeRevision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "sourceTreeSha256": "d7a156941589e867236a470adc5fccb6c03a513d98bd7ae092ea3df17097c213",
+  "compilerSha256": "36265406504e8e1d4bcaac1534ff5ecf3f639a6f854cebbfc044a167f1785bf5",
+  "moduleVersions": {
+    "spectrum": "0.1.0-experimental",
+    "modulation": "0.1.0-experimental",
+    "character": "0.1.0-experimental",
+    "miniverb": "0.1.0-experimental",
+    "tapeecho": "0.1.0-experimental",
+    "euclid": "0.1.0-experimental",
+    "repitch": "0.1.0-experimental"
+  },
+  "files": {
+    "dsp-packages.json": {
+      "bytes": 29535,
+      "sha256": "7cad992241f9ddb6dbfd96b47cb165d2fda5c8c6518be0212b7738c3e1f11fcd"
+    },
+    "coldfire-packages.json": {
+      "bytes": 350768,
+      "sha256": "8ee91f4d26e700898c5d65459dc09ea8830209cbcaef7c2874edbdf9b55a9bfe"
+    },
+    "resident-dsp.json": {
+      "bytes": 24181,
+      "sha256": "061f5c3dab871c5a810a07c309088efa17f68a217f0786f163ed1d6a781220b6"
+    },
+    "rom-packages.json": {
+      "bytes": 19200,
+      "sha256": "d4284b9334f264c2743a451d65999fb4013e807660ac9582383eac546060ffb5"
+    },
+    "bootstrap-package.json": {
+      "bytes": 2923,
+      "sha256": "6174215047c7a33beab0861dc5b7a3fab04e759fb45fb9000b6a4126c9c9b77d"
+    },
+    "menu-recipes.json": {
+      "bytes": 31934,
+      "sha256": "25b8ec57b6ee8076492d7fb6408577ecf499032b93e71146a5099f4d6a636aef"
+    },
+    "descriptor-recipes.json": {
+      "bytes": 40241,
+      "sha256": "fd613ddaad2e6069ba1daf506b9a958e58a551861987cf9dc82cef2ff84e775b"
+    },
+    "platform-writes.json": {
+      "bytes": 16253,
+      "sha256": "08eb7dc84e1ccf30baee979f99a86d87d7892482243cac4dcbb6f5d4e8216bce"
+    }
+  },
+  "approval": null,
+  "qualification": "assembly and relocation only; no new hardware, audio or stress qualification"
+}

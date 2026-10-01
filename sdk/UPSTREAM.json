@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/sambanks/octabam",
+  "sourceRepository": "https://github.com/repeat98/octamad",
+  "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "scope": [
+    "character",
+    "euclid",
+    "miniverb",
+    "modulation",
+    "repitch",
+    "spectrum",
+    "tapeecho"
+  ],
+  "transforms": [
+    {
+      "path": "modules/tapeecho/manifest.py",
+      "guards": 2
+    },
+    {
+      "path": "modules/repitch/manifest.py",
+      "guards": 9
+    },
+    {
+      "path": "modules/euclid/manifest.py",
+      "guards": 3
+    },
+    {
+      "path": "tools/remix/platform_build.py",
+      "guards": 1
+    },
+    {
+      "path": "platform/dsp-dynload-stock/manifest.py",
+      "guards": 1,
+      "dspHookGuards": 1
+    },
+    {
+      "path": "platform/dsp-dynload-stock-b/manifest.py",
+      "guards": 0,
+      "dspHookGuards": 1
+    },
+    {
+      "path": "platform/dsp-dynload/manifest.py",
+      "guards": 10,
+      "dspHookGuards": 1
+    },
+    {
+      "path": "platform/dsp-dynload-transport/manifest.py",
+      "guards": 5,
+      "dspHookGuards": 1
+    },
+    {
+      "path": "platform/dsp-dynload-transport/receiver_runtime.asm",
+      "stockFreeTail": 9
+    }
+  ],
+  "notes": [
+    "Fresh upstream clone, then exact fork source pin used by browser proofs.",
+    "No Git history, submodules, firmware, downloads, vendor binaries or extracted output imported.",
+    "Displaced ColdFire stock instruction expectations are replaced by guarded local reads.",
+    "Required platform migration now passes two native composition identities and the crowded-selection rejection; portable setup and source-release automation remain pending.",
+    "Removed tools/remix/stock_labels.json: copied stock label data must be recovered locally, not carried by the SDK.",
+    "Required dynamic-loader infrastructure is isolated under platform/, outside the seven-module catalog; native SDK composition parity passed."
+  ]
+}

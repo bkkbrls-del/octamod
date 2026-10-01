@@ -1,0 +1,22 @@
+import { readFile, mkdir, readdir, copyFile, writeFile, access } from 'node:fs/promises'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { parseModuleDocument } from '../src/catalog/module-contract.ts'
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'..'),args=process.argv.slice(2),id=args[0]
+const option=(name,fallback)=>{const i=args.indexOf(name);return i<0?fallback:args[i+1]}
+const kind=option('--kind','dsp'),author=option('--author',''),output=option('--output',null)
+if(!id||!['dsp','coldfire'].includes(kind)||!author)throw new Error('Usage: npm run module:new -- my-filter --kind dsp|coldfire --author github-login')
+const document=JSON.parse(await readFile(resolve(root,'public/module-repository.example.json'),'utf8'))
+document.id=id;document.key=id.toUpperCase().replaceAll('-',' ');document.name=id.split('-').map(word=>word[0]?.toUpperCase()+word.slice(1)).join(' ');document.author={github:author,credits:[author]}
+if(kind==='coldfire'){document.category='playback';document.compatibility.location='Flex / Static';document.compatibility.effectId=null;document.controls=[]}
+parseModuleDocument(document)
+const destination=output?resolve(output,id):resolve(root,'sdk/octabam/modules',id)
+try{await access(destination);throw new Error('Destination exists; refusing to replace a module: '+destination)}catch(error){if(error.code!=='ENOENT')throw error}
+await mkdir(destination,{recursive:true});await mkdir(resolve(destination,'media'))
+const template=resolve(root,'sdk/templates',kind),placeholder=kind==='dsp'?'_template':'_template_cf'
+for(const file of await readdir(template)){if(file==='manifest.py'){let source=await readFile(resolve(template,file),'utf8');source=source.replaceAll('__AUTHOR__',author).replaceAll(placeholder,id).replaceAll(kind==='dsp'?'TEMPLATE':'TEMPLATE CF',document.key);await writeFile(resolve(destination,file),source)}else await copyFile(resolve(template,file),resolve(destination,file))}
+await writeFile(resolve(destination,'octamod.module.json'),JSON.stringify(document,null,2)+'\n')
+await copyFile(resolve(root,'sdk/octabam/LICENSE'),resolve(destination,'LICENSE'))
+await writeFile(resolve(destination,'README.md'),`# ${document.name}\n\nVersion: ${document.version} · author: @${author}\n\n## Overview\n\nDescribe the sound, signal path and practical uses. This scaffold has not been tested.\n\n## Controls\n\nDocument every active control, defaults, ranges, modes and interactions. Keep octamod.module.json synchronized.\n\n## Usage\n\nGive a useful starting configuration and explain where the module appears.\n\n## Compatibility and limitations\n\nDeclare supported hardware, base OS, slots, memory claims and conflicts. Do not publish unverified claims. DSP scaffolds start with an example effect ID: choose a free ID and add gate evidence before use.\n\n## Tests and measurements\n\nSee [TESTING.md](TESTING.md). Unknown costs must remain explicitly unmeasured.\n\n## Authorship and licences\n\nRetain original authors and component licence texts. Only original or properly licensed code/media; no Elektron firmware, extracted routines or tables.\n\n## Screens and audio\n\nAdd actual original/licensed captures under media/ and declare captions, alt text, authorship and rights in the manifest. Illustrations are not hardware captures.\n`)
+await writeFile(resolve(destination,'TESTING.md'),`# ${document.name} testing\n\n## Commands and exact revision\n\nNo checks have been run. Record the tested source commit and every command/result after implementation.\n\n## Stress and audio quality\n\nRecord workload, track count, modes, moving controls, duration, peaks and limitations. Separate emulator evidence from hardware results.\n\n## Resources\n\nStorage and CPU/DSP load have not been measured.\n\n## Hardware\n\nUntested. Never infer hardware safety from assembly or a green metadata check.\n`)
+console.log('Created '+destination+'\nImplement the native source, choose a free effect ID where applicable, and document tests before proposing a catalog addition.')

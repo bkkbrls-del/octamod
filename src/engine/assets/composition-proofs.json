@@ -1,0 +1,419 @@
+{
+  "schema": 1,
+  "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "sourceSha256": "164f31224bf61181e3f50e7dec40df9afcae5b16dbf6e4c0d0cc5e986af0a84e",
+  "packing": {
+    "version": "OCTAMOD79",
+    "sourceUpgradeSha256": "34695b606eb00e1b4dded5fd0c4b66f3a460522a632e47d7416dbd220599e1ad",
+    "oracleSha256": "7c9cc005b48ae2cd14953c38159f592333a33b2db059604e0b2ca0ad1acb3414",
+    "sources": {
+      "vendor/elektron-firmware-tool/main.c": "eedd11769bf3c4fa2b88107b49e83e654e600bffcd8be4ce019dd43e9710b165",
+      "vendor/elektron-firmware-tool/compress.c": "f7af548480e9e49f571ffe4cf4d5b6957cde9d5eaaef123c73c2e951abf7a223",
+      "vendor/elektron-firmware-tool/decompress.c": "9f2c1f3f7889544d34bfbe48731cc2d9d9024ce74a809b8b7a9ae374a8b930d0",
+      "vendor/elektron-firmware-tool/integrity.c": "89d1d117331c63f499eef46bc4129079b894da8a38884ea5d9c0eb7c95d1c99f",
+      "tools/build/bin_decode.py": "d092430bf99d30d39c6fa81a186a746f0bfc5c6875636a03f48d800e59a05144",
+      "tools/build/make_bin.py": "755ed65e1f5de29bb1d19949828a0dc85a7cd38609907d73787ea4e0c9a8851a"
+    }
+  },
+  "proofs": [
+    {
+      "moduleIds": [],
+      "default": false,
+      "menu": {
+        "fx1": [],
+        "fx2": [],
+        "hidden": []
+      },
+      "bytes": 1139076,
+      "sha256": "a71dd93ca80e7c715fe60658c735c952be37c164f4e3f3bc50a9d5a2b4ed68d7",
+      "osSha256": "4142c042522d6c43be2393963200a346938dd4b388372375d066a2df67a85e5a",
+      "appendSha256": "176f23066f1ddc03c1a5b18f626eec8e70d7f929209f2ea358d7392c82e8fbd6",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 464486,
+        "containerSha256": "40266b7436f3cda595e75a756145a9c781623ff1d28c75b8b759c4a06e3a46af",
+        "bytes": 464504,
+        "sha256": "5008dddabbf6e0fc553b2732d8160d676728f152efbb6591b119e98b2ac9f49d"
+      }
+    },
+    {
+      "moduleIds": [
+        "repitch"
+      ],
+      "default": false,
+      "menu": {
+        "fx1": [],
+        "fx2": [],
+        "hidden": []
+      },
+      "bytes": 1139076,
+      "sha256": "11fd45ac068aca46070f379a455f1a6b05a65487345c51c6f55230be39c6b8cf",
+      "osSha256": "4f02c53fb02f38a0111cf09108ef05ebbbf76add51b57536fed0a1f66b28fa30",
+      "appendSha256": "176f23066f1ddc03c1a5b18f626eec8e70d7f929209f2ea358d7392c82e8fbd6",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 464919,
+        "containerSha256": "5ce561b7d94850e542edfa65116e759c036ed79c144f6c95386ee891c01c0845",
+        "bytes": 464936,
+        "sha256": "c6d167eddb1cd27fddb54057e365e87f51f3b3928b39376896d3af5b1cccddb5"
+      }
+    },
+    {
+      "moduleIds": [
+        "tapeecho",
+        "euclid"
+      ],
+      "default": false,
+      "menu": {
+        "fx1": [],
+        "fx2": [
+          "TAPE ECHO",
+          "EUCLID"
+        ],
+        "hidden": []
+      },
+      "bytes": 1244370,
+      "sha256": "a3268a083e3ec8bf176ee071bf55b2d08582f76b98f883dbca547aadfb433846",
+      "osSha256": "6c9a7180f9473b4b8e2e5ce5f103b55396832007ab151b31ea4fee1493f45835",
+      "appendSha256": "136e9c23de497f67a7a8b8e79e0338ba0d26d9adb4aff1f165e7a6dee8c68128",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 580863,
+        "containerSha256": "536fe6d55dbf20d27afd3cf3be54074beabffb7a5f78dfb95e4df32b00fe68d8",
+        "bytes": 580880,
+        "sha256": "9dfba3a15f0d092c8d00a68d43d45a606cc0355bfd70e1b4f31b9c27a1d56459"
+      }
+    },
+    {
+      "moduleIds": [
+        "spectrum",
+        "modulation",
+        "character",
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch"
+      ],
+      "default": false,
+      "menu": {
+        "fx1": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "SPECTRUM",
+          "MODULATION",
+          "CHARACTER",
+          "EUCLID"
+        ],
+        "fx2": [
+          "MINIVERB",
+          "TAPE ECHO",
+          "EUCLID"
+        ],
+        "hidden": [
+          "SPECTRUM",
+          "MODULATION",
+          "CHARACTER"
+        ]
+      },
+      "bytes": 1250126,
+      "sha256": "5162680d8bc342deb623cef00307f2a343f539a90f0bfcef59b59ceb4c60bb83",
+      "osSha256": "9f0a254fcb68ead12dcf3a4623eb522ac3f1c9dfcd089f08ecbc67427961832f",
+      "appendSha256": "4487f17951fc97df836bb09bdb4e51e6cacfc80ba6c666e3a54ef8c35a6b3066",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 590055,
+        "containerSha256": "109ecb9d278347bba958b85ce79c0189ea0706a213001e3a3c53717538c80f91",
+        "bytes": 590072,
+        "sha256": "1f5050c1ef1f0bc632bd354410be18d151828312f0d80cdafe2a21c4a02feb0d"
+      }
+    },
+    {
+      "moduleIds": [],
+      "default": true,
+      "menu": {
+        "fx1": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI"
+        ],
+        "fx2": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "DELAY",
+          "PLATE REV",
+          "SPRING REV",
+          "DARK REV"
+        ],
+        "hidden": []
+      },
+      "bytes": 1139076,
+      "sha256": "0b70083048ac850c0f474915576cb402e7d954407f8f5d828c757c3e3e35af22",
+      "osSha256": "0dcb86a358626dbbcdf1304fd0e3e6b41fb90b63bb2ed577d4b1aab25de2e770",
+      "appendSha256": "176f23066f1ddc03c1a5b18f626eec8e70d7f929209f2ea358d7392c82e8fbd6",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 464492,
+        "containerSha256": "58104333bc0c983070425552dc5e5f3725b7e610f1d68a9660256a5c8af6b93d",
+        "bytes": 464508,
+        "sha256": "f189d242be2f93784c547e608041b3ee81f72d969c039d00a13ee385c324ed1e"
+      }
+    },
+    {
+      "moduleIds": [
+        "spectrum",
+        "modulation",
+        "character",
+        "euclid"
+      ],
+      "default": true,
+      "menu": {
+        "fx1": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "SPECTRUM",
+          "MODULATION",
+          "CHARACTER",
+          "EUCLID"
+        ],
+        "fx2": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "DELAY",
+          "PLATE REV",
+          "SPRING REV",
+          "DARK REV",
+          "EUCLID"
+        ],
+        "hidden": [
+          "SPECTRUM",
+          "MODULATION",
+          "CHARACTER"
+        ]
+      },
+      "bytes": 1146902,
+      "sha256": "a0ff0aefed4428a3b308b1629c5d3c52af880042ac244d9cc70763158e18f5ad",
+      "osSha256": "b0b051304d2121ffd1258e0eb506f0d4c75c8ff11ae87eec8734d2eab60b03ad",
+      "appendSha256": "94886c50cd03b6be81b5039a83d9dbdff632261313034c5e3ee28911c5af8ad2",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 476280,
+        "containerSha256": "28fc6567341ebebae14fb97fcfd601c843156e7ad27f7e0d901052cd56376ae0",
+        "bytes": 476296,
+        "sha256": "a704bd9acd2f93a21f62c8823da3440c11e4a9ed90d099a0f2faddd832e0c8ba"
+      }
+    },
+    {
+      "moduleIds": [
+        "spectrum",
+        "modulation",
+        "character",
+        "miniverb",
+        "tapeecho",
+        "euclid"
+      ],
+      "default": true,
+      "menu": {
+        "fx1": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "SPECTRUM",
+          "MODULATION",
+          "CHARACTER",
+          "EUCLID"
+        ],
+        "fx2": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "DELAY",
+          "PLATE REV",
+          "SPRING REV",
+          "DARK REV",
+          "MINIVERB",
+          "TAPE ECHO",
+          "EUCLID"
+        ],
+        "hidden": [
+          "SPECTRUM",
+          "MODULATION",
+          "CHARACTER"
+        ]
+      },
+      "bytes": 1250126,
+      "sha256": "997021c58bab8d7d47b71e2d26a6f291746aaff37e8e05b3d605e5f7e57ac4b3",
+      "osSha256": "6bc7b45f430f6dee2ab31a132eae8826169225d8269e6a5783b86a9595ee9499",
+      "appendSha256": "4487f17951fc97df836bb09bdb4e51e6cacfc80ba6c666e3a54ef8c35a6b3066",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 589645,
+        "containerSha256": "f7f03135de92d0010e682bde58643798957ee69936a912c028014c5b426ae177",
+        "bytes": 589664,
+        "sha256": "8d7fcb964b65ee35155c610437129603f679c55cc26eda5cf2d8296ab8209584"
+      }
+    },
+    {
+      "moduleIds": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch"
+      ],
+      "default": true,
+      "menu": {
+        "fx1": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "EUCLID"
+        ],
+        "fx2": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "DELAY",
+          "PLATE REV",
+          "SPRING REV",
+          "DARK REV",
+          "MINIVERB",
+          "TAPE ECHO",
+          "EUCLID"
+        ],
+        "hidden": []
+      },
+      "bytes": 1245104,
+      "sha256": "1dbef0e5646ae3814224b88ca6ebda7fb911840a8ca2aa2af810ed5ef5e0cdac",
+      "osSha256": "6f3c1021e11bce698cecfeeb25808ce2c7671d9c05d95870847803b1dae884ca",
+      "appendSha256": "b112e88460499e39ac4c151ed6496c12a1f14bf81b839551da904a23f23899f1",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 582244,
+        "containerSha256": "dba40bf4157810ec147769eccec7e07f3f3750c49a34ab46d608dec2f741babf",
+        "bytes": 582260,
+        "sha256": "91331100c6035b9961fa55c9757b6132eebb0c5b773c1d918052f08b558a78b0"
+      }
+    },
+    {
+      "moduleIds": [
+        "spectrum",
+        "modulation",
+        "character",
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch"
+      ],
+      "default": true,
+      "menu": {
+        "fx1": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "SPECTRUM",
+          "MODULATION",
+          "CHARACTER",
+          "EUCLID"
+        ],
+        "fx2": [
+          "FILTER",
+          "EQUALIZER",
+          "DJ EQ",
+          "PHASER",
+          "FLANGER",
+          "CHORUS",
+          "SPATIALIZER",
+          "COMB FILTER",
+          "COMPRESSOR",
+          "LO-FI",
+          "DELAY",
+          "PLATE REV",
+          "SPRING REV",
+          "DARK REV",
+          "MINIVERB",
+          "TAPE ECHO",
+          "EUCLID"
+        ],
+        "hidden": [
+          "SPECTRUM",
+          "MODULATION",
+          "CHARACTER"
+        ]
+      },
+      "error": "wide dial hook (116 B) does not fit"
+    }
+  ]
+}

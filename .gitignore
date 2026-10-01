@@ -1,0 +1,36 @@
+node_modules/
+dist/
+.wrangler/
+coverage/
+*.local
+.env
+.env.*
+!.env.example
+.DS_Store
+*.tsbuildinfo
+# User firmware and captures must never enter source control.
+*.bin
+*.syx
+*.zip
+*.wav
+firmware/
+downloads/
+
+# Local UI review screenshots.
+artifacts/
+
+.dev.vars
+.dev.vars.*
+
+!.dev.vars.example
+
+# Generated PR-reviewed media; originals remain in module folders.
+public/module-media/
+# Original/licensed module previews may be committed; firmware is still excluded.
+!sdk/octabam/modules/*/media/**/*.wav
+
+# SDK toolchains and local firmware-containing native output.
+**/__pycache__/
+*.pyc
+sdk/octabam/vendor/
+sdk/octabam/out/

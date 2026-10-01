@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "sourceSha256": "164f31224bf61181e3f50e7dec40df9afcae5b16dbf6e4c0d0cc5e986af0a84e",
+  "stock": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "modules": [
+    {
+      "id": "euclid",
+      "fxId": 29,
+      "sha256": "3ada36996092d2267bdde3a1a33caa0e15d41ca3dd70bb451802851229f45fcf",
+      "readsBase": 0,
+      "needsColdFire": true
+    },
+    {
+      "id": "miniverb",
+      "fxId": 23,
+      "sha256": "90d21077ad8b4243e7947e7e0ba35fe186393ec8e64dda77b905da1e4f4c5b0b",
+      "readsBase": 1,
+      "needsColdFire": false
+    },
+    {
+      "id": "modulation",
+      "fxId": 11,
+      "sha256": "9b11e3b3c8132c14a015902ef213603b7e155c4b45971024ea26068d95b9b9f5",
+      "readsBase": 1,
+      "needsColdFire": false
+    },
+    {
+      "id": "spectrum",
+      "fxId": 10,
+      "sha256": "f220448dd850155d0d146d4a48989d53bfd5557f243f7db28456aa148fcb41ff",
+      "readsBase": 1,
+      "needsColdFire": false
+    },
+    {
+      "id": "tapeecho",
+      "fxId": 15,
+      "sha256": "5a305a4c4a3d23b4d453b773f0ef800f37c43b8433c333623025631f6dc20742",
+      "readsBase": 0,
+      "needsColdFire": true
+    }
+  ]
+}

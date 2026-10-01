@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "cases": [
+    {
+      "case": 0,
+      "expected": {
+        "bytes": 253,
+        "sha256": "f0c8952658278cd39c3485b330097f43f4be135975946365e7cccf443a4f25b5",
+        "stage": 1084841984,
+        "stageEnd": 1084842005,
+        "rawHash": 165,
+        "packedHash": 429881517
+      }
+    },
+    {
+      "case": 1,
+      "expected": {
+        "bytes": 540,
+        "sha256": "aa639a71472f87d089e5a2c56cf139f9a1305ad383a935bbd14b478cbc14a3d8",
+        "stage": 1084841984,
+        "stageEnd": 1084842292,
+        "rawHash": 3762610048,
+        "packedHash": 845674634
+      }
+    },
+    {
+      "case": 2,
+      "expected": {
+        "bytes": 272,
+        "sha256": "ba360328a23763f9204af20592a525b6ae83458aa4eb9e4f66e67d44f25b6b4c",
+        "stage": 1084841984,
+        "stageEnd": 1084842024,
+        "rawHash": 922318562,
+        "packedHash": 381005309
+      }
+    },
+    {
+      "case": 3,
+      "expected": {
+        "bytes": 259,
+        "sha256": "771e1807c90788008fc748bd1de5c7ffada37e86580fd478238535a0792020e7",
+        "stage": 1084874752,
+        "stageEnd": 1084874779,
+        "rawHash": 1020914118,
+        "packedHash": 920491252
+      }
+    },
+    {
+      "case": 4,
+      "expected": {
+        "bytes": 5193,
+        "sha256": "dd6236ca8c0c6d2f6109847939c38b3babcafb1842e9871296afca4e75f199be",
+        "stage": 1084846080,
+        "stageEnd": 1084851041,
+        "rawHash": 3373656354,
+        "packedHash": 3705090455
+      }
+    },
+    {
+      "case": 7,
+      "expected": {
+        "bytes": 275,
+        "sha256": "39fdcbce58c8e49c2ec272dda4e623c8c01ce8660e30ed0724c3b3d6e57c67ec",
+        "stage": 1084841984,
+        "stageEnd": 1084842027,
+        "rawHash": 3343065680,
+        "packedHash": 366889051
+      }
+    }
+  ]
+}

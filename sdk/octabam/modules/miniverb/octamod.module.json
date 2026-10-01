@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 2,
+  "id": "miniverb",
+  "key": "MINIVERB",
+  "name": "Mini Verb",
+  "version": "0.1.0-experimental",
+  "category": "effects",
+  "author": {
+    "github": "repeat98",
+    "credits": [
+      "repeat98",
+      "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
+    ]
+  },
+  "nativeManifest": "manifest.py",
+  "presentation": {
+    "label": "DIFFUSED SPACE",
+    "family": "Reverb",
+    "summary": "A diffused reverb with a modulated tail.",
+    "overview": "A compact diffused reverb with a modulated tail. Control its length and darkness, then use modulation depth and rate to add movement to the space.",
+    "highlights": [
+      "Diffused, modulated reverb tail",
+      "Damping for darker spaces",
+      "Five dedicated controls"
+    ],
+    "usage": [
+      "Choose MINI VERB in FX2. DECAY controls the tail; higher DAMP makes the sound darker.",
+      "MOD sets modulation depth and RATE selects one of eight modulation speeds. Use MIX to place the reverb behind the dry signal.",
+      "The delay ring clears progressively on initialization. Audio stays dry until the ring is ready."
+    ]
+  },
+  "controls": [
+    {
+      "name": "DECAY",
+      "default": 104,
+      "count": 128,
+      "doc": "feedback 0.65..0.97; fixed room size",
+      "labels": null
+    },
+    {
+      "name": "DAMP",
+      "default": 70,
+      "count": 128,
+      "doc": "higher values darken the tail",
+      "labels": null
+    },
+    {
+      "name": "MIX",
+      "default": 40,
+      "count": 128,
+      "doc": "dry/wet, smoothed; 0 dry, 127 wet",
+      "labels": null
+    },
+    {
+      "name": "MOD",
+      "default": 80,
+      "count": 128,
+      "doc": "two in-loop allpasses; smoothed 0..64 sample depth",
+      "labels": null
+    },
+    {
+      "name": "RATE",
+      "default": 2,
+      "count": 8,
+      "doc": "LFO speed: (value+1)*0.33646 Hz, continuous phase",
+      "labels": [
+        "0.34",
+        "0.67",
+        "1.01",
+        "1.35",
+        "1.68",
+        "2.02",
+        "2.36",
+        "2.69"
+      ]
+    }
+  ],
+  "compatibility": {
+    "firmware": "1.40C",
+    "location": "FX2",
+    "conflicts": [],
+    "limitations": [
+      "The documented sweep exercises moving controls, trigger splits and eight instances for 4,096 blocks per case. The README explicitly says it has not been flashed or verified on hardware."
+    ],
+    "effectId": 23
+  },
+  "resources": {
+    "recorded": "20 Sep 2026",
+    "storage": {
+      "label": "DSP program / buffer",
+      "display": "457 words / 16K ring",
+      "value": null,
+      "unit": "see display",
+      "method": "static",
+      "conditions": "Per-instance Y ring allocation; 13,750 positions are occupied by the documented layout.",
+      "source": "README.md"
+    },
+    "processing": {
+      "label": "DSP instruction peak",
+      "display": "20,296 per core/block",
+      "value": null,
+      "unit": "see display",
+      "method": "emulator",
+      "conditions": "Worst tested case with eight instances, four per core, at 44.1 kHz and 16-sample blocks. Excludes dispatcher, voice engines, other effects and hardware stalls.",
+      "source": "README.md"
+    }
+  },
+  "tests": {
+    "report": "TESTING.md",
+    "summary": "The documented sweep exercises moving controls, trigger splits and eight instances for 4,096 blocks per case. The README explicitly says it has not been flashed or verified on hardware.",
+    "hardwareStatus": "untested",
+    "evidenceRevision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+    "gates": [
+      "tools/verify/verify_miniverb.py"
+    ]
+  },
+  "license": {
+    "spdx": "MIT",
+    "file": "LICENSE",
+    "declaration": "Original module sources retain upstream authorship and permissive licences. See ../../THIRD_PARTY.md for component-specific credits and terms. No rights or hardware qualification are newly asserted by this import."
+  },
+  "media": []
+}

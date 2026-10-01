@@ -1,0 +1,50 @@
+[
+  {
+    "id": "euclid",
+    "description": "Euclid rhythmic modulation: 12 dB LP/BP/HP or AMP, both FX slots.",
+    "moduleIds": [
+      "euclid"
+    ],
+    "proof": "render",
+    "proofNote": "the module's render gates",
+    "path": "remixes/test/euclid/remix.py",
+    "testFixture": true,
+    "author": "repeat98"
+  },
+  {
+    "id": "miniverb",
+    "description": "Minimal allocator-owned FDN reverb.",
+    "moduleIds": [
+      "miniverb"
+    ],
+    "proof": "render",
+    "proofNote": "`make verify-miniverb`",
+    "path": "remixes/test/miniverb/remix.py",
+    "testFixture": true,
+    "author": "repeat98"
+  },
+  {
+    "id": "repitch",
+    "description": "stock effects with variable-speed REPITCH in the TSTR selector.",
+    "moduleIds": [
+      "repitch"
+    ],
+    "proof": "hardware",
+    "proofNote": "repeat98's MKII, 16 Sep 2026 (OCTABAM81)",
+    "path": "remixes/test/repitch/remix.py",
+    "testFixture": true,
+    "author": "repeat98"
+  },
+  {
+    "id": "tapeecho",
+    "description": "Tape Echo replacing Spring Reverb, alone.",
+    "moduleIds": [
+      "tapeecho"
+    ],
+    "proof": "hardware",
+    "proofNote": "the author's unit (OCTACLID4): six instances; a seventh freezes it, open",
+    "path": "remixes/test/tapeecho/remix.py",
+    "testFixture": true,
+    "author": "repeat98"
+  }
+]

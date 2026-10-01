@@ -1,0 +1,5 @@
+octabam/vendor/
+octabam/.venv/
+octabam/out/
+__pycache__/
+*.pyc

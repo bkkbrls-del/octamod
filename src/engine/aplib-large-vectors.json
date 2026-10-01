@@ -1,0 +1,23 @@
+[
+  {
+    "name": "long gamma lengths",
+    "pattern": "repeat",
+    "length": 2050,
+    "value": 99,
+    "packedSha256": "3a978a20ab605464bc310e9e4e720a6743c5b72fa569211ab605a8e95ea73539"
+  },
+  {
+    "name": "incompressible literals",
+    "pattern": "random",
+    "length": 4096,
+    "seed": 1592594996,
+    "packedSha256": "46b44d203cdb231e6f52e12dc18e093f898ecfb1454ef41b1f43a5295e0e8ef1"
+  },
+  {
+    "name": "far-offset bonus",
+    "pattern": "far",
+    "length": 4000,
+    "seed": 1592594996,
+    "packedSha256": "225bc39da712bfcb626a9bf36da83feef4acbf89f355cb8f20dcafac811934c0"
+  }
+]

@@ -1,0 +1,173 @@
+import { ModuleSets } from './components/ModuleSets'
+import { ModuleComparison } from './components/ModuleComparison'
+import metadata from './catalog/native-metadata.json'
+import { api } from './community/api'
+import { CompatibilityPanel } from './components/CompatibilityPanel'
+import { useCommunity } from './community/context'
+import { ActivityPage } from './community/ActivityPage'
+import { SubmissionPage } from './community/SubmissionPage'
+import { AdminPage } from './community/AdminPage'
+import { PublishedModulePage } from './community/PublishedModulePage'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import type { ChangeEvent, DragEvent } from 'react'
+import { MODULES, resolveSelection } from './catalog/modules'
+import { DETAILS } from './catalog/details'
+import { ENGINE_AVAILABLE, DOWNLOADS_ENABLED } from './engine/protocol'
+import { useFirmwareBuild } from './hooks/useFirmwareBuild'
+import { FirmwareBuildPanel } from './components/FirmwareBuildPanel'
+import { downloadSelection, parseSelection } from './config/selection'
+import { Icon } from './components/Icon'
+import { ModulePreview } from './components/ModulePreview'
+import { ModuleDetail } from './components/ModuleDetail'
+
+import { useWorkspace } from './hooks/useWorkspace'
+import { ConfigurationDialog } from './components/ConfigurationDialog'
+function subscribeRoute(callback: () => void) {
+  window.addEventListener('hashchange', callback)
+  return () => window.removeEventListener('hashchange', callback)
+}
+function getRoute() { const route=window.location.hash.slice(1)||'library'; return route==='remixes'?'module-sets':route==='account'?'activity':route.startsWith('remix/')?'module-set/'+route.slice(6):route }
+
+export default function App() {
+  const route = useSyncExternalStore(subscribeRoute, getRoute, () => 'library')
+  const detailModule = route.startsWith('module/') ? MODULES.find((module) => module.id === route.slice(7)) : undefined
+  const configuration = route === 'configuration'
+  const { session, catalog } = useCommunity()
+  const communityModule = route.startsWith('community-module/') ? catalog.find(item => item.module_id === route.slice(17)) : undefined
+  const communityRoute = route === 'activity' || route === 'review' || route === 'admin' || route.startsWith('submit') || !!communityModule
+  const missingRoute=!['library','effects','playback','module-sets','configuration','activity','review','admin'].includes(route)&&!route.startsWith('submit')&&!detailModule&&!route.startsWith('community-module/')&&!route.startsWith('module-set/')
+  const filter = route === 'effects' || route === 'playback' ? route : 'all'
+  const workspace = useWorkspace()
+  const { active, ready, firmware, fileState, fileError, firmwareSaved, readFile, clearFile } = workspace
+  const selectedIds = active?.moduleIds ?? []
+  const firmwareBuild = useFirmwareBuild(workspace.firmwareClient, active, firmware)
+  const [query, setQuery] = useState('')
+  const [family,setFamily]=useState('all'),[sort,setSort]=useState('collection'),[comparison,setComparison]=useState<string[]>([]),[compareOpen,setCompareOpen]=useState(false)
+  const [statistics,setStatistics]=useState<{module_id:string;average:number;count:number;likes:number}[]>([])
+  useEffect(()=>{if(session.available)void api<typeof statistics>('/community/summary').then(setStatistics).catch(()=>{})},[session.available,route])
+  const [dragging, setDragging] = useState(false)
+  const [saved, setSaved] = useState(false)
+  const [riskAccepted, setRiskAccepted] = useState<{key:string;accepted:boolean}>({key:'',accepted:false})
+  const [importError,setImportError]=useState('')
+  const importRef=useRef<HTMLInputElement>(null)
+  const [configDialog, setConfigDialog] = useState<'create' | 'rename' | 'duplicate' | 'delete' | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const mainRef = useRef<HTMLElement>(null)
+  useEffect(() => { mainRef.current?.scrollTo({ top: 0 });document.title=(detailModule?.name??(route==='configuration'?'Configuration':route.startsWith('submit')?'Submit a module':route==='activity'?'Your activity':(route==='review'||route==='admin')?'Admin workspace':route.startsWith('module-set')?'Module sets':'Module library'))+' · Octamod' }, [route,detailModule?.name])
+  const selection = resolveSelection(selectedIds)
+  const visibleModules = MODULES.filter((module) =>
+    (filter === 'all' || module.category === filter)
+    && (family==='all'||DETAILS[module.id].family===family)
+    && (module.name + ' ' + module.description + ' ' + module.author).toLowerCase().includes(query.toLowerCase().trim()),
+  ).sort((a,b)=>sort==='name'?a.name.localeCompare(b.name):sort==='author'?a.author.localeCompare(b.author)||a.name.localeCompare(b.name):sort==='rated'?(statistics.find(item=>item.module_id===b.id)?.average??0)-(statistics.find(item=>item.module_id===a.id)?.average??0):0)
+
+  function toggleModule(id: string) { workspace.toggleModule(id); setSaved(false); setRiskAccepted({key:'',accepted:false}) }
+  function chooseFile(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.currentTarget.files?.[0]
+    event.currentTarget.value = ''
+    if (file) void readFile(file)
+  }
+  function dropFile(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault(); setDragging(false)
+    if (event.dataTransfer.files.length !== 1) { workspace.setFileError('Choose one firmware file at a time.'); return }
+    void readFile(event.dataTransfer.files[0])
+  }
+  function saveSelection() { downloadSelection(selectedIds, firmware, active?.name, active?.keepStockFx2, active?.moduleVersions); setSaved(true) }
+  async function importSelection(event: ChangeEvent<HTMLInputElement>) {
+    const file=event.currentTarget.files?.[0]; event.currentTarget.value=''; if(!file)return
+    setImportError('')
+    try {
+      if(file.size>32*1024)throw new Error('Configuration backups must be smaller than 32 KB.')
+      const imported=parseSelection(await file.text())
+      workspace.importConfiguration(imported.name,imported.moduleIds,imported.keepStockFx2,imported.moduleVersions)
+      setSaved(false);setRiskAccepted({key:'',accepted:false});window.location.assign('#configuration')
+    }catch(error){setImportError(error instanceof Error?error.message:'Could not import this configuration.')}
+  }
+  function changeConfiguration(id: string) { workspace.selectConfiguration(id); setSaved(false); setRiskAccepted({key:'',accepted:false}); window.location.assign('#configuration') }
+  function submitConfigurationDialog(name: string) {
+    if (configDialog === 'delete') workspace.deleteConfiguration()
+    else if (configDialog === 'rename') workspace.renameConfiguration(name)
+    else workspace.createConfiguration(name, configDialog === 'duplicate')
+    setSaved(false); setRiskAccepted({key:'',accepted:false}); window.location.assign('#configuration')
+  }
+
+  return (
+    <div className="app-shell">
+      <a className="skip-link" href="#main-content" onClick={(event) => { event.preventDefault(); mainRef.current?.focus() }}>Skip to content</a>
+      <aside className="sidebar" aria-label="App sidebar">
+        <a className="app-brand" href="#library"><img src={import.meta.env.BASE_URL + 'favicon.svg'} width="34" height="34" alt="" /><span>Octamod<small>Firmware configurator</small></span></a>
+        <div className="sidebar-section-label">Library</div>
+        <nav className="sidebar-nav" aria-label="Module library">
+          <a href="#library" className={route === 'library' ? 'active' : ''} aria-current={route === 'library' ? 'page' : undefined}><Icon name="grid" /><span>All modules</span><small>{MODULES.length}</small></a>
+          <a href="#effects" onClick={()=>setFamily('all')} className={!detailModule && filter === 'effects' ? 'active' : ''} aria-current={!detailModule && filter === 'effects' ? 'page' : undefined}><Icon name="wave" /><span>Effects</span><small>{MODULES.filter((module) => module.category === 'effects').length}</small></a>
+          <a href="#playback" onClick={()=>setFamily('all')} className={!detailModule && filter === 'playback' ? 'active' : ''} aria-current={!detailModule && filter === 'playback' ? 'page' : undefined}><Icon name="sliders" /><span>Playback</span><small>1</small></a>
+          <a href="#module-sets" className={route.startsWith('module-set')?'active':''}><Icon name="file"/><span>Module sets</span></a>
+        </nav>
+        <div className="sidebar-section-label configuration-label"><span>Configurations</span><button className="icon-button" aria-label="New configuration" disabled={!ready} onClick={() => setConfigDialog("create")}><Icon name="plus" size={18} /></button></div>
+        <nav className="sidebar-nav configuration-nav" aria-label="Saved configurations">{workspace.configurations.map(item => <button key={item.id} className={item.id === active?.id ? 'active' : ''} aria-pressed={item.id === active?.id} onClick={() => changeConfiguration(item.id)}><Icon name="file" /><span>{item.name}</span><small>{item.moduleIds.length}</small></button>)}</nav>
+        <div className="sidebar-section-label community-label">Community</div><nav className="sidebar-nav community-nav" aria-label="Community"><a href="#submit" className={route.startsWith('submit') ? 'active' : ''}><Icon name="plus"/><span>Submit a module</span></a><a href="#activity" className={route === 'activity' ? 'active' : ''}><Icon name="message"/><span>Your activity</span></a>{session.admin && <a href="#admin" className={route === 'admin'||route === 'review' ? 'active' : ''}><Icon name="shield"/><span>Admin workspace</span></a>}</nav>
+        <div className="sidebar-spacer" />
+        <div className="sidebar-build">
+          <div className="sidebar-build-heading"><span className={'status-dot ' + (firmware ? 'verified' : '')} /><strong>{firmware ? 'Base firmware ready' : 'Your base firmware'}</strong></div>
+          <p>{firmware ? 'OS 1.40C · ' + (firmwareSaved ? 'saved on device' : 'this session') + '' : 'Start with your own OS 1.40C file.'}</p>
+          <a className="button button-quiet" href="#configuration">{firmware ? 'View configuration' : 'Choose firmware'}<Icon name="arrow" size={14} /></a>
+        </div>
+        <div className="sidebar-footer"><Icon name="shield" size={14} /><span>Firmware stays on your device</span></div>
+      </aside>
+      {compareOpen&&<ModuleComparison ids={comparison} selected={selectedIds} onToggle={toggleModule} onClose={()=>setCompareOpen(false)}/>}
+      {configDialog && <ConfigurationDialog mode={configDialog} initialName={configDialog === 'create' ? '' : configDialog === 'duplicate' ? (active?.name ?? '') + ' copy' : active?.name ?? ''} onSubmit={submitConfigurationDialog} onClose={() => setConfigDialog(null)} />}
+      <div className="workspace">
+        <header className="app-toolbar">
+          <div className="toolbar-title"><Icon name={configuration ? 'file' : 'grid'} size={17} /><span>{configuration ? 'Configuration' : communityRoute ? 'Community' : route.startsWith('module-set') ? 'Module sets' : 'Modules'}</span>{detailModule && <><span className="breadcrumb-divider">/</span><strong>{detailModule.name}</strong></>}<span className="preview-badge">Preview</span></div>
+          {['library','effects','playback','module-sets'].includes(route) && <label className="search"><Icon name="search" size={15} /><input type="search" aria-label={route==='module-sets'?'Search module sets':'Search modules'} placeholder={route==='module-sets'?'Search module sets':'Search modules'} value={query} onChange={(event) => setQuery(event.target.value)} /></label>}
+          <a className="mobile-account-link" href="#submit" aria-label="Submit a module"><Icon name="plus" size={17}/></a><a className="mobile-account-link" href="#activity" aria-label="Your activity"><Icon name="message" size={17}/></a><a className="configuration-button" href="#configuration" aria-label={"Open configuration, " + selection.length + " modules selected"}><Icon name="sliders" size={16} /><span>Configuration</span><span className="toolbar-count">{selection.length}</span></a>
+        </header>
+        <main className="workspace-content" id="main-content" ref={mainRef} tabIndex={-1}>
+          {workspace.storageError && <div className="file-error" role="alert">{workspace.storageError} Export important configurations before closing this tab.</div>}
+          {!ready ? <div className="loading-panel" role="status">Opening your workspace…</div> : <>
+          {missingRoute?<div className="no-results"><h1>Page not found</h1><p>This module or page is not in the current catalog.</p><a className="button button-quiet" href="#library">Open module library</a></div>:route==='module-sets'||route.startsWith('module-set/')?<ModuleSets query={query} id={route.startsWith('module-set/')?route.slice(11):undefined} onUse={(name,ids)=>{workspace.importConfiguration(name,ids);window.location.assign('#configuration')}}/>:route === 'activity' ? <ActivityPage /> : route.startsWith('submit') ? <SubmissionPage key={route} moduleId={route.split('/')[1] ?? ''} /> : route === 'review'||route === 'admin' ? <AdminPage /> : communityModule ? <PublishedModulePage module={communityModule} /> : detailModule ? <ModuleDetail key={detailModule.id} module={detailModule} selected={selectedIds.includes(detailModule.id)} onToggle={() => toggleModule(detailModule.id)} /> : configuration ? (
+            <div className="configuration-page">
+              <div className="page-heading"><div><p className="page-kicker">YOUR WORKSPACE</p><h1>{active?.name}</h1><p>Changes save automatically on this device.</p></div><span className="pill">OS 1.40C</span></div>
+              <div className="configuration-actions"><select aria-label="Choose configuration" value={active?.id ?? ''} onChange={event => changeConfiguration(event.target.value)}>{workspace.configurations.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select><button className="button button-primary" onClick={() => setConfigDialog('create')}><Icon name="plus" size={16} />New</button><button className="button button-quiet" onClick={() => setConfigDialog('rename')}>Rename</button><button className="button button-quiet" onClick={() => setConfigDialog('duplicate')}>Duplicate</button><button className="button button-quiet" onClick={() => setConfigDialog('delete')}>Delete</button><button className="button button-quiet" onClick={()=>importRef.current?.click()}>Import JSON</button></div><input ref={importRef} type="file" accept="application/json,.json" hidden onChange={event=>void importSelection(event)} aria-label="Import configuration backup"/>{importError&&<p className="file-error" role="alert">{importError}</p>}
+              <input ref={inputRef} type="file" accept=".bin" onChange={chooseFile} hidden aria-label="Choose base firmware" />
+              <section className="configuration-section" aria-labelledby="firmware-title"><div className="section-title"><h2 id="firmware-title">Base firmware</h2><span className="subtle">Read locally</span></div>
+                <div className={'firmware-drop ' + (dragging ? 'is-dragging ' : '') + (fileState === 'ready' ? 'is-verified' : '')} onDragOver={(event) => event.preventDefault()} onDragEnter={() => setDragging(true)} onDragLeave={() => setDragging(false)} onDrop={dropFile} aria-busy={fileState === 'reading'}>
+                  <span className="file-symbol"><Icon name={firmware ? 'check' : 'file'} size={26} /></span>
+                  <div className="file-copy" aria-live="polite"><strong>{firmware ? firmware.name : fileState === 'reading' ? 'Checking your firmware…' : 'Original Octatrack OS 1.40C'}</strong><span>{firmware ? 'SHA-256 verified · ' + (firmware.bytes / 1024).toFixed(0) + ' KB' : 'Drop your .bin file here, or choose it from your device.'}</span></div>
+                  <button className="button button-quiet" onClick={() => inputRef.current?.click()}>{firmware ? 'Change file' : 'Choose file'}</button>
+                </div>
+                {fileError && <p className="file-error" role="alert">{fileError}</p>}
+                <div className="file-footnote"><span>{firmware ? (firmwareSaved ? 'Saved on this device and verified again each time you return.' : 'Verified for this session. Saving on this device…') : 'Saved in this browser after verification. Never uploaded.'}</span>{(firmware || fileState === 'reading') && <button className="text-button" onClick={clearFile}>Remove from device</button>}</div>
+              </section>
+              <section className="configuration-section" aria-labelledby="selection-title"><div className="section-title"><h2 id="selection-title">Selected modules <span className="subtle">{selection.length}</span></h2><a className="text-button" href="#library">Browse modules <Icon name="plus" size={14} /></a></div>
+                {selection.length ? <ul className="selected-list">{selection.map((module) => <li key={module.id}><a className="selected-module-link" href={'#module/' + module.id}><ModulePreview id={module.id} compact /><span><strong>{module.name}</strong><small>{module.detail} · {module.author}</small></span></a><button className="icon-button" aria-label={'Remove ' + module.name} onClick={() => toggleModule(module.id)}><Icon name="close" size={17} /></button></li>)}</ul> : <div className="selection-empty"><Icon name="grid" size={26} /><strong>No modules selected</strong><p>Find something in the library and add it to your configuration.</p><a className="button button-quiet" href="#library">Browse modules</a></div>}
+              </section>
+              <section className="configuration-section chooser-options"><h2>Effect menus</h2><label><input type="checkbox" checked={active?.keepStockFx2??true} onChange={event=>workspace.setKeepStockFx2(event.target.checked)}/><span><strong>Keep stock FX2 effects</strong><small>All original FX1 effects remain available. Turn this off for a shorter FX2 menu and more room for modules.</small></span></label></section>{firmwareBuild.error?.includes('Use current module versions')&&<button className="button button-quiet" onClick={workspace.updateModuleVersions}>Use current module versions</button>}<CompatibilityPanel ids={selectedIds} buildState={firmwareBuild.state}/><aside className="risk-note"><strong>Before you flash</strong><p>Custom firmware can make the device unusable or cause data loss. Back up your projects and samples, review the module test records, and keep the original OS. Flash at your own risk.</p><label className="risk-accept"><input type="checkbox" checked={riskAccepted.key===firmwareBuild.key&&riskAccepted.accepted} onChange={event => setRiskAccepted({key:firmwareBuild.key,accepted:event.target.checked})} />I understand the risks of flashing custom firmware.</label></aside>
+              <FirmwareBuildPanel build={firmwareBuild} available={ENGINE_AVAILABLE} downloadsEnabled={DOWNLOADS_ENABLED} firmwareReady={!!firmware} moduleCount={selection.length} riskAccepted={riskAccepted.key===firmwareBuild.key&&riskAccepted.accepted} configurationName={active?.name??'Octamod configuration'} onExport={saveSelection} exported={saved}/>
+
+            </div>
+          ) : (
+            <div className="library-page">
+              <div className="page-heading"><div><p className="page-kicker">OCTAMOD / COLLECTION</p><h1>{filter === 'all' ? 'Module library' : filter === 'effects' ? 'Effects' : 'Playback'}</h1><p>A different way to play your Octatrack.</p></div><span className="library-total">{visibleModules.length} modules</span></div>
+              <div className="library-subheading"><span>{query.trim() ? 'Results for “' + query.trim() + '”' : filter === 'all' ? 'Explore the collection' : filter === 'effects' ? 'Filters, texture & space' : 'New ways to play'}</span><span className="subtle">Octatrack · OS 1.40C</span></div>
+              <div className="discovery-tools"><label>Type<select value={family} onChange={event=>setFamily(event.target.value)}><option value="all">All sounds</option>{Array.from(new Set(MODULES.map(m=>DETAILS[m.id].family))).map(value=><option key={value}>{value}</option>)}</select></label><label>Sort<select value={sort} onChange={event=>setSort(event.target.value)}><option value="collection">Collection order</option><option value="name">Name A–Z</option><option value="author">Author</option><option value="rated">Highest rated</option></select></label><button className="button button-quiet" disabled={comparison.length<2} onClick={()=>setCompareOpen(true)}>Compare{comparison.length?' ('+comparison.length+')':''}</button></div>
+              <div className="module-grid">{visibleModules.map((module) => {
+                const selected = selectedIds.includes(module.id)
+                const stats=statistics.find(item=>item.module_id===module.id),record: {proof:string}=(metadata.modules as Record<string,{proof:string}>)[module.id]
+                return <article key={module.id} className={'module-card ' + (selected ? 'is-selected' : '')}>
+                  <a href={'#module/' + module.id} className="module-cover" aria-label={'View ' + module.name}><ModulePreview id={module.id} /><div className="hover-info"><span>{module.description}</span><strong>Explore module <Icon name="arrow" size={15} /></strong></div>{selected && <span className="selected-badge" aria-label="Selected"><Icon name="check" size={12} /></span>}</a>
+                  <div className="module-card-body"><div className="module-card-title"><a href={'#module/' + module.id}>{module.name}</a><button className={'add-button ' + (selected ? 'is-added' : '')} aria-label={(selected ? 'Remove ' : 'Add ') + module.name + (selected ? ' from configuration' : ' to configuration')} aria-pressed={selected} onClick={() => toggleModule(module.id)}><Icon name={selected ? 'check' : 'plus'} size={15} /><span>{selected ? 'Added' : 'Add'}</span></button></div><div className="card-credit"><a href={module.authorUrl} target="_blank" rel="noreferrer">{module.author}</a><span>{module.detail}</span></div><div className="card-description">{module.description}</div><div className="card-bottom"><span>{DETAILS[module.id].family}</span><span className="unrated"><Icon name="star" size={11} />{stats?stats.average.toFixed(1)+' ('+stats.count+')':'Unrated'}</span></div><div className="card-proof"><span>{record.proof==='hardware'?'Earlier hardware evidence':'Emulator evidence'}</span><label><input type="checkbox" checked={comparison.includes(module.id)} disabled={comparison.length>=3&&!comparison.includes(module.id)} onChange={()=>setComparison(current=>current.includes(module.id)?current.filter(id=>id!==module.id):[...current,module.id])}/>Compare<span className="sr-only"> {module.name}</span></label></div></div>
+                </article>
+              })}</div>
+              {!visibleModules.length && <div className="no-results"><Icon name="search" size={30} /><h2>No modules found</h2><p>Try another name, effect or author.</p><button className="button button-quiet" onClick={() => {setQuery('');setFamily('all')}}>Clear search</button></div>}
+              {!!catalog.filter((item,index,items)=>!MODULES.some(module=>module.id===item.module_id)&&items.findIndex(other=>other.module_id===item.module_id)===index).length && <section className="published-collection"><h2>Community modules</h2><div className="module-grid">{catalog.filter((item,index,items)=>!MODULES.some(module=>module.id===item.module_id)&&items.findIndex(other=>other.module_id===item.module_id)===index).map(item=><article className="published-card" key={item.module_id}><span className="pill">Reviewed contribution</span><h2><a href={'#community-module/'+item.module_id}>{item.title}</a></h2><p>{item.description}</p><a className="text-button" href={'#community-module/'+item.module_id}>View module →</a></article>)}</div></section>}
+              <div className="library-note"><span className="status-dot" /><p>This catalog follows an experimental build. Review each module before preparing a configuration.</p></div>
+            </div>
+          )}
+          </>}
+        </main>
+        <footer className="status-bar"><span><span className={'status-dot ' + (firmware ? 'verified' : '')} />{firmware ? 'OS 1.40C verified' : 'No base firmware selected'}</span><span className="status-build" role="status">{workspace.saving ? "Saving…" : workspace.storageError ? "Changes not saved" : "Workspace saved on device"}</span><a href="#configuration" aria-live="polite">{selection.length} {selection.length === 1 ? 'module' : 'modules'} selected <Icon name="arrow" size={12} /></a></footer>
+      </div>
+    </div>
+  )
+}
