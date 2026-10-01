@@ -1,3 +1,4 @@
+import { trackUsage } from '../community/usage'
 import { useEffect, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import type { Configuration } from '../config/workspace'
@@ -34,7 +35,7 @@ export function useFirmwareBuild(client: RefObject<FirmwareClient | null>, activ
     building.current = true; setView({ key, state: 'building', report: current.report, phase: 'composing' })
     try {
       const result = await client.current.build(ids, keepStock, phase => { if (operation.current === request) setView({ key, state: 'building', report: current.report, phase }) })
-      if (operation.current === request) setView({ key, state: 'built', report: result.report, result: { buffer: result.buffer, sha256: result.sha256 } })
+      if (operation.current === request) { setView({ key, state: 'built', report: result.report, result: { buffer: result.buffer, sha256: result.sha256 } }); trackUsage('build_succeeded') }
     } catch (error) { if (operation.current === request) setView({ key, state: 'error', error: error instanceof Error ? error.message : 'Could not prepare this firmware.' }) }
     finally { if (operation.current === request) building.current = false }
   }

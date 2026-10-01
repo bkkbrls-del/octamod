@@ -807,3 +807,26 @@ h1 { font-size: 28px; }
   .faq-question summary { padding: 15px; }
   .faq-answer { padding: 0 15px 18px; }
 }
+
+.statistics-controls { display:flex; gap:12px; align-items:end; flex-wrap:wrap; }
+.statistics-controls label { display:grid; gap:6px; font-size:12px; color:var(--muted); }
+.statistics-controls select { min-height:36px; padding:6px 10px; border:1px solid var(--line); border-radius:5px; background:var(--surface); color:inherit; }
+.statistics-cards { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.statistics-cards small { display:block; color:var(--muted); font-size:11px; margin-top:8px; }
+.visitors-chart { margin:24px 0; padding:18px; border:1px solid var(--line); border-radius:7px; }
+.visitors-chart figcaption { font-size:13px; margin-bottom:20px; }
+.visitors-bars { height:120px; display:flex; gap:3px; align-items:end; }
+.visitors-bars span { flex:1; min-width:1px; border-radius:3px 3px 0 0; background:#9389e6; }
+.visitors-bars span.uncollected { background:var(--line); }
+.chart-dates { display:flex; justify-content:space-between; color:var(--muted); font-size:11px; margin-top:12px; }
+.statistics-table:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.statistics-table { overflow:auto; margin:20px 0; }
+.statistics-table table { width:100%; border-collapse:collapse; font-size:12px; font-variant-numeric:tabular-nums; }
+.statistics-table caption { text-align:left; color:var(--muted); padding-bottom:12px; }
+.statistics-table th,.statistics-table td { border-bottom:1px solid var(--line); padding:12px 9px; text-align:right; }
+.statistics-table th:first-child { text-align:left; white-space:nowrap; }
+.statistics-table thead th { color:var(--muted); font-weight:500; min-width:80px; }
+.statistics-definitions { margin-top:20px; font-size:13px; color:var(--muted); }
+.statistics-definitions summary { cursor:pointer; color:#ececf1; }
+.status-bar .privacy-link { margin-right:8px; font-size:11px; }
+@media(max-width:650px) { .statistics-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } .usage-statistics>.section-title { flex-wrap:wrap; gap:12px; } }

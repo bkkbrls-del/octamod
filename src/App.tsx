@@ -1,3 +1,5 @@
+import { trackPageView, trackUsage } from './community/usage'
+import { PrivacyPage } from './community/PrivacyPage'
 import { ModuleSets } from './components/ModuleSets'
 import { ModuleComparison } from './components/ModuleComparison'
 import { MODULE_DOCUMENTS_BY_ID } from './catalog/documents'
@@ -35,13 +37,14 @@ function getRoute() { const route=window.location.hash.slice(1)||'library'; retu
 
 export default function App() {
   const route = useSyncExternalStore(subscribeRoute, getRoute, () => 'library')
+  useEffect(()=>trackPageView(route),[route])
   const detailModule = route.startsWith('module/') ? AVAILABLE_MODULES.find((module) => module.id === route.slice(7)) : undefined
   const pausedModule = MODULES.find(module => isModulePaused(module.id) && (route === 'module/' + module.id || route === 'community-module/' + module.id))
   const configuration = route === 'configuration'
   const { session, catalog } = useCommunity()
   const communityModule = route.startsWith('community-module/') ? catalog.find(item => item.module_id === route.slice(17) && !isModulePaused(item.module_id)) : undefined
   const communityRoute = route === 'activity' || route === 'review' || route === 'admin' || route.startsWith('submit') || !!communityModule
-  const missingRoute=!['library',...MODULE_CATEGORIES,'module-sets','configuration','faq','activity','review','admin'].includes(route)&&!route.startsWith('submit')&&!detailModule&&!communityModule&&!route.startsWith('module-set/')
+  const missingRoute=!['library',...MODULE_CATEGORIES,'module-sets','configuration','faq','activity','review','admin','privacy'].includes(route)&&!route.startsWith('submit')&&!detailModule&&!communityModule&&!route.startsWith('module-set/')
   const filter = MODULE_CATEGORIES.find(category => category === route) ?? 'all'
   const categoryLabels = { effects:'Effects', playback:'Playback', machines:'Machines & sequencer', scenes:'Scenes', 'midi-usb':'MIDI & USB' }
   const workspace = useWorkspace()
@@ -60,7 +63,7 @@ export default function App() {
   const [configDialog, setConfigDialog] = useState<'create' | 'rename' | 'duplicate' | 'delete' | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const mainRef = useRef<HTMLElement>(null)
-  useEffect(() => { mainRef.current?.scrollTo({ top: 0 });document.title=(detailModule?.name??(route==='faq'?'FAQ':route==='configuration'?'Configuration':route.startsWith('submit')?'Submit a module':route==='activity'?'Your activity':(route==='review'||route==='admin')?'Admin workspace':route.startsWith('module-set')?'Module sets':'Module library'))+' · Octamod' }, [route,detailModule?.name])
+  useEffect(() => { mainRef.current?.scrollTo({ top: 0 });document.title=(detailModule?.name??(route==='faq'?'FAQ':route==='privacy'?'Privacy':route==='configuration'?'Configuration':route.startsWith('submit')?'Submit a module':route==='activity'?'Your activity':(route==='review'||route==='admin')?'Admin workspace':route.startsWith('module-set')?'Module sets':'Module library'))+' · Octamod' }, [route,detailModule?.name])
   const selection = resolveSelection(selectedIds)
   const availabilityError = moduleAvailabilityError(selectedIds)
   const conflicts = selectionConflicts(selectedIds, DSP_LOADER && (active?.keepStockFx2 ?? true))
@@ -86,7 +89,7 @@ export default function App() {
     if (event.dataTransfer.files.length !== 1) { workspace.setFileError('Choose one firmware file at a time.'); return }
     void readFile(event.dataTransfer.files[0])
   }
-  function saveSelection() { downloadSelection(selectedIds, firmware, active?.name, DSP_LOADER && (active?.keepStockFx2 ?? true), active?.moduleVersions); setSaved(true) }
+  function saveSelection() { downloadSelection(selectedIds, firmware, active?.name, DSP_LOADER && (active?.keepStockFx2 ?? true), active?.moduleVersions); setSaved(true); trackUsage('configuration_exported') }
   async function importSelection(event: ChangeEvent<HTMLInputElement>) {
     const file=event.currentTarget.files?.[0]; event.currentTarget.value=''; if(!file)return
     setImportError('')
@@ -135,14 +138,14 @@ export default function App() {
       {configDialog && <ConfigurationDialog mode={configDialog} initialName={configDialog === 'create' ? '' : configDialog === 'duplicate' ? (active?.name ?? '') + ' copy' : active?.name ?? ''} onSubmit={submitConfigurationDialog} onClose={() => setConfigDialog(null)} />}
       <div className="workspace">
         <header className="app-toolbar">
-          <div className="toolbar-title"><Icon name={route === 'faq' ? 'help' : configuration ? 'file' : 'grid'} size={17} /><span>{route === 'faq' ? 'FAQ & flashing guide' : configuration ? 'Configuration' : communityRoute ? 'Community' : route.startsWith('module-set') ? 'Module sets' : 'Modules'}</span>{detailModule && <><span className="breadcrumb-divider">/</span><strong>{detailModule.name}</strong></>}<span className="preview-badge">Preview</span></div>
+          <div className="toolbar-title"><Icon name={route === 'faq' ? 'help' : configuration ? 'file' : 'grid'} size={17} /><span>{route === 'faq' ? 'FAQ & flashing guide' : configuration ? 'Configuration' : route === 'privacy' ? 'Privacy' : communityRoute ? 'Community' : route.startsWith('module-set') ? 'Module sets' : 'Modules'}</span>{detailModule && <><span className="breadcrumb-divider">/</span><strong>{detailModule.name}</strong></>}<span className="preview-badge">Preview</span></div>
           {['library',...MODULE_CATEGORIES,'module-sets'].includes(route) && <label className="search"><Icon name="search" size={15} /><input type="search" aria-label={route==='module-sets'?'Search module sets':'Search modules'} placeholder={route==='module-sets'?'Search module sets':'Search modules'} value={query} onChange={(event) => setQuery(event.target.value)} /></label>}
           <a className="mobile-account-link" href="#submit" aria-label="Submit a module"><Icon name="plus" size={17}/></a><a className="mobile-account-link" href="#activity" aria-label="Your activity"><Icon name="message" size={17}/></a><a className="configuration-button" href="#configuration" aria-label={"Open configuration, " + selection.length + " modules selected"}><Icon name="sliders" size={16} /><span>Configuration</span><span className="toolbar-count">{selection.length}</span></a>
         </header>
         <main className="workspace-content" id="main-content" ref={mainRef} tabIndex={-1}>
           {workspace.storageError && <div className="file-error" role="alert">{workspace.storageError} Export important configurations before closing this tab.</div>}
           {route === 'faq' ? <FaqPage /> : !ready ? <div className="loading-panel" role="status">Opening your workspace…</div> : <>
-          {missingRoute?<div className="no-results"><h1>{pausedModule ? 'Module temporarily unavailable' : 'Page not found'}</h1><p>{pausedModule ? pausedModule.name + ' has been temporarily removed due to reported audio crackling.' : 'This module or page is not in the current catalog.'}</p><a className="button button-quiet" href="#library">Open module library</a></div>:route==='module-sets'||route.startsWith('module-set/')?<ModuleSets query={query} id={route.startsWith('module-set/')?route.slice(11):undefined} onUse={(name,ids)=>{workspace.importConfiguration(name,ids);window.location.assign('#configuration')}}/>:route === 'activity' ? <ActivityPage /> : route.startsWith('submit') ? <SubmissionPage key={route} moduleId={route.split('/')[1] ?? ''} /> : route === 'review'||route === 'admin' ? <AdminPage /> : communityModule ? <PublishedModulePage module={communityModule} /> : detailModule ? <ModuleDetail key={detailModule.id} module={detailModule} selected={selectedIds.includes(detailModule.id)} onToggle={() => toggleModule(detailModule.id)} /> : configuration ? (
+          {missingRoute?<div className="no-results"><h1>{pausedModule ? 'Module temporarily unavailable' : 'Page not found'}</h1><p>{pausedModule ? pausedModule.name + ' has been temporarily removed due to reported audio crackling.' : 'This module or page is not in the current catalog.'}</p><a className="button button-quiet" href="#library">Open module library</a></div>:route==='module-sets'||route.startsWith('module-set/')?<ModuleSets query={query} id={route.startsWith('module-set/')?route.slice(11):undefined} onUse={(name,ids)=>{workspace.importConfiguration(name,ids);window.location.assign('#configuration')}}/>:route === 'privacy' ? <PrivacyPage /> : route === 'activity' ? <ActivityPage /> : route.startsWith('submit') ? <SubmissionPage key={route} moduleId={route.split('/')[1] ?? ''} /> : route === 'review'||route === 'admin' ? <AdminPage /> : communityModule ? <PublishedModulePage module={communityModule} /> : detailModule ? <ModuleDetail key={detailModule.id} module={detailModule} selected={selectedIds.includes(detailModule.id)} onToggle={() => toggleModule(detailModule.id)} /> : configuration ? (
             <div className="configuration-page">
               <div className="page-heading"><div><p className="page-kicker">YOUR WORKSPACE</p><h1>{active?.name}</h1><p>Changes save automatically on this device.</p></div><span className="pill">OS 1.40C</span></div>
               <div className="configuration-actions"><select aria-label="Choose configuration" value={active?.id ?? ''} onChange={event => changeConfiguration(event.target.value)}>{workspace.configurations.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select><button className="button button-primary" onClick={() => setConfigDialog('create')}><Icon name="plus" size={16} />New</button><button className="button button-quiet" onClick={() => setConfigDialog('rename')}>Rename</button><button className="button button-quiet" onClick={() => setConfigDialog('duplicate')}>Duplicate</button><button className="button button-quiet" onClick={() => setConfigDialog('delete')}>Delete</button><button className="button button-quiet" onClick={()=>importRef.current?.click()}>Import JSON</button></div><input ref={importRef} type="file" accept="application/json,.json" hidden onChange={event=>void importSelection(event)} aria-label="Import configuration backup"/>{importError&&<p className="file-error" role="alert">{importError}</p>}
@@ -187,7 +190,7 @@ export default function App() {
           )}
           </>}
         </main>
-        <footer className="status-bar"><span><span className={'status-dot ' + (firmware ? 'verified' : '')} />{firmware ? 'OS 1.40C verified' : 'No base firmware selected'}</span><span className="status-build" role="status">{workspace.saving ? "Saving…" : workspace.storageError ? "Changes not saved" : "Workspace saved on device"}</span><a href="#configuration" aria-live="polite">{selection.length} {selection.length === 1 ? 'module' : 'modules'} selected <Icon name="arrow" size={12} /></a></footer>
+        <footer className="status-bar"><a className="privacy-link" href="#privacy">Privacy</a><span><span className={'status-dot ' + (firmware ? 'verified' : '')} />{firmware ? 'OS 1.40C verified' : 'No base firmware selected'}</span><span className="status-build" role="status">{workspace.saving ? "Saving…" : workspace.storageError ? "Changes not saved" : "Workspace saved on device"}</span><a href="#configuration" aria-live="polite">{selection.length} {selection.length === 1 ? 'module' : 'modules'} selected <Icon name="arrow" size={12} /></a></footer>
       </div>
     </div>
   )

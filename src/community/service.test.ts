@@ -2,7 +2,8 @@
 import { DatabaseSync } from 'node:sqlite'
 import type { SQLInputValue } from 'node:sqlite'
 import { readFileSync } from 'node:fs'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { cleanupUsage } from '../../server/usage'
 import { handleApi } from '../../server/api'
 import { handleCommunity } from '../../server/transport'
 import { digest } from '../../server/security'
@@ -23,6 +24,7 @@ async function fixture(){
  db.exec(readFileSync(new URL('../../migrations/0005_configuration_choosers.sql',import.meta.url),'utf8'))
  db.exec(readFileSync(new URL('../../migrations/0006_configuration_versions.sql',import.meta.url),'utf8'))
  db.exec(readFileSync(new URL('../../migrations/0007_guest_only_admin.sql',import.meta.url),'utf8'))
+ db.exec(readFileSync(new URL('../../migrations/0008_private_usage.sql',import.meta.url),'utf8'))
  const env:Env={DB:adapter(db),APP_URL:'https://octamod.test',ADMIN_KEY_SHA256:await digest(adminKey)}
  const objects=new Map<string,ArrayBuffer>()
  env.MEDIA={async put(key,bytes){objects.set(key,bytes)},async get(key){const bytes=objects.get(key);return bytes?{body:new ReadableStream({start(controller){controller.enqueue(new Uint8Array(bytes));controller.close()}})}:null},async delete(key){objects.delete(key)}}
@@ -41,7 +43,7 @@ async function fixture(){
  return {db,env,call,tokens,admin,openAdmin}
 }
 const adminKey='e'.repeat(64)
-afterEach(()=>{for(const db of databases.splice(0))db.close()})
+afterEach(()=>{vi.useRealTimers();for(const db of databases.splice(0))db.close()})
 const details={moduleId:'new-filter',title:'New filter',repositoryUrl:'https://github.com/sambanks/example/tree/main/modules/filter',description:'Original filter',usage:'Choose the filter',testReportUrl:'https://github.com/sambanks/example/blob/main/TESTS.md',stressNotes:'Eight tracks under stress',qualityNotes:'Emulator only; hardware untested',resourceNotes:'100 words; CPU not measured',license:'Original code, MIT; own capture',rightsConfirmed:true}
 describe('community access and review',()=>{
  it('accepts module contributions through PRs only, including authors and admins',async()=>{
@@ -196,5 +198,79 @@ describe('GitHub Pages and separate backend',()=>{
   }
   const session=await (await handleCommunity(new Request(endpoint+'/auth/session',{headers}),env)).text()
   expect(session).not.toMatch(/github/i)
+ })
+})
+
+const usageEvent=(event='page_view',visitor='11111111-1111-4111-8111-111111111111',eventId=crypto.randomUUID())=>({event,visitor,eventId})
+describe('private aggregate usage statistics',()=>{
+ it('counts events once, deduplicates daily visitors, and keeps summaries behind administrator authorization',async()=>{
+  const {call,db,admin,tokens}=await fixture(),first=usageEvent()
+  expect((await call('/usage/events','POST',first)).status).toBe(200)
+  expect((await call('/usage/events','POST',first)).status).toBe(200)
+  for(const event of ['configuration_started','build_succeeded','firmware_download_requested','configuration_exported'])expect((await call('/usage/events','POST',usageEvent(event))).status).toBe(200)
+  expect((await call('/usage/events','POST',usageEvent('page_view','22222222-2222-4222-8222-222222222222'))).status).toBe(200)
+  for(const auth of ['', 'octamod_session='+tokens.author])expect((await call('/admin/statistics','GET',undefined,auth)).status).toBe(403)
+  expect((await call('/usage/events','GET')).status).toBe(404)
+  const response=await call('/admin/statistics?days=7','GET',undefined,'',undefined,admin)
+  expect(response.headers.get('cache-control')).toBe('no-store')
+  const result=await response.json();expect(result.rows).toHaveLength(1)
+  expect(result.rows[0]).toMatchObject({visitors:2,page_views:2,configurations:1,builds:1,downloads:1,exports:1})
+  expect(result.collectionStarted).toMatch(/^\d{4}-\d{2}-\d{2}T/)
+  expect(JSON.stringify(db.prepare('SELECT * FROM usage_visitors').all())).not.toContain(first.visitor)
+  expect(JSON.stringify(db.prepare('SELECT * FROM usage_events').all())).not.toContain(first.eventId)
+  expect(db.prepare('SELECT COUNT(*) AS n FROM users').get()).toEqual({n:3}) // No visitor accounts are created.
+  expect((await call('/admin/statistics?days=365','GET',undefined,'',undefined,admin)).status).toBe(400)
+  expect((await handleApi(new Request('https://octamod.test/api/admin/statistics',{headers:{'X-Octamod-Admin':admin}}),{DB:adapter(db),APP_URL:'https://octamod.test'})).status).toBe(403)
+ })
+ it('rolls back a failed count and allows an unchanged event to be safely retried',async()=>{
+  const {call,db}=await fixture(),event=usageEvent()
+  db.exec("CREATE TRIGGER fail_usage_count BEFORE INSERT ON usage_daily BEGIN SELECT RAISE(ABORT,'Synthetic failure'); END")
+  expect((await call('/usage/events','POST',event)).status).toBe(500)
+  for(const table of ['usage_events','usage_visitors','usage_daily','usage_meta'])expect(db.prepare('SELECT COUNT(*) AS n FROM '+table).get()).toEqual({n:0})
+  db.exec('DROP TRIGGER fail_usage_count')
+  expect((await call('/usage/events','POST',event)).status).toBe(200)
+  expect((await call('/usage/events','POST',{...event,event:'build_succeeded'})).status).toBe(200)
+  expect(db.prepare('SELECT visitors,page_views,builds FROM usage_daily').get()).toEqual({visitors:1,page_views:1,builds:0})
+ })
+ it('refuses firmware, configuration content, extra fields, invalid events and other origins without recording them',async()=>{
+  const {call,db,env}=await fixture()
+  for(const body of [{...usageEvent(),firmware:'not accepted'},{...usageEvent(),moduleIds:['miniverb']},{...usageEvent(),email:'not collected'},usageEvent('arbitrary_event'),{...usageEvent(),visitor:'stable-user-name'}])expect((await call('/usage/events','POST',body)).status).toBe(400)
+  expect((await call('/usage/events','POST',{...usageEvent(),firmware:'x'.repeat(1024)})).status).toBe(413)
+  expect((await call('/usage/events','POST',usageEvent(),'','https://elsewhere.test')).status).toBe(403)
+  expect((await handleApi(new Request('https://octamod.test/api/usage/events',{method:'POST',headers:{Origin:env.APP_URL!,'Content-Type':'application/octet-stream'},body:'ELEK'}),env)).status).toBe(415)
+  expect(db.prepare('SELECT COUNT(*) AS n FROM usage_daily').get()).toEqual({n:0})
+ })
+ it('honors browser privacy headers and fails closed when usage is not configured',async()=>{
+  const {env,db}=await fixture()
+  for(const header of ['DNT','Sec-GPC'])expect((await handleCommunity(new Request('https://octamod.test/api/usage/events',{method:'POST',headers:{Origin:env.APP_URL!,'Content-Type':'application/json',[header]:'1'},body:JSON.stringify(usageEvent())}),env)).status).toBe(204)
+  expect(db.prepare('SELECT COUNT(*) AS n FROM usage_events').get()).toEqual({n:0})
+  expect((await handleCommunity(new Request('https://octamod.test/api/usage/events',{method:'POST',headers:{Origin:env.APP_URL!,'Content-Type':'application/json'},body:JSON.stringify(usageEvent())}),{...env,ADMIN_KEY_SHA256:undefined})).status).toBe(503)
+ })
+ it('changes server visitor hashes every UTC day and preserves independent daily counts',async()=>{
+  vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date('2026-10-01T23:59:00Z'))
+  const {call,db}=await fixture(),event=usageEvent()
+  expect((await call('/usage/events','POST',event)).status).toBe(200)
+  vi.setSystemTime(new Date('2026-10-02T00:01:00Z'))
+  expect((await call('/usage/events','POST',event)).status).toBe(200)
+  const visitors=db.prepare('SELECT visitor_hash FROM usage_visitors ORDER BY day').all();expect(visitors).toHaveLength(2);expect(visitors[0]).not.toEqual(visitors[1])
+  expect(db.prepare('SELECT visitors,page_views FROM usage_daily ORDER BY day').all()).toEqual([{visitors:1,page_views:1},{visitors:1,page_views:1}])
+ })
+ it('expires short-lived markers, keeps 90 aggregate days and reports absent historical coverage honestly',async()=>{
+  const {call,db,env,admin}=await fixture()
+  const empty=await (await call('/admin/statistics','GET',undefined,'',undefined,admin)).json();expect(empty.collectionStarted).toBeNull();expect(empty.rows).toEqual([])
+  for(const date of ['2026-07-03','2026-07-04','2026-09-29','2026-09-30']){
+   db.prepare('INSERT INTO usage_daily(day,visitors) VALUES(?,1)').run(date)
+   db.prepare('INSERT INTO usage_visitors(day,visitor_hash) VALUES(?,?)').run(date,'a'.repeat(64))
+   db.prepare('INSERT INTO usage_events(day,event_hash) VALUES(?,?)').run(date,'b'.repeat(64))
+  }
+  await cleanupUsage(env.DB!,new Date('2026-10-01T12:00:00Z'))
+  expect(db.prepare('SELECT day FROM usage_daily ORDER BY day').all()).toEqual([{day:'2026-07-04'},{day:'2026-09-29'},{day:'2026-09-30'}])
+  expect(db.prepare('SELECT day FROM usage_visitors').all()).toEqual([{day:'2026-09-30'}]);expect(db.prepare('SELECT day FROM usage_events').all()).toEqual([{day:'2026-09-30'}])
+ })
+ it('limits event bursts without accepting further counts',async()=>{
+  const {call,db}=await fixture()
+  for(let i=0;i<200;i++)expect((await call('/usage/events','POST',usageEvent())).status).toBe(200)
+  expect((await call('/usage/events','POST',usageEvent())).status).toBe(429)
+  expect(db.prepare('SELECT visitors,page_views FROM usage_daily').get()).toEqual({visitors:1,page_views:200})
  })
 })
