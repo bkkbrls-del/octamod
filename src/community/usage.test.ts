@@ -3,20 +3,21 @@ let usage: typeof import('./usage')
 let values: Map<string,string>
 let request: ReturnType<typeof vi.fn>
 beforeEach(async()=>{
- vi.resetModules();vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date('2026-10-01T12:00:00Z'))
+ vi.resetModules();vi.stubEnv('VITE_COMMUNITY_API_URL','');vi.useFakeTimers({toFake:['Date']});vi.setSystemTime(new Date('2026-10-01T12:00:00Z'))
  values=new Map();request=vi.fn().mockResolvedValue(new Response('{}'))
  vi.stubGlobal('window',{});vi.stubGlobal('navigator',{doNotTrack:null});vi.stubGlobal('fetch',request)
  vi.stubGlobal('localStorage',{getItem:(key:string)=>values.get(key)??null,setItem:(key:string,value:string)=>values.set(key,value),removeItem:(key:string)=>values.delete(key)})
  usage=await import('./usage')
 })
-afterEach(()=>{vi.useRealTimers();vi.unstubAllGlobals()})
+afterEach(()=>{vi.useRealTimers();vi.unstubAllGlobals();vi.unstubAllEnvs()})
 describe('anonymous usage reporting',()=>{
- it('sends only the closed event name and random IDs, without cookies, session headers or configuration identifiers',()=>{
-  values.set('octamod.community.session:/api','a'.repeat(64));values.set('octamod.community.admin:/api','b'.repeat(64))
+ it.each(['','https://community.example/api'])('sends only anonymous fields without credentials for API base %s',(apiBase)=>{
+  vi.stubEnv('VITE_COMMUNITY_API_URL',apiBase)
+  values.set('octamod.community.session:'+(apiBase||'/api'),'a'.repeat(64));values.set('octamod.community.admin:'+(apiBase||'/api'),'b'.repeat(64))
   const configuration='33333333-3333-4333-8333-333333333333'
   usage.trackConfigurationStarted(configuration);usage.trackConfigurationStarted(configuration)
   expect(request).toHaveBeenCalledTimes(1)
-  const [url,options]=request.mock.calls[0];expect(url).toBe('/api/usage/events');expect(options.credentials).toBe('omit');expect(options.referrerPolicy).toBe('no-referrer')
+  const [url,options]=request.mock.calls[0];expect(url).toBe((apiBase||'/api')+'/usage/events');expect(options.credentials).toBe('omit');expect(options.referrerPolicy).toBe('no-referrer')
   expect(Object.keys(JSON.parse(options.body)).sort()).toEqual(['event','eventId','visitor'])
   expect(options.body).not.toContain(configuration);expect(options.headers).toEqual({'Content-Type':'application/json'})
  })
