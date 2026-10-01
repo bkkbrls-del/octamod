@@ -1,3 +1,4 @@
+import { DSP_LOADER } from '../engine/protocol'
 import { resolveSelection } from '../catalog/modules'
 import { compareModuleVersions } from '../catalog/versions'
 
@@ -9,7 +10,7 @@ function deviceId() {
 }
 
 export type Configuration = { id: string; name: string; moduleIds: string[]; moduleVersions: Record<string,string>; keepStockFx2: boolean; createdAt: string; updatedAt: string }
-export function newConfiguration(name: string, moduleIds: string[] = [], keepStockFx2 = true, moduleVersions?: Record<string,string>): Configuration {
+export function newConfiguration(name: string, moduleIds: string[] = [], keepStockFx2 = DSP_LOADER, moduleVersions?: Record<string,string>): Configuration {
   const now = new Date().toISOString()
   return { id: deviceId(), name: cleanName(name), moduleIds: resolveSelection(moduleIds).map(m => m.id), moduleVersions: moduleVersions ? normalizeModuleVersions(moduleIds,moduleVersions) : pinModuleVersions(moduleIds), keepStockFx2, createdAt: now, updatedAt: now }
 }
