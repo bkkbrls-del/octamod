@@ -1,3 +1,4 @@
+import { trackConfigurationStarted } from '../community/usage'
 import { useEffect, useRef, useState } from 'react'
 import { newConfiguration, cleanName, pinModuleVersions } from '../config/workspace'
 import { isModuleAvailable } from '../catalog/availability'
@@ -91,11 +92,13 @@ export function useWorkspace() {
     const item = newConfiguration(name, copy ? original?.moduleIds : [], copy ? original?.keepStockFx2 : true, copy ? original?.moduleVersions : undefined)
     replaceConfigurations([...configsRef.current, item]); changeActive(item.id)
     persist(async store => { await store.saveConfiguration(item); await store.setActiveConfiguration(item.id) })
+    if(item.moduleIds.length)trackConfigurationStarted(item.id)
     return item
   }
   function importConfiguration(name: string, ids: string[], keepStockFx2 = true, moduleVersions?: Record<string,string>) {
     const item = newConfiguration(name, ids, keepStockFx2, moduleVersions)
     replaceConfigurations([...configsRef.current,item]);changeActive(item.id)
+    if(item.moduleIds.length)trackConfigurationStarted(item.id)
     persist(async store => {await store.saveConfiguration(item);await store.setActiveConfiguration(item.id)})
   }
   function updateActive(update: Partial<Pick<Configuration, 'name' | 'moduleIds' | 'moduleVersions' | 'keepStockFx2'>>) {
@@ -112,6 +115,7 @@ export function useWorkspace() {
     const moduleIds = current.moduleIds.includes(id) ? current.moduleIds.filter(value => value !== id) : [...current.moduleIds, id]
     const moduleVersions = Object.fromEntries(moduleIds.map(selected=>[selected,current.moduleVersions[selected]??pinModuleVersions([selected])[selected]]))
     updateActive({ moduleIds, moduleVersions })
+    if(!current.moduleIds.length&&moduleIds.length)trackConfigurationStarted(current.id)
   }
   function deleteConfiguration() {
     const deleting = activeRef.current

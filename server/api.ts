@@ -1,3 +1,4 @@
+import { recordUsage, usageStatistics } from './usage'
 import recipes from '../src/catalog/module-sets.json'
 import type { Database, Env, Media, User } from './platform'
 import { ADMIN_ACTOR, authentication, currentUser, guest, isAdmin, throttle } from './auth'
@@ -19,6 +20,7 @@ export async function handleApi(request: Request, env: Env): Promise<Response> {
     if (/^\/api\/configurations(?:\/|$)/.test(path)) throw new HttpError(410,'Configurations are saved on your device. Use Export to copy one to another device.')
     const db = env.DB
     if (!db) throw new HttpError(503,'Community services are not connected yet. Your device workspace still works.')
+    if (path === '/api/usage/events' && request.method === 'POST') return await recordUsage(request,env,db)
     const user = await currentUser(request,db)
     const admin = await isAdmin(request,env,db)
     let match: RegExpMatchArray | null
@@ -77,6 +79,7 @@ export async function handleApi(request: Request, env: Env): Promise<Response> {
     }
     if (path.startsWith('/api/admin/')) {
       if (!admin) throw new HttpError(403,'Administrator access is required.')
+      if (path === '/api/admin/statistics' && request.method === 'GET') return await usageStatistics(db,Number(url.searchParams.get('days') ?? 7))
       if (path === '/api/admin/overview' && request.method === 'GET') return response(await db.prepare("SELECT (SELECT COUNT(*) FROM submissions WHERE status='pending') AS pending,(SELECT COUNT(*) FROM module_publications) AS published,(SELECT COUNT(*) FROM comments) AS comments,(SELECT COUNT(*) FROM issues WHERE status='open') AS issues,(SELECT COALESCE(SUM(bytes),0) FROM media) AS mediaBytes").first())
       if (path === '/api/admin/history' && request.method === 'GET') return response((await db.prepare('SELECT e.id,e.module_id,e.action,e.note,e.created_at,u.display_name AS actor FROM review_events e JOIN users u ON u.id=e.actor_id ORDER BY e.rowid DESC LIMIT 100').all()).results)
       if (path === '/api/admin/issues' && request.method === 'GET') return response((await db.prepare('SELECT i.id,i.module_id,i.author_login,i.title,i.body,i.status,i.created_at,u.display_name AS reporter FROM issues i JOIN users u ON u.id=i.reporter_id ORDER BY i.created_at DESC LIMIT 200').all()).results)
