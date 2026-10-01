@@ -34,3 +34,7 @@ public/module-media/
 *.pyc
 sdk/octabam/vendor/
 sdk/octabam/out/
+
+# Local agent state and internal session notes stay off the public repository.
+.codex/
+docs/HANDOFF-*.md

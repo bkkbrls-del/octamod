@@ -56,6 +56,12 @@ for (const variant of packages.get('resident-dsp.json').variants) {
   // Native static placement leaves unbound ids on stock's null stub; only the running receiver redirects them.
   if (variant.nullInit !== variant.stockCopy.sourceAddress || variant.nullProc !== variant.stockCopy.sourceAddress + 1) throw new Error('Compiled receiver must keep stock null dispatch entries')
 }
+// Release automation never sees firmware, so it cannot prove native parity. Publish only packages that
+// reproduce the committed, locally parity-verified ones; provenance is the only permitted difference.
+if (!development) for (const [name, doc] of packages) {
+  const withoutProvenance = doc => JSON.stringify({ ...doc, sourceCommit: null })
+  if (withoutProvenance(doc) !== withoutProvenance(await json(resolve(root,'src/engine/assets',name)))) throw new Error('Compiled ' + name + ' does not reproduce the committed, parity-verified package. Rebuild locally, verify native parity and commit the result.')
+}
 if(checkOnly){console.log('All eight artifacts, complete source inventory and version pins validated ('+(development?'development':'owner-approved')+').');process.exit(0)}
 // Validate the complete artifact before touching any frontend file.
 for (const name of expected) await copyFile(resolve(folder,name),resolve(root,'src/engine/assets',name))
