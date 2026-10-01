@@ -37,4 +37,13 @@ sdk/octabam/out/
 
 # Local agent state and internal session notes stay off the public repository.
 .codex/
+.agents/
+.claude/
+AGENTS.md
+AGENTS.local.md
+CLAUDE.md
+GEMINI.md
+/GOAL.md
+/docs/GOAL-ADDITIONS.md
 docs/HANDOFF-*.md
+/docs/*.local.md
