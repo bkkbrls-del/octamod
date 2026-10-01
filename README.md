@@ -63,7 +63,7 @@ Comments, ratings and likes are public. Issue reports name the module author but
 
 Modules, code updates, documentation and media are submitted through GitHub PRs only. **The owner merging the PR is approval** for that version. There is no second website approval step. Require owner review and successful checks on the latest revision, protect main and never reuse a released version for changed contents. Pending PRs and failed release builds retain the previous publication.
 
-Module manifests import plain-text descriptions, controls, evidence and rights metadata from source folders. Compilation from merged commits must run in isolated automation without secrets or stock firmware and bind versioned artifacts to source/review identities. That source-to-package release integration is still pending; metadata generation alone cannot install arbitrary modules.
+Module manifests import plain-text descriptions, controls, evidence and rights metadata from source folders. `.github/workflows/pages.yml` compiles each owner-merged main commit in a container without network, credentials or stock firmware, mounting only the tracked tree of that one commit. The publisher independently confirms the owner merge through the GitHub API (configured numeric `MODULE_APPROVER_GITHUB_ID`), current versions, the complete source inventory, the compiler and all eight artifact hashes. It publishes only if the build reproduces the committed packages, which were checked locally for native parity. Metadata generation alone cannot install arbitrary modules. See `docs/VERIFICATION.md` for what has and has not run.
 
 The website contribution route provides SDK/PR instructions and uses `VITE_REPOSITORY_URL` for the actual repository links. Until a repository is configured, it clearly says the repository is being prepared. The former submission, repository-import and website-review API routes return 410. Existing database publication/history records and media reads remain for migration; no new version can bypass PR approval.
 
@@ -71,13 +71,13 @@ The private administrator workspace provides GitHub contribution entry points, p
 
 ## GitHub Pages and community API setup
 
-The repository includes a manual frontend deployment workflow at `.github/workflows/pages.yml`. It checks the app with Node 24, builds static files and publishes `dist/` to GitHub Pages. Relative asset paths and hash navigation support repository URLs such as `https://<owner>.github.io/<repo>/` and root/custom-domain URLs. No GitHub repository, Pages site or remote backend has been created. The SDK belongs in this same repository; see [accepted decisions](docs/DECISIONS.md).
+`.github/workflows/pages.yml` runs for every push to main (and on manual dispatch): it verifies the owner merge, compiles modules in isolation, checks the app with Node 24, builds static files and publishes `dist/` to GitHub Pages. Direct pushes without an owner-merged PR fail before anything is built. Actions, the runner image and the toolchain base image are pinned to exact versions. Relative asset paths and hash navigation support repository URLs such as `https://<owner>.github.io/<repo>/` and root/custom-domain URLs. The public repository exists; Pages and the remote backend are not configured yet. The SDK belongs in this same repository; see [accepted decisions](docs/DECISIONS.md).
 
 The community runs separately through `worker.ts` and `wrangler.worker.jsonc`, using Cloudflare Worker, D1 and R2 free allowances initially. No paid authentication or email provider is required. Free limits still apply. The frontend uses the public `VITE_COMMUNITY_API_URL` ending in `/api`; leave it blank for the local Vite proxy. Only JSON, original/licensed preview media and community session data reach the API. No firmware endpoint exists.
 
 Before an authorized deployment:
 
-1. Configure the public repository and enable GitHub Pages with GitHub Actions as its publishing source. Set the repository variable `COMMUNITY_API_URL` to the deployed backend URL ending in `/api`.
+1. Enable GitHub Pages with GitHub Actions as its publishing source and protect `main` (required PR, owner review, required checks; no merge queue, which would change the merging account). Set the repository variables `MODULE_APPROVER_GITHUB_ID` to the owner's numeric GitHub user ID (`gh api users/<login> --jq .id`) and `COMMUNITY_API_URL` to the deployed backend URL ending in `/api`. For a custom domain, verify it for Pages and set it in the Pages settings; with Actions publishing no `CNAME` file is needed.
 2. Create D1 and R2 resources and replace the placeholder database ID and bucket binding in `wrangler.worker.jsonc`. Apply migrations 0001–0007 to the intended remote database.
 3. Set backend `APP_URL` to the full frontend URL **including its repository path and trailing slash**. Keep `SESSION_TRANSPORT=bearer` for separate domains.
 4. Run `npm run admin:key` locally. Keep the printed key in a password manager and store only its digest as the Worker secret `ADMIN_KEY_SHA256`; never as a frontend `VITE_` value.
@@ -87,7 +87,7 @@ Cross-origin requests do not depend on third-party cookies. Guest sessions are o
 
 The owner may instead host the backend on their own webserver. `server/platform.ts` defines the database and object-store adapter interfaces; a self-hosted HTTP entry point, SQLite adapter and filesystem/object-storage adapter remain to be implemented. Only the frontend's API URL would change; local firmware processing would remain identical. A self-hosted backend must derive the client IP for rate limits from its trusted reverse proxy instead of `CF-Connecting-IP`. Same-origin Cloudflare Pages remains a fallback via `wrangler.jsonc`, the existing Pages Function and `npm run deploy:pages`.
 
-`.dev.vars.example` documents local variables; `.dev.vars` is ignored. Deployment/public repository creation still require authorization. GitHub repository ownership is public for a free public Pages repository; a branded URL does not hide that ownership.
+`.dev.vars.example` documents local variables; `.dev.vars` is ignored. Deployment still requires the owner's authorization. GitHub repository ownership is public for a free public Pages repository; a branded URL does not hide that ownership.
 
 ## Firmware engine status
 

@@ -1,5 +1,6 @@
 # Toolchain preparation has network access. The module compilation run does not.
-FROM ubuntu:24.04
+# Multi-architecture index digest of ubuntu:24.04, resolved 1 October 2026.
+FROM ubuntu:24.04@sha256:008173c23f95b170204355c12626cb5a965d779a7e1283b09e9cffbb1bf33ca3
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends python3 git cmake make g++ binutils-m68k-linux-gnu ca-certificates && rm -rf /var/lib/apt/lists/*
 RUN for tool in as ld nm objcopy; do ln -s /usr/bin/m68k-linux-gnu-$tool /usr/local/bin/m68k-elf-$tool; done
