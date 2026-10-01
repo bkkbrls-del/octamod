@@ -1150,16 +1150,12 @@
       "id": "analog-bassdrum",
       "key": "ANALOG BD",
       "name": "Analog BD",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "machines",
       "source": {
         "repository": "https://github.com/sambanks/octabam",
         "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "path": "modules/analog-bassdrum"
-      },
-      "build": {
-        "status": "pending",
-        "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
       },
       "author": {
         "github": "repeat98",
@@ -1268,7 +1264,6 @@
           "poly"
         ],
         "limitations": [
-          "Source imported. Firmware builds for this module are awaiting Octamod verification.",
           "SPRING REV is excluded from the upstream standalone remix; its shared DARK helper must be restored from local firmware.",
           "The current browser and eight-track changes are not hardware-qualified. Eight 909s with DJ EQ in both slots failed with silent output.",
           "Saving this project on stock firmware can overwrite synth settings."
@@ -1297,7 +1292,7 @@
       },
       "tests": {
         "report": "TESTING.md",
-        "summary": "Upstream records exact render/state and source/AMP/effects checks on both cores. ANALOGBD1 ran on an MKI; the current engine browser, louder output and eight-track revision still await hardware qualification. No Octamod native/browser parity has been run for this import.",
+        "summary": "Upstream records exact render/state and source/AMP/effects checks on both cores. ANALOGBD1 ran on an MKI; the current engine browser, louder output and eight-track revision still await hardware qualification. Octamod native and actual-browser composition/packaging parity and rejection checks passed on 1 October 2026. The owner reported both combined test images working; this is a smoke report, not full feature/load qualification.",
         "hardwareStatus": "historical",
         "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "gates": [
@@ -1323,16 +1318,12 @@
       "id": "midi-scenes",
       "key": "MIDI SCENES",
       "name": "MIDI Scenes",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "scenes",
       "source": {
         "repository": "https://github.com/sambanks/octabam",
         "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "path": "modules/midi-scenes"
-      },
-      "build": {
-        "status": "pending",
-        "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
       },
       "author": {
         "github": "bkkbrls-del",
@@ -1365,7 +1356,6 @@
         "location": "MIDI tracks",
         "conflicts": [],
         "limitations": [
-          "Source imported. Firmware builds for this module are awaiting Octamod verification.",
           "MIDI CONTROL CC48/55/56 filter rows are not included.",
           "Composition with Octakit requires its KITS RELOAD bridge; Octakit is outside this catalog."
         ]
@@ -1393,7 +1383,7 @@
       },
       "tests": {
         "report": "TESTING.md",
-        "summary": "The octabam port records hardware operation in OKMS1 with Octakit on 14 September. This import pins 1.40MIDISC8.2 and its regenerated GNU assembly. That earlier hardware result does not qualify this later pin or an Octamod composition.",
+        "summary": "The octabam port records hardware operation in OKMS1 with Octakit on 14 September. This import pins 1.40MIDISC8.2 and its regenerated GNU assembly. That earlier hardware result does not qualify this later pin or an Octamod composition. Octamod native and actual-browser composition/packaging parity and rejection checks passed on 1 October 2026. The owner reported both combined test images working; this is a smoke report, not full feature/load qualification.",
         "hardwareStatus": "historical",
         "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "gates": [
@@ -1412,16 +1402,12 @@
       "id": "usb-audio-out-tracks-main-cue",
       "key": "USB AUDIO OUT TRACKS MAIN CUE",
       "name": "USB Audio",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "midi-usb",
       "source": {
         "repository": "https://github.com/sambanks/octabam",
         "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "path": "modules/usb-audio-out-tracks-main-cue"
-      },
-      "build": {
-        "status": "pending",
-        "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
       },
       "author": {
         "github": "markandrus",
@@ -1461,7 +1447,6 @@
           "usb-audio-out-tracks"
         ],
         "limitations": [
-          "Source imported. Firmware builds for this module are awaiting Octamod verification.",
           "USB output only. Host-to-Octatrack USB input variants are outside this import.",
           "Requires the included internal USB MIDI dependency. Only one USB output layout can be composed.",
           "Windows and Linux hosts have not been measured in this record.",
@@ -1491,7 +1476,7 @@
       },
       "tests": {
         "report": "TESTING.md",
-        "summary": "Selected for the broadest recorded hardware evidence: MKI and MKII, sustained multi-track 24-bit captures and high MIDI receive traffic. The latest source includes track/MAIN alignment and a hardware-tested master-on CUE correction; startup artifacts and unmeasured host/platform cases remain. This import has no Octamod browser/native parity yet.",
+        "summary": "Selected for the broadest recorded hardware evidence: MKI and MKII, sustained multi-track 24-bit captures and high MIDI receive traffic. The latest source includes track/MAIN alignment and a hardware-tested master-on CUE correction; startup artifacts and unmeasured host/platform cases remain. Octamod native and actual-browser composition/packaging parity and rejection checks passed on 1 October 2026. The owner reported both combined test images working; this is a smoke report, not full feature/load qualification.",
         "hardwareStatus": "historical",
         "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "gates": [
@@ -1511,16 +1496,12 @@
       "id": "quantizer",
       "key": "SCALE QUANTIZER",
       "name": "Scale Quantizer",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "machines",
       "source": {
         "repository": "https://github.com/sambanks/octabam",
         "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "path": "modules/quantizer"
-      },
-      "build": {
-        "status": "pending",
-        "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
       },
       "author": {
         "github": "timhastie",
@@ -1615,7 +1596,6 @@
         "location": "Project sequencer",
         "conflicts": [],
         "limitations": [
-          "Source imported. Firmware builds for this module are awaiting Octamod verification.",
           "Sample pitch quantization works on Flex, Static and Pickup; RATE is not a semitone control.",
           "Synth polyphony and synth-specific tuning/glide depend on SYNTH MACHINE, which is outside this catalog.",
           "v2.9’s last fixes have emulator evidence; the earlier MKI result does not qualify the complete current pin."
@@ -1644,7 +1624,7 @@
       },
       "tests": {
         "report": "TESTING.md",
-        "summary": "Upstream records pitch/lock/key, ROOT, save/load and warm-boot checks, and MKI operation through the v2.9 line before its last two fixes. Those last fixes are emulator-verified. This import pins octatrick-modules v2.9 and has no Octamod native/browser parity yet.",
+        "summary": "Upstream records pitch/lock/key, ROOT, save/load and warm-boot checks, and MKI operation through the v2.9 line before its last two fixes. Those last fixes are emulator-verified. This import pins octatrick-modules v2.9. Octamod native and actual-browser composition/packaging parity and rejection checks passed on 1 October 2026. The owner reported both combined test images working; this is a smoke report, not full feature/load qualification.",
         "hardwareStatus": "historical",
         "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "gates": []

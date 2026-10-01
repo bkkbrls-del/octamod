@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "version": "0.1.0-experimental",
+  "version": "0.1.1-experimental",
   "nativeManifest": "manifest.py",
   "media": [],
   "id": "quantizer",
@@ -99,7 +99,6 @@
     "location": "Project sequencer",
     "conflicts": [],
     "limitations": [
-      "Source imported. Firmware builds for this module are awaiting Octamod verification.",
       "Sample pitch quantization works on Flex, Static and Pickup; RATE is not a semitone control.",
       "Synth polyphony and synth-specific tuning/glide depend on SYNTH MACHINE, which is outside this catalog.",
       "v2.9’s last fixes have emulator evidence; the earlier MKI result does not qualify the complete current pin."
@@ -128,7 +127,7 @@
   },
   "tests": {
     "report": "TESTING.md",
-    "summary": "Upstream records pitch/lock/key, ROOT, save/load and warm-boot checks, and MKI operation through the v2.9 line before its last two fixes. Those last fixes are emulator-verified. This import pins octatrick-modules v2.9 and has no Octamod native/browser parity yet.",
+    "summary": "Upstream records pitch/lock/key, ROOT, save/load and warm-boot checks, and MKI operation through the v2.9 line before its last two fixes. Those last fixes are emulator-verified. This import pins octatrick-modules v2.9. Octamod native and actual-browser composition/packaging parity and rejection checks passed on 1 October 2026. The owner reported both combined test images working; this is a smoke report, not full feature/load qualification.",
     "hardwareStatus": "historical",
     "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
     "gates": []
@@ -137,10 +136,6 @@
     "repository": "https://github.com/sambanks/octabam",
     "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
     "path": "modules/quantizer"
-  },
-  "build": {
-    "status": "pending",
-    "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
   },
   "license": {
     "spdx": "MIT",

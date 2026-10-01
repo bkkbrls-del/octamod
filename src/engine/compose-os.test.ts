@@ -23,7 +23,7 @@ describe('complete local OS composer', () => {
     }
   })
   it('rejects changed firmware before creating a runtime or output', async () => {
-    await expect(composeOs(new Uint8Array(64), ['repitch'])).rejects.toThrow('original OS fingerprint')
+    await expect(composeOs(new Uint8Array(64), ['repitch'])).rejects.toThrow('original, unmodified OS image')
   })
   it('pins complete native identities without keeping image bytes', () => {
     expect(proofs.revision).toBe(CATALOG_SOURCE.revision)

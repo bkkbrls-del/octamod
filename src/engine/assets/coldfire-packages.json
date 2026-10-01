@@ -191,7 +191,7 @@
       "sha256": "0bd2782079a4890b6506cd44cd8d9f0db917bfc96e71b03821c05c9c555b4ba2"
     }
   ],
-  "sourceCommit": "98190bbe4f514899c9f7b2ad49ca5cb1df9f85b2",
+  "sourceCommit": null,
   "moduleVersions": {
     "spectrum": "0.1.0-experimental",
     "modulation": "0.1.0-experimental",
@@ -199,6 +199,10 @@
     "miniverb": "0.1.1-experimental",
     "tapeecho": "0.1.1-experimental",
     "euclid": "0.1.1-experimental",
-    "repitch": "0.1.1-experimental"
+    "repitch": "0.1.1-experimental",
+    "analog-bassdrum": "0.1.1-experimental",
+    "midi-scenes": "0.1.1-experimental",
+    "usb-audio-out-tracks-main-cue": "0.1.1-experimental",
+    "quantizer": "0.1.1-experimental"
   }
 }

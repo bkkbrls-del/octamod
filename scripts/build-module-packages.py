@@ -1,16 +1,17 @@
-"""Compile the seven reviewed SDK modules without stock firmware.
+"""Compile the eleven reviewed SDK modules without stock firmware.
 
 Run untrusted changes only in the isolated build container. This developer
 command executes reviewed native declarations in a disposable source copy.
 It assembles and proves relocation; it never boots, renders or stress-tests.
 """
 from pathlib import Path
-import argparse, hashlib, json, os, re, shutil, subprocess, sys, tempfile
+import argparse, hashlib, json, os, re, shutil, struct, subprocess, sys, tempfile
 
 APP = Path(__file__).resolve().parents[1]
 ORDER = ['spectrum', 'modulation', 'character', 'miniverb', 'tapeecho', 'euclid', 'repitch']
+REQUESTED = ['analog-bassdrum', 'midi-scenes', 'usb-audio-out-tracks-main-cue', 'quantizer']
 ASSET_NAMES = ['dsp-packages.json', 'coldfire-packages.json', 'resident-dsp.json', 'rom-packages.json',
-               'bootstrap-package.json', 'menu-recipes.json', 'descriptor-recipes.json', 'platform-writes.json']
+               'bootstrap-package.json', 'menu-recipes.json', 'descriptor-recipes.json', 'platform-writes.json', 'requested-packages.json']
 HASH = lambda data: hashlib.sha256(data).hexdigest()
 
 
@@ -57,11 +58,74 @@ def fingerprint(reference, address):
     raise ValueError('A protected span must be declared with a fingerprint')
 
 
+def compile_requested(root, known, documents, versions, revision, provenance, native, sources, assembler, disassembler):
+    """Authored objects and runtime recipes only; inherited USB spans are masked."""
+    ids = REQUESTED
+    byid = {m.name: m for m in known.values()}
+    selected = [byid[id] for id in ids] + [known['USB MIDI']]
+    selection = {m.key: m for m in selected}
+    objects, groups = [], []
+    for m in selected:
+        author = documents[m.name]['author']['github'] if m.name in documents else 'markandrus'
+        for u in m.linked:
+            work = root / 'requested' / u.label; work.mkdir(parents=True)
+            text = (root / u.source).read_text(); validate_source(text.replace('.include "remix.inc"', ''))
+            extra = []
+            if u.include:
+                (work / 'remix.inc').write_text(u.include(selection)); extra = ['-I', work]
+            obj = work / 'unit.o'; cpu = '54455' if u.dram else u.cpu
+            run(['m68k-elf-as', '-mcpu=' + cpu, *extra, '-o', obj, root / u.source], root)
+            data = bytearray(obj.read_bytes()); copies = []
+            if u.label == 'usbmidi_cfg':
+                shoff, = struct.unpack_from('>I', data, 32); shnum, = struct.unpack_from('>H', data, 48)
+                headers = [struct.unpack_from('>10I', data, shoff + i * 40) for i in range(shnum)]
+                sym = next(h for h in headers if h[1] == 2); strings = headers[sym[6]]
+                names = data[strings[4]:strings[4]+strings[5]]; symbols = {}
+                for at in range(sym[4], sym[4] + sym[5], 16):
+                    name, value, _, _, _, section = struct.unpack_from('>IIIBBH', data, at)
+                    symbols[bytes(names[name:names.index(0,name)]).decode()] = (section, value)
+                for label, address in [('cfg_fs',0x400e201c),('cfg_hs',0x400e203c),('cfg_os_fs',0x400e205c),('cfg_os_hs',0x400e207c)]:
+                    section, value = symbols[label]; offset = headers[section][4] + value + 9
+                    inherited = bytes(data[offset:offset+23]); data[offset:offset+23] = bytes(23)
+                    copies.append(dict(section=section, offset=value+9, source=address+9, bytes=23, sha256=HASH(inherited)))
+            manifest = 'platform/usb-midi/manifest.py' if m.name == 'usb-midi' else f'modules/{m.name}/manifest.py'
+            objects.append(dict(label=u.label,moduleId=m.name,version=documents[m.name]['version'] if m.name in documents else None,key=m.key,author=author,nativeAuthor=m.author,cpu=cpu,dram=u.dram,caveAddress=u.cave_addr,source=u.source,sources={q:sources[q] for q in [u.source,manifest]},bytes=len(data),code=data.hex(),sha256=HASH(data),stockCopies=copies))
+        detours, refs, pokes, tables = [], [], [], []
+        for d in m.detours:
+            length, digest = fingerprint(d.expect,d.site)
+            detours.append(dict(address=d.site,guardLength=length,guardSha256=digest,unit=d.unit,symbol=d.symbol,target=d.target,kind=d.kind,writeLength=d.pad_to or 6,note=d.note))
+        for r in m.symbol_refs:
+            refs.append(dict(address=r.addr,guardLength=4,guardSha256=HASH(r.expect.to_bytes(4,'big')),unit=r.unit,symbol=r.symbol,addend=r.addend,note=r.note))
+        for q in m.pokes:
+            length,digest=fingerprint(q.expect,q.addr)
+            pokes.append(dict(address=q.addr,guardLength=length,guardSha256=digest,code=q.write.hex(),note=q.note))
+        for t in m.tables:
+            tables.append(dict(label=t.label,old=t.old,count=t.count,symbols=[dict(unit=u,symbol=n) for u,n in t.symbols],refs=[dict(address=a,old=o) for a,o in t.refs]))
+        groups.append(dict(moduleId=m.name,key=m.key,author=author,nativeAuthor=m.author,detours=detours,refs=refs,pokes=pokes,tables=tables))
+    import ab_image, dsp909
+    ab_image.OUT = root / 'requested/analog'; dsp909.DSP_ASM=assembler; dsp909.DISASM=disassembler
+    lay,vbase=ab_image.layout(); variants=[]
+    for tag,c in ab_image.PAY.items():
+        words,syms=ab_image.assemble(c['spring'],c['cont'],lay,vbase,tag)
+        variants.append(dict(tag=tag,payloadAddress=c['payload'][0],payloadBytes=c['payload'][1],pointer=c['pointer'],spring=c['spring'],null=list(c['null']),seam=c['seam'],entry=syms['zg01'],words=words,sha256=HASH(code_bytes(words)),calls=list(ab_image.SHARED_CALLS[tag]),destination=ab_image.PRE[tag][0],stage=ab_image.PRE[tag][1]))
+    analog=dict(variants=variants,xBase=ab_image.TABLES,xWords=ab_image.x_image(lay,vbase),springWords=ab_image.SPRING_WORDS,sharedWords=ab_image.SHARED_WORDS,sharedOffset=ab_image.SHARED_OFFSET,sharedSha256=ab_image.SHARED_SHA256)
+    work=root/'requested/bootstrap'; work.mkdir()
+    (work/'table.inc').write_text('        .long 1\n        .long blob0,0,0,0,0,0,0,0\n        .align 4\nblob0:\n')
+    (work/'pretable.inc').write_text('        .long 2\n        .long preblob0,0,0,0,0,0,0,0\n        .long preblob1,0,0,0,0,0,0,0\n        .align 4\npreblob0:\npreblob1:\n')
+    loader = (root/'tools/remix/loader.S').read_text()
+    if loader.count('pretable(%pc)') != 1: raise ValueError('Changed pre-boot pointer needs review')
+    (work/'loader.S').write_text(loader.replace('pretable(%pc)', 'octamod_pre_table(%pc)'))
+    obj=work/'loader.o';run(['m68k-elf-as','-mcpu=5475','-I',work,'--defsym','PREBOOT=1','-o',obj,work/'loader.S'],root)
+    raw=obj.read_bytes(); bootstrap=dict(bytes=len(raw),code=raw.hex(),sha256=HASH(raw))
+    print('Compiled 23 requested ColdFire objects, both Analog BD engines and stock-free pre-boot skeleton.',flush=True)
+    return dict(schema=1,revision=revision,**provenance,objects=objects,groups=groups,analog=analog,bootstrap=bootstrap)
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--vendor', type=Path, required=True, help='Patched DSP assembler/disassembler toolchain directory')
     parser.add_argument('--output', type=Path, required=True, help='New stock-free artifact directory; never overwritten')
     parser.add_argument('--source-commit', help='Exact clean Octamod Git commit for a release build; absent means development')
+    parser.add_argument('--include-requested', action='store_true', help='Development-only assembly for parity verification; does not unlock pending module builds')
     parser.add_argument('--verify-existing', action='store_true', help='Compare every compiled code package with the pinned browser baseline')
     args = parser.parse_args()
     destination, vendor = args.output.resolve(), args.vendor.resolve()
@@ -76,6 +140,7 @@ def main():
         run(['git', 'diff', '--exit-code', 'HEAD', '--', 'sdk', 'src', 'scripts'], APP)
         if run(['git', 'ls-files', '--others', '--exclude-standard', '--', 'sdk', 'src', 'scripts'], APP).strip():
             parser.error('Untracked source is not allowed in a release build')
+    if args.include_requested and args.source_commit: parser.error('Pending modules may be compiled only for local development verification')
     sdk = APP / 'sdk/octabam'
     sources = source_hashes(sdk)
     baseline = {name: json_file(APP / 'src/engine/assets' / name) for name in ASSET_NAMES}
@@ -84,17 +149,18 @@ def main():
     for module in catalog['modules']:
         if catalog_documents[module['id']]['version'] != module['version']: parser.error('Stale catalog module version: ' + module['id'])
     buildable = [module for module in catalog['modules'] if catalog_documents[module['id']].get('build', {}).get('status') != 'pending']
-    if [module['id'] for module in buildable] != ORDER: parser.error('This release compiler supports exactly the seven verified modules; other catalog imports must remain pending')
+    if [module['id'] for module in buildable] not in (ORDER, ORDER + REQUESTED): parser.error('This release compiler supports the seven original modules and four reviewed requested modules')
+    include_requested = args.include_requested or len(buildable) == len(ORDER + REQUESTED)
     versions = {module['id']: module['version'] for module in buildable}
     revision = catalog['sourceRevision']
-    documents = {id: json_file(sdk / 'modules' / id / 'octamod.module.json') for id in ORDER}
+    documents = {id: json_file(sdk / 'modules' / id / 'octamod.module.json') for id in ORDER + REQUESTED}
     provenance = {'sourceCommit': args.source_commit, 'moduleVersions': versions}
     products = {}
     with tempfile.TemporaryDirectory(prefix='octamod-source-build.') as temporary:
         root = Path(temporary)
         # Pending imports stay in the source fingerprint, but are never evaluated or compiled.
         (root / 'modules').mkdir()
-        for id in ORDER:
+        for id in ORDER + (REQUESTED if include_requested else []):
             shutil.copytree(sdk / 'modules' / id, root / 'modules' / id, ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.DS_Store'))
         for group in ['platform', 'tools', 'dsp']:
             shutil.copytree(sdk / group, root / group, ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.DS_Store'))
@@ -108,11 +174,11 @@ def main():
         from remix.schema import Remix
         def deny_stock(): raise RuntimeError('Source builds never accept or resolve stock firmware')
         stock_guard._verified_image = deny_stock
-        registry.PLATFORM_NAMES = ('dsp-dynload-stock', 'dsp-dynload-stock-b')
+        registry.PLATFORM_NAMES = ('dsp-dynload-stock', 'dsp-dynload-stock-b') + (('usb-midi',) if include_requested else ())
         known = registry.modules()
         byid = {module.name: module for module in known.values()}
         public = sorted(module.name for module in known.values() if not module.is_stock and module.name not in registry.PLATFORM_NAMES)
-        if public != sorted(ORDER): raise ValueError('Unexpected module scope')
+        if public != sorted(ORDER + (REQUESTED if include_requested else [])): raise ValueError('Unexpected module scope')
         for id in ORDER:
             module, doc = byid[id], documents[id]
             if doc['version'] != versions[id] or doc['key'] != module.key or doc['author']['github'] != module.author or doc['compatibility']['effectId'] != (module.menu.fx2_id if module.menu else None):
@@ -293,6 +359,8 @@ def main():
             manifest = f'platform/{module.name}/manifest.py' if module.name in registry.PLATFORM_NAMES else f'modules/{module.name}/manifest.py'
             groups.append(dict(old, source=manifest, sourceSha256=sources[manifest], detours=rows))
         products['platform-writes.json'] = dict(baseline['platform-writes.json'], **provenance, groups=groups)
+        if include_requested:
+            products['requested-packages.json'] = compile_requested(root, known, documents, versions, revision, provenance, native, sources, assembler, disassembler)
         if stock_guard._cache is not None: raise RuntimeError('Stock must never be read during source compilation')
         if native._SCRATCH is not None: shutil.rmtree(native._SCRATCH, ignore_errors=True)
 
@@ -313,12 +381,15 @@ def main():
             strip_source = lambda rows: [{key: value for key, value in row.items() if key not in ('source', 'sourceSha256')} for row in rows]
             if strip_source(products[name][field]) != strip_source(baseline[name][field]): raise ValueError(name + ': native declarations differ')
         if [row['proofs'] for row in products['rom-packages.json']['packages']] != [row['proofs'] for row in baseline['rom-packages.json']['packages']]: raise ValueError('ROM relocation proofs differ')
+        if include_requested:
+            clean = lambda doc: {key: value for key, value in doc.items() if key not in ('sourceCommit', 'moduleVersions')}
+            if clean(products['requested-packages.json']) != clean(baseline['requested-packages.json']): raise ValueError('Requested authored packages or placement recipes differ from the verified baseline')
         print('Every authored compiled package and receiver matches the existing browser/native baseline.', flush=True)
 
     os.chdir(APP)
     destination.mkdir(parents=True)
     files = {}
-    for name in ASSET_NAMES:
+    for name in products:
         path = destination / name; dump(path, products[name]); files[name] = {'bytes': path.stat().st_size, 'sha256': HASH(path.read_bytes())}
     tree = HASH(json.dumps(sources, sort_keys=True, separators=(',', ':')).encode())
     dump(destination / 'module-build.json', {'schemaVersion': 1, 'kind': 'source-packages', 'sourceCommit': args.source_commit,

@@ -5,7 +5,7 @@ export type SelectionConflict = { id: string; title: string; description: string
 // Native build_bus.py admits Analog BD with stock DSP effects only. These
 // are the custom DSP sections in the pinned catalog, including paused ones.
 const customDspIds = ['spectrum', 'modulation', 'character', 'miniverb', 'tapeecho', 'euclid']
-const crowdedMenuIds = ['miniverb', 'tapeecho', 'euclid', 'repitch', 'midi-scenes', 'usb-audio-out-tracks-main-cue', 'quantizer']
+const crowdedMenuIds = ['miniverb', 'tapeecho', 'euclid', 'repitch', 'quantizer']
 
 export function selectionConflicts(ids: readonly string[], keepStockFx2 = false): SelectionConflict[] {
   const modules = resolveSelection(ids), selected = new Set(modules.map(module => module.id))
@@ -14,7 +14,7 @@ export function selectionConflicts(ids: readonly string[], keepStockFx2 = false)
   const keepEffectsRemoves = ['analog-bassdrum', ...(crowdedMenuIds.every(id => selected.has(id)) ? ['euclid'] : [])]
   if (selected.has('analog-bassdrum') && dsp.length) conflicts.push({
     id: 'analog-bd-custom-dsp', title: 'Choose Analog BD or custom effects',
-    description: 'Analog BD currently works with the original effects. It cannot run alongside ' + dsp.map(module => module.name).join(', ') + '.' + (keepEffectsRemoves.length > 1 ? ' The other seven also exceed menu space; removing Analog BD and Euclid keeps six modules.' : ''),
+    description: 'Analog BD currently works with the original effects. It cannot run alongside ' + dsp.map(module => module.name).join(', ') + '.' + (keepEffectsRemoves.length > 1 ? ' Removing Analog BD and Euclid also resolves the menu-space limit.' : ''),
     moduleIds: ['analog-bassdrum', ...dsp.map(module => module.id)],
     fixes: [{ label: keepEffectsRemoves.length > 1 ? 'Remove Analog BD & Euclid' : 'Remove Analog BD', removeIds: keepEffectsRemoves }, { label: 'Keep Analog BD · remove custom effects', removeIds: dsp.map(module => module.id) }],
   })
@@ -24,12 +24,11 @@ export function selectionConflicts(ids: readonly string[], keepStockFx2 = false)
     moduleIds: [...dsp.map(module => module.id), ...(selected.has('analog-bassdrum') ? ['analog-bassdrum'] : [])],
     fixes: [{ label: 'Turn off stock FX2', keepStockFx2: false }],
   })
-  // Exact owner-requested native profile, 1 Oct 2026: seven modules, stock
-  // FX1 + Euclid, stock FX2 removed. Menu formatters exceed the available
-  // space. Do not generalize this result to smaller, unmeasured subsets.
+  // Native matrix: this five-module subset exhausts menu space, regardless
+  // of additional MIDI Scenes or USB Audio units in DRAM.
   if (!keepStockFx2 && !selected.has('analog-bassdrum') && crowdedMenuIds.every(id => selected.has(id))) conflicts.push({
-    id: 'seven-module-menu-space', title: 'This selection needs more menu space',
-    description: 'These seven modules do not fit together in the Octatrack’s effect menus. Removing Euclid leaves the six-module combination that passed a local native build.',
+    id: 'module-menu-space', title: 'This selection needs more menu space',
+    description: 'Mini Verb, Tape Echo, Euclid, Repitch and Scale Quantizer need more menu space than the Octatrack has available together. Removing Euclid keeps every other selected module.',
     moduleIds: crowdedMenuIds,
     fixes: [{ label: 'Remove Euclid', removeIds: ['euclid'] }],
   })

@@ -1,0 +1,3064 @@
+{
+  "schema": 1,
+  "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "sourceSha256": "164f31224bf61181e3f50e7dec40df9afcae5b16dbf6e4c0d0cc5e986af0a84e",
+  "staticStock": true,
+  "proofs": [
+    {
+      "ids": [],
+      "keepStockFx2": false,
+      "bytes": 1112560,
+      "sha256": "1a6aa5afef713988da434e3f02e9b35cc64dea580d8e6d0ff91994ed0f264c39"
+    },
+    {
+      "ids": [
+        "miniverb"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1112560,
+      "sha256": "f3df245e44caa485502ea2c896f8850dce6a9de93121f71e765e192729e95a49"
+    },
+    {
+      "ids": [
+        "tapeecho"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1215051,
+      "sha256": "f65baeb74fc4f1ab956de0166a4fa7ad406ddb0536691e56ea8dad569fefa02b"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1215051,
+      "sha256": "a104fdeaf86b4cd1bfd1c7375b3c2640952a6a86ce62e3da2b39d0e64cb5ef78"
+    },
+    {
+      "ids": [
+        "euclid"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1114981,
+      "sha256": "90f3b8a345431c36563f520d8a1101e770fb2932ad4142ef8802b4032cb578a2"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1114981,
+      "sha256": "1840f74d940d02fbda44d2951988ea6d037bce11e450fe1c18fdf9c23e5c8417"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217159,
+      "sha256": "af2e85c410371e84283b3748288d89569e23c478f54d8b77cdb2e8d38a4d552e"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217159,
+      "sha256": "7bd5ad368054a95be30182ca6d5a4e3403424262fed017881d199d3a55c27457"
+    },
+    {
+      "ids": [
+        "repitch"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1112560,
+      "sha256": "0639f301725e13f76ffd11e8ba6dbc12945f77c46f7a1e6e9d906beb904ca182"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1112560,
+      "sha256": "67d2f4b587e86ad7f93ccdb18fd9cda5c41c8e51134b52ace59bdd3da20bdd90"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1215051,
+      "sha256": "c8302e0556ca05cdc650bc34a9a4d1d9a21caa22fbe7d6f9718946bc6560de89"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1215051,
+      "sha256": "61b09a3a7acf0b41f215c5b5da45586c82389a6c10ec60024dbfc00b7d30a59e"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1114981,
+      "sha256": "ee6159fce6a37656f306e0d162b4ac3f4785c149bb517fc2b8481d41c8744567"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1114981,
+      "sha256": "2573945b49cd2a0cd1b54e7260b1e951098c1a5cef6c7547d426eca7e827d058"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217159,
+      "sha256": "a92a62d36307171a6d81020877750475596acd815a8af1375c586d943e0327bd"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217159,
+      "sha256": "5d0cb95fcdd9a631dbbf7db971d89084252a3788734de84c7df1d6b50107223c"
+    },
+    {
+      "ids": [
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1265549,
+      "sha256": "a781170767572381566a0ff2fd2b1d2804075c021e89da8ad31c2537ef595fdf"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "euclid",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1265549,
+      "sha256": "d5562551fd311a2fb27a06d9f8a44aa8c64ae6f17f27d310469bfc8efa3b1ced"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115177,
+      "sha256": "694aa3c844eb4b3a574ad2e3d6c3fd8534ad2355071b04582feca706f35328b6"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115177,
+      "sha256": "8784009a7fcdfced802f8c39bc0728a37165efb8fdb75588a10fde79238dfe4e"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217426,
+      "sha256": "e631764a6ee2efde0a8589aa5fd1ef956f46c6b97df07312f43698751091b802"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217426,
+      "sha256": "7cc0dcae20438aa0b2c650dea3cf594cf608c52a9728813f0371d1daeabd5db1"
+    },
+    {
+      "ids": [
+        "euclid",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117347,
+      "sha256": "bc38e1317d4077c115ec7a5afa9680a1202f299fa0a173b685d66a7b7043578c"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117347,
+      "sha256": "b9580a60c54884f9d7a2a75dea1994e12244ecdb35edebbe342f36e3fcc6b5f6"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219536,
+      "sha256": "b212f6156d66413f7d7650cd526f6f07686225eb0da9b0b6de88bb9e5c0ae1ed"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219536,
+      "sha256": "bb624be55adc9653deb257f2e53c0e6f5b3371214e68d3404f618dd398d62820"
+    },
+    {
+      "ids": [
+        "repitch",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115177,
+      "sha256": "8b7230dbff3a690a487b13269534c535ead10773dd7e2c56a1ceff7e3cea1f78"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115177,
+      "sha256": "1afac1810d24497bf1a08d7338bae6c74d6b8d66817f89fb08e671e43dcd7770"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217426,
+      "sha256": "190b0e8ec32b6383896ef1effec315e6fbd246193a4fd0b27613a774e7d17db0"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217426,
+      "sha256": "77f719f6b42efd8b25779e248dc4bccc6f561ab66b6246b9b6eac1b46e21c361"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117347,
+      "sha256": "bd4d6725065a6d539fb44ee7d95daf9898483558b94b553b80bad6740f6e0ab9"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117347,
+      "sha256": "32b7810e7df13f7a743a60f64cd8eb56cebdc58811bdcdbb3a23045821c07aae"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219536,
+      "sha256": "eafa0a6b248480e09c7629e1a3ac6363a811cf73d45fca2ea91e08a5b82f031f"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219536,
+      "sha256": "b6fe65341d0a038d75c6cd79fac74f726c6e50eae143e8f4bd70b7df0b98983c"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1267881,
+      "sha256": "18f6e1bc403250dfe48209315fa3d5a9a434b09ecac383a592b66a85364e6dce"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1267881,
+      "sha256": "456f5e16849b2e6cd898fd9975fef74b9cf4cbc570546f48015ef44af3ee3dbe"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115070,
+      "sha256": "55899f427596e4607aa73be0c77cff5ae0cd64d0bbbb593a191ae93ed4866eb8"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115070,
+      "sha256": "4808292badf5d0aebf906cc03ae824fa23a561da3ad48dee1e5f299f1f9cf8b5"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217303,
+      "sha256": "629d0ab31e4e078fa942153fd0731827692ae0247e534d24a50f12b2a5bc883d"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217303,
+      "sha256": "3dca5cd3811f2a53c8d18bc3f3c7c46a31c5d857250c68e9cb37654b5e6e78a6"
+    },
+    {
+      "ids": [
+        "euclid",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117212,
+      "sha256": "950c49b1409a1cd5f87545846dfdeeb799762244d13f2523278f3f892b29cca8"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117212,
+      "sha256": "81f35117aeaad80f26fc38d687cb4d6845723d0f3d8c1b574faa2869642a2722"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219413,
+      "sha256": "955c888d76b65cc75ef430d0c2cbfbebef245cb463836c1c01dbe5382cd910c7"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219413,
+      "sha256": "e1211813c1a42952abd04b0131aecab9610cb5c755d44c988bcace13de8e671a"
+    },
+    {
+      "ids": [
+        "repitch",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115070,
+      "sha256": "24005b6b88bad5b7ee0d6abde73c211cf3869998b5290d53fe48245b01cb3ee8"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115070,
+      "sha256": "c3f2055587eb152fd60e8ce0edfd13b46b0da6f06ffcbb099fba56f9d473b088"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217303,
+      "sha256": "583299de1e7b96d66bb7429485d816ba49d8490b14e33c4cb7cf1c45bdb4c835"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217303,
+      "sha256": "6d7bce10e26a48e0c550af775655feac31a7025f88f17a8939ea6d62f240791d"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117212,
+      "sha256": "ce2536943ff31cd8688ac3c4fba37f6bf88765834ff40a4faa80cd50892bd5ab"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117212,
+      "sha256": "c5e79f1d0964c912698468c648a7217c7846a6450f445a2764c8895705cac021"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219413,
+      "sha256": "db55cefaccc760a70f8606a63f9672b367b630a6517f9b304557801174b81625"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219413,
+      "sha256": "cb6960696611598885ee8ced88459096714f98a04966f35e952cdd88c8bd4a58"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1267769,
+      "sha256": "69b102cf82d2ece9f9076d37989f233f149d88e4d6690c06b70faab1263eb906"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "euclid",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1267769,
+      "sha256": "4dfd81511a9aa99b5ec326ab12a0f500ae83b0d4843e576b12d8653babfe6fb7"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only"
+    },
+    {
+      "ids": [
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117392,
+      "sha256": "2f726d5d510f02ab3509c9701c9452ef5179959e1df05939e37b027fcfeb2baa"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117392,
+      "sha256": "2c8d423b7f047cf60480905d627527433e9341a1b599df7fa09d08afdc3f8d71"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219663,
+      "sha256": "2029d644d5607dcfe67ed4686b2d0a984b31881e3c7c80e661835735ce6b6634"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219663,
+      "sha256": "3ba7ceaf849a5e2b642939cf60dbdaf0f849fe75d41f10b8411298bb5692b622"
+    },
+    {
+      "ids": [
+        "euclid",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119558,
+      "sha256": "a5785927c216fb0644628869b584b60d12bfcd36c71a648aeaafe36824c0fa4c"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119558,
+      "sha256": "0997e8747179529b948a8547ca4dd5fb5109a001519ceffa57e7f8ca5d740101"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221769,
+      "sha256": "b632083b91d848a6c5c43b069d258f0ee5e62ada985dc14e39f2bc6d49ca60f0"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221769,
+      "sha256": "9fb62be8abc2c2a6ed8f52d7ebf9dfc5abeb5e9c76aa8b582ed63ad686106a1f"
+    },
+    {
+      "ids": [
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117392,
+      "sha256": "23fb160f54ea1ba3b7fd41c39f79660da976a1433cc2f2aa6c5d4bed2844b428"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117392,
+      "sha256": "37661b722f0082d43e5c4ffda1af5d2ebb07494352db70f73d2cfb1e0232c234"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219663,
+      "sha256": "b7a090a3745519a4e10994526c63e60acc86485c5ab86eaab82bfb40325a2a58"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219663,
+      "sha256": "1123a32ff6ee00f7f4414fe30ff7c49a1a327f5feab2d1381527055f9bf8909b"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119558,
+      "sha256": "e3699a09c2b7ba6ba150646b66a8f471fbed10ef2a39509b9569823e73eb9671"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119558,
+      "sha256": "16b8647db0199c4c1f571785830146485bed9aca8cc9b3bb9daf9699a1c82cd3"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221769,
+      "sha256": "34e6bb2d07da16906bf7cb8dbd15d3a81aa29a7616b99b128aac24615faf3feb"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221769,
+      "sha256": "1b2661f9e18a054a434bc3c529c2098f8b61cc4b6467624750a796e4cb9a210f"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1270097,
+      "sha256": "1e0d466fe8c7d53e79d82c0801deadef98365e580b1592853184b4abb7666cdf"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1270097,
+      "sha256": "2bd8d2c31d78bded1edcfc34f0798a131de039020d9f515f63d889e22df71fdd"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115052,
+      "sha256": "5a1d2a39dc02f4d35848984bf6240c5b2dd176a3d3eb640b2c4153f81044d790"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115052,
+      "sha256": "e8da5c54ad1138426af6bf7c3ad0f4a90e3e53ad97ad9cb0a85d900b386519b1"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217273,
+      "sha256": "7974c3dca7ce1b34010280e29e8d20913b697ed2e883423d778898a07a8845de"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217273,
+      "sha256": "a927a658de4d5c9da2281802c287fca20986c27ece314f376935e3750361d86c"
+    },
+    {
+      "ids": [
+        "euclid",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117201,
+      "sha256": "f9279fc7c9cacd254cf48dd8af0f73990165bcacc1051546df75a4abd464c043"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117201,
+      "sha256": "2074082bcb3b1f4c3c76d8cef9007d3e8c52d35490b7b1b98ba78a420926bae3"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219366,
+      "sha256": "600c25ae01a2310f060fb33d031e91d759e0fb30349c651473112039e04b656a"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219366,
+      "sha256": "d847258ac0b552e0db1cc44fda548ca856cc6ec466bb938f995d0198cbc17133"
+    },
+    {
+      "ids": [
+        "repitch",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115052,
+      "sha256": "833046cbdc6e3445d544e649b31854a0d77bee3c63cdb2945dbc15a3b14afb90"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1115052,
+      "sha256": "1b77e3429f1fa26087c3ee0c2a3f6def2c1bc261bf542ce9ce5bbd492c945eb3"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217273,
+      "sha256": "226fde5dba64c0508262285c804675479d0c87d3b76e1de2b169454e93ea2314"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1217273,
+      "sha256": "a7aabcbd20e39cbdcf01c5d47b55a329a982168e659b00e8d993150bfe12c524"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117201,
+      "sha256": "7f3bba78d3b8e1f1053e80f2b0233fbc68721b8db02dcc68f25deeaa1303b06e"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117201,
+      "sha256": "3516ca47036a2408200dc57e754c4a4281963e3d21621b6854c5a32cddc7c749"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219366,
+      "sha256": "094cf6d81c142d21c0ecb1c0e152fe2f7e2966e0019d3cf5a9cd89c3d2581073"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "label formatters do not fit: EUCLID slot 10 needs 254 B; the clone window ends at 0x400d7c3c and the overflow run at 0x400d2ce0 (next free 0x400d2ce0)"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1267729,
+      "sha256": "37967c613d7bc3ba6f3df8cd2003b11b41dad513e5a3b28a10436966cdb02a9c"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1267729,
+      "sha256": "f4d1bb516f2757e83361817e85f1d30932ad41cdf39400553b96fd3c83335de3"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117328,
+      "sha256": "dbf2c8111a3fbaa557a2d8141af4493cffc254cd3055c8f906cdaa948c68b291"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117328,
+      "sha256": "f2c87c821c27d811d342ba4dab6e2059957023115d173be5a15c6919e8a52025"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219583,
+      "sha256": "6126126881388adccc0408632eb2de69e78c4b36ae8cadd033173ccdacc37b7e"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219583,
+      "sha256": "30378553ad93001d9cf4e6fc23a782cf4cedabff17aaaed5ebfc51b041b403ec"
+    },
+    {
+      "ids": [
+        "euclid",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119499,
+      "sha256": "45f64c034ea81c1d5113bd10bffcfb91ad27458705bd1dc229242eb54706e26e"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119499,
+      "sha256": "dfb0782913783a48b3dc20c545efd9cdc5b99ab4a6f6831916ed75197e85104b"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221683,
+      "sha256": "9a547aaf9de654de986bc0c51f520c3e9bc76f5250c72ff55f372248e821942c"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221683,
+      "sha256": "40dce55c1514dcdfa0049340fc70f35881078c00f0253bec93957fd23242ee75"
+    },
+    {
+      "ids": [
+        "repitch",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117328,
+      "sha256": "e1ec207b9c4234c656ee55e287f96c56e19441fe8e49022c63c226c4d9730243"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117328,
+      "sha256": "8376e07b67d350691147bab4df8c3bd5e5324f748d28b5839746faced16238fe"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219583,
+      "sha256": "7eba486b5de93e1af4ad2405c353e53efffe0de5a479b0b7bb5fb6116cf9a141"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219583,
+      "sha256": "cde42be6523b961ade070d5920e6782126db0ded5a412a7f61ffc0c64836dfdb"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119499,
+      "sha256": "46f4cc210599fee9d9ba924cb0db7ece760d0365fdcaf9d49be15f586dbd1866"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119499,
+      "sha256": "1b557d67c1f4a28a569bb3876cc39b704b93e19d5f68e0dd655b188fb658de52"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221683,
+      "sha256": "b76d985b4332bcecfab2cde3a15ad45b7f0b575ddb9165a4b77e1f438923629f"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "label formatters do not fit: EUCLID slot 10 needs 254 B; the clone window ends at 0x400d7c3c and the overflow run at 0x400d2ce0 (next free 0x400d2ce0)"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1270033,
+      "sha256": "1b22283fb8ff5a24918fbb8935cfc1d816f2192541e1692b742023d4aecec95a"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1270033,
+      "sha256": "18f6e57f615886e2c887fde83e28059849fa80a5fe00a896a78b60aff507eea6"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117276,
+      "sha256": "d49e6ae1570da8709b0d668415752b23fbd0e8e1bc06e0d986e95ef7766d0a2e"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117276,
+      "sha256": "dafbc04f7aa4f25eecf9502da159158cda3e9058476a049ed8b3c79de0e89988"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219507,
+      "sha256": "e14084cd61f4a587e5ce606439691bf616fb52a0bfb2410dd314e03413dbd1ed"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219507,
+      "sha256": "7ac2cf2d8b13c0aea7df803419faa86dbdd8d06d8335b514e11ef6dae4ad018c"
+    },
+    {
+      "ids": [
+        "euclid",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119406,
+      "sha256": "28709e2af0de84f01a78b7291d221823fb19dfb666b5c23303717b181f66b93a"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119406,
+      "sha256": "63d2c2d25687a9c22f919d82048edfd71616cb64c6df71c097df1f9cd111911e"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221594,
+      "sha256": "92c1f4fbeb5285df1ba35b4131f9170b76042e4fb7631677573ddc5ac354124c"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221594,
+      "sha256": "c71cdcbcacfd78b55c64455263861f226821f1926ad00f8724146dcd69f07d34"
+    },
+    {
+      "ids": [
+        "repitch",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117276,
+      "sha256": "e8f528c00acbaab85e95eccc38122aab5cae05124ee966ce289421cbf20bcd97"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1117276,
+      "sha256": "3c5769da57a0393cb4b98100119561b7f543a3bc917bfd14c897db51f8f2e421"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219507,
+      "sha256": "cb12879065d878c9ffd7e03078607904f81843c8560b1c8a91e207fcd89361eb"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1219507,
+      "sha256": "6f99c48836963c1f745474786ce088f1b54b91c46609f9415222ecdc8c6b11a0"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119406,
+      "sha256": "184b2b23528314d9a2525de325c66f163ab0c7f1621cbb9f96f1c02b3e1765a7"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119406,
+      "sha256": "a54035b26953559a34f153e2e1115d3f3d0056d7d2faf7ec2c338491ada069c0"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221594,
+      "sha256": "6ef76d79c730001809abe1a55088ff2208fb785c4c34793654cd867437270304"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "label formatters do not fit: EUCLID slot 10 needs 254 B; the clone window ends at 0x400d7c3c and the overflow run at 0x400d2ce0 (next free 0x400d2ce0)"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1269949,
+      "sha256": "93193a69dab36824522f62fa9381b1f7d8f9e4b4f2bafa23a32b9a016d074fd8"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1269949,
+      "sha256": "af3848d23302d0e5111071e252689db21fd2da6f2e99700b83ad320867c6f712"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119538,
+      "sha256": "0a5ca753130cf1a999209a92cb05fd8eb7753bec970b88e4f0258686a072197b"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119538,
+      "sha256": "7f6ac8550aef0eec3dd856a796affd2a2bf800a365b13c9abba2b4eaa31ef76f"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221832,
+      "sha256": "e62c911d1b0cb69a039a4d99b09365f737d441225718321437ad7645788b7259"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221832,
+      "sha256": "6682a54578438691bf1231054f11587d5676e5ae9eba1a33e6468b2135b38f70"
+    },
+    {
+      "ids": [
+        "euclid",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1121717,
+      "sha256": "ee10064b7f4e89b91e41cc1e7fb638f54a6f50067c5a8fdd4e6e28f2de7cc0d0"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1121717,
+      "sha256": "c7f4b15b2669f6d4a37b5e9c76219abb7dde26b16356912a66f1b47ea5c04750"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1223938,
+      "sha256": "ddfcc6428eafa8918cfc4c4e12f6182974074035e17273daa3913cf33d7c9bf6"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1223938,
+      "sha256": "060d70f750ce1a7107d02c0ec747970d1ab6fa80d9105928d1ea97cf2e163d48"
+    },
+    {
+      "ids": [
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119538,
+      "sha256": "936e22bc74ef9443598d35302c0ae665fde4626797da757d77497bef8f6f9c27"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1119538,
+      "sha256": "040dac2f5c3d9090d7fa243760fd6bf4943e3d4099471d6bd1bedfe5844abc67"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221832,
+      "sha256": "50a9affb29a7273581d37abfdba470d744997c29ecdbe2bd4b596374fb4c2a5a"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1221832,
+      "sha256": "27b2252773ef514a5b8af30ca803f0fb827f812a7ad772a38896a061e21cf5a8"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1121717,
+      "sha256": "046cd37d4b53a7267aed1869757016f2360b1902581fc363c4f4f4a5e99f78c7"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1121717,
+      "sha256": "fa50bcef4329a68a0ffa541899b9c85f4eb3d2be0e0088ef66edeb6aff0559fb"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1223938,
+      "sha256": "17edbdb95b2b428f94a27fce9112c70029c3c335b1b2221aeb435a0720de8683"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "label formatters do not fit: EUCLID slot 10 needs 254 B; the clone window ends at 0x400d7c3c and the overflow run at 0x400d2ce0 (next free 0x400d2ce0)"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1272237,
+      "sha256": "1c673833176506f3dff9c3e6f88880d69f833636b57e2b879c601d30bf185332"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "bytes": 1272237,
+      "sha256": "f72ae2de0b3086d4fef9f2f20530193a3dec001d7d2a2fccca46208ec3d6b88d"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "euclid",
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": false,
+      "error": "ANALOG BD's DSP source currently composes with stock effects only",
+      "method": "native-admission-rule"
+    },
+    {
+      "ids": [],
+      "keepStockFx2": true,
+      "bytes": 1112560,
+      "sha256": "3c3a72fbc69912ffb5377f99a0c38e16c4531c04ca1aaeb77169e8936d9641f6"
+    },
+    {
+      "ids": [
+        "repitch"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1112560,
+      "sha256": "f2555851696a0da70e63d434fe6ca7d877061000c990dadde925014f17dc2482"
+    },
+    {
+      "ids": [
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "midi-scenes"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1115177,
+      "sha256": "0f61272d4de17d32a036f056982beb211adc6a9c7d73d96942c0f412880c4976"
+    },
+    {
+      "ids": [
+        "repitch",
+        "midi-scenes"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1115177,
+      "sha256": "e357cdb0d22115903e6dad97af60be15ad63790a7dc6af16e4f5e2fdf4358ced"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1115070,
+      "sha256": "7ba8631db85953a6d3fad02132911920172b118b89d4de9f218a3727d93513fe"
+    },
+    {
+      "ids": [
+        "repitch",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1115070,
+      "sha256": "6c273eacd08a7cda110699f3b8faca0738117263d76a4ac8c3a704f76c109a12"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1117392,
+      "sha256": "13f37622bae009a3680723dddf41889e79237980284b248238bf66973cd7b96b"
+    },
+    {
+      "ids": [
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1117392,
+      "sha256": "a39b5dbc5ceb6cb2f77223f7c632e21429cd7a1a195dc49b77650f392fc5c72a"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1115052,
+      "sha256": "4dd1633192a03699db32be48f45cc19c739cc87f3e3186e5ec77e104999bb36e"
+    },
+    {
+      "ids": [
+        "repitch",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1115052,
+      "sha256": "7bdc366d0a651004cc068f3ffd9ab24cb45f519aec45700cafb468dd41e35335"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1117328,
+      "sha256": "636631d862eb5d99819643d37387a9085053d0779c3b2c70d008e3a404adb2f3"
+    },
+    {
+      "ids": [
+        "repitch",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1117328,
+      "sha256": "6bbe9a481a3219a9cbaa03d441a261f1928a060317f7c337c6066ec6f1c6839e"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1117276,
+      "sha256": "77f662a0ca4f43052ad0d5b3563e06bde1a5a736f6645ae58b07d054b830788c"
+    },
+    {
+      "ids": [
+        "repitch",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1117276,
+      "sha256": "52d6d0a950a7a74ce34b356ef0189c4d8feb0831e49f8bc8a10dfbd6c1db9491"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1119538,
+      "sha256": "a2025d06a2deba5ec29894b5c5a649e69236cfff1c96b00515f5669ec2c40655"
+    },
+    {
+      "ids": [
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "bytes": 1119538,
+      "sha256": "a51ca444e5ca6b36dc4d9f522e64739336bf0a9a398c8ca879574d29cf69d0d7"
+    },
+    {
+      "ids": [
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "keepStockFx2": true,
+      "error": "ANALOG BD owns SPRING REV's code and both DSP uploads; remove SPRING REV / MACHINEDRUM from this remix"
+    }
+  ]
+}

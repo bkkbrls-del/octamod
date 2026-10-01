@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "proofs": [
+    {
+      "ids": [
+        "miniverb",
+        "tapeecho",
+        "repitch",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "version": "OCTAMOD79",
+      "bytes": 566156,
+      "sha256": "2dcf0af580f6db05a26f501dc4d4c58730efeba20e4bc39734113a91a0d600d8",
+      "containerBytes": 566137,
+      "containerSha256": "dc0f1021d70ce1d4610cebb9ea63964231806134f7da9de5a05a8619be71ac4e"
+    },
+    {
+      "ids": [
+        "repitch",
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "version": "OCTAMOD79",
+      "bytes": 576756,
+      "sha256": "961f82df19aa3b29f14dcba3e2184161dff59a340185013d6166206263f5f9d9",
+      "containerBytes": 576738,
+      "containerSha256": "5e4d8c8caec553bbfba6faf7c6859db7ca00731ec33e2303e2d262e6b52d4129"
+    }
+  ]
+}

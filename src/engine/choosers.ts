@@ -1,5 +1,6 @@
 // Chooser format facts are pinned; all stock descriptor pointers and guards
 // are read from the user's own verified OS. No stock table content is bundled.
+import type { CfRuntimeLink } from './coldfire-link.ts'
 import metadata from './assets/chooser-metadata.json' with { type: 'json' }
 import { CATALOG_SOURCE, resolveSelection } from '../catalog/modules.ts'
 import { composeModuleMenus, MENU_CAVE_END, MENU_LONG_LIST } from './module-menus.ts'
@@ -13,6 +14,7 @@ export function defaultChoosers(ids: readonly string[], keepStockFx2 = true): Ch
   if (metadata.schema !== 1 || metadata.revision !== CATALOG_SOURCE.revision) throw new Error('Chooser metadata does not match the pinned catalog.')
   const modules = resolveSelection(ids).map(module => {
     const entry = metadata.modules.find(entry => entry.id === module.id)
+    if (!entry && module.fxId === undefined) return { id: module.id, key: module.key, fxId: null, fx1: false, fx1Only: false }
     if (!entry || entry.key !== module.key || entry.fxId !== (module.fxId ?? null)) throw new Error('The chooser declarations do not match this module version.')
     return entry
   })
@@ -40,11 +42,11 @@ export function validateChoosers(ids: readonly string[], profile: ChooserProfile
   if (selected.some(module => module.id === 'character') && !metadata.curveReaders.some(reader => kept.includes(reader))) throw new Error('This Character configuration needs the X-table placement engine. Keep DJ EQ available for now.')
   return { own, hidden: own.filter(module => module.fx1Only && profile.fx1.includes(module.key)).map(module => module.key) }
 }
-export async function composeChoosers(original: Uint8Array, ids: readonly string[], profile: ChooserProfile = defaultChoosers(ids)) {
+export async function composeChoosers(original: Uint8Array, ids: readonly string[], profile: ChooserProfile = defaultChoosers(ids), runtime: CfRuntimeLink | null = null) {
   const { own, hidden } = validateChoosers(ids, profile), layout = metadata.layout
   if (await hash(original) !== metadata.sourceSha256) throw new Error('Chooser composition needs the original OS fingerprint.')
   const listAddress = (profile.fx2.length + 2) * 4 <= 32 ? layout.NEW_LIST : layout.LONG_LIST
-  const menus = await composeModuleMenus(original, ids, listAddress === layout.NEW_LIST ? MENU_CAVE_END : MENU_LONG_LIST)
+  const menus = await composeModuleMenus(original, ids, listAddress === layout.NEW_LIST ? MENU_CAVE_END : MENU_LONG_LIST, runtime)
   const writes: OsWrite[] = [...menus.writes], view = new DataView(original.buffer, original.byteOffset, original.byteLength)
   const read = (address: number) => view.getUint32(address - OS_LOAD_ADDRESS)
   const pointerTable = (entries: readonly number[]) => {

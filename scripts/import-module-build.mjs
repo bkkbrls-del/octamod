@@ -5,6 +5,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { fetchOwnerApproval } from '../src/release/approval.ts'
 import { parseModuleDocument } from '../src/catalog/module-contract.ts'
+import { parseColdFireObject } from '../src/engine/coldfire-elf.ts'
 import { PACKAGE_FILES as expected, moduleSourcePaths, compiledModuleVersions } from './module-source.mjs'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const args = process.argv.slice(2), folder = args[0] && resolve(args[0]), development = args.includes('--development'), checkOnly = args.includes('--check-only')
@@ -55,15 +56,25 @@ for (const variant of packages.get('resident-dsp.json').variants) {
   // Native static placement leaves unbound ids on stock's null stub; only the running receiver redirects them.
   if (variant.nullInit !== variant.stockCopy.sourceAddress || variant.nullProc !== variant.stockCopy.sourceAddress + 1) throw new Error('Compiled receiver must keep stock null dispatch entries')
 }
+const requested = packages.get('requested-packages.json')
+for (const pkg of requested.objects) {
+  if (!Array.isArray(pkg.stockCopies) || pkg.stockCopies.length !== (pkg.label === 'usbmidi_cfg' ? 4 : 0)) throw new Error('Invalid inherited USB placeholder inventory')
+  if (!hash(pkg.sha256) || !/^[a-f0-9]+$/.test(pkg.code) || pkg.code.length !== pkg.bytes * 2 || sha(Buffer.from(pkg.code, 'hex')) !== pkg.sha256) throw new Error('Invalid requested authored object')
+  const object = parseColdFireObject(new Uint8Array(Buffer.from(pkg.code, 'hex')))
+  for (const copy of pkg.stockCopies) {
+    const section = object.sections[copy.section]
+    if (!section || copy.bytes !== 23 || !Number.isSafeInteger(copy.offset) || copy.offset < 0 || copy.offset + copy.bytes > section.data.length || !hash(copy.sha256) || section.data.subarray(copy.offset, copy.offset + copy.bytes).some(byte => byte !== 0)) throw new Error('Inherited USB spans must contain only zero placeholders')
+  }
+}
 // Release automation never sees firmware, so it cannot prove native parity. Publish only packages that
 // reproduce the committed, locally parity-verified ones; provenance is the only permitted difference.
 if (!development) for (const [name, doc] of packages) {
   const withoutProvenance = doc => JSON.stringify({ ...doc, sourceCommit: null })
   if (withoutProvenance(doc) !== withoutProvenance(await json(resolve(root,'src/engine/assets',name)))) throw new Error('Compiled ' + name + ' does not reproduce the committed, parity-verified package. Rebuild locally, verify native parity and commit the result.')
 }
-if(checkOnly){console.log('All eight artifacts, complete source inventory and version pins validated ('+(development?'development':'owner-approved')+').');process.exit(0)}
+if(checkOnly){console.log('All source-package artifacts, complete source inventory and version pins validated ('+(development?'development':'owner-approved')+').');process.exit(0)}
 // Validate the complete artifact before touching any frontend file.
 for (const name of expected) await copyFile(resolve(folder,name),resolve(root,'src/engine/assets',name))
 const frontend = { schemaVersion:1, kind:'source-packages', sourceCommit:report.sourceCommit, nativeRevision:report.nativeRevision, sourceTreeSha256:report.sourceTreeSha256, compilerSha256:report.compilerSha256, moduleVersions:report.moduleVersions, files:report.files, approval, qualification:report.qualification }
 await writeFile(resolve(root,'src/engine/assets/module-build.json'), JSON.stringify(frontend,null,2)+'\n')
-console.log('Imported eight source-built artifacts at exact module versions (' + (development ? 'local development; no release approval' : 'owner-approved PR #' + approval.pullRequest) + ').')
+console.log('Imported source-built artifacts at exact module versions (' + (development ? 'local development; no release approval' : 'owner-approved PR #' + approval.pullRequest) + ').')

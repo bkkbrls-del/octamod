@@ -25,7 +25,7 @@
       "version": "v2.9"
     }
   },
-  "status": "source-import; browser/native integration pending",
+  "status": "verified loader-free browser/native integration; owner merge required for publication",
   "files": [
     {
       "path": "modules/analog-bassdrum/CPU.md",
@@ -57,7 +57,9 @@
       "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
       "sourcePath": "modules/analog-bassdrum/README.md",
       "sourceSha256": "4876d9613e5e65de0aefeef7ddd60ef6d0d5642c61b1fde60b97fc0f72255f68",
-      "vendoredSha256": "57743ee073204e2a1b51ed7abad7ddf44eae95faddc90d397ca707d30a2bdfed"
+      "vendoredSha256": "2f1f71fbf24b2781a08a0d9a87459694816e43ac01f7d849ce60786db0ea68bd",
+      "importedVendoredSha256": "57743ee073204e2a1b51ed7abad7ddf44eae95faddc90d397ca707d30a2bdfed",
+      "adaptation": " Octamod 0.1.1 version and native verification evidence appended; imported fingerprint retained."
     },
     {
       "path": "modules/analog-bassdrum/REFERENCE.md",
@@ -217,7 +219,9 @@
       "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
       "sourcePath": "modules/midi-scenes/README.md",
       "sourceSha256": "6210403449aec741d1f388a525f2b3b2df083a7c762ba4f110f770c070d9b492",
-      "vendoredSha256": "bb1b4b9f5babe96ad4455c9d639a1eadcbaa4dd8a7b373f0179369493c2ff078"
+      "vendoredSha256": "2d4b9c2b0a35e1853698b00cc41d158be441cc5fccd91ae1d7cdfa5a2fc1861d",
+      "importedVendoredSha256": "bb1b4b9f5babe96ad4455c9d639a1eadcbaa4dd8a7b373f0179369493c2ff078",
+      "adaptation": " Octamod 0.1.1 version and native verification evidence appended; imported fingerprint retained."
     },
     {
       "path": "modules/midi-scenes/manifest.py",
@@ -233,7 +237,9 @@
       "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
       "sourcePath": "modules/usb-audio-out-tracks-main-cue/README.md",
       "sourceSha256": "29178fb2e5f4897de68981d011abb93a15d2ef2e79a39964431640c10f3b84f1",
-      "vendoredSha256": "e4dbbca399a112ae15ff2faa6449570fb1208ad7b3808ffb8beb72f16d7f6bfb"
+      "vendoredSha256": "b486482e1bfd7f4a5d2d328adb5029788b32690cf95b7fcdb74b7038911fab67",
+      "importedVendoredSha256": "e4dbbca399a112ae15ff2faa6449570fb1208ad7b3808ffb8beb72f16d7f6bfb",
+      "adaptation": " Octamod 0.1.1 version and native verification evidence appended; imported fingerprint retained."
     },
     {
       "path": "modules/usb-audio-out-tracks-main-cue/manifest.py",
@@ -257,7 +263,9 @@
       "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
       "sourcePath": "modules/quantizer/README.md",
       "sourceSha256": "7361d0da558aac29b9d02752bab6c9cc7d569d83d81a843988df767e29bb3c69",
-      "vendoredSha256": "7ffc975e6de64f77478f4f9bdce8ee2b43dbe5a0a704bff0acfa0e61f2cf0a65"
+      "vendoredSha256": "095c6e3a93c4278943cbc7c692db5d6c5099b1ae9805d203b90ef533f3ad5c1b",
+      "importedVendoredSha256": "7ffc975e6de64f77478f4f9bdce8ee2b43dbe5a0a704bff0acfa0e61f2cf0a65",
+      "adaptation": " Octamod 0.1.1 version and native verification evidence appended; imported fingerprint retained."
     },
     {
       "path": "modules/quantizer/manifest.py",

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "version": "0.1.0-experimental",
+  "version": "0.1.1-experimental",
   "nativeManifest": "manifest.py",
   "media": [],
   "id": "usb-audio-out-tracks-main-cue",
@@ -44,7 +44,6 @@
       "usb-audio-out-tracks"
     ],
     "limitations": [
-      "Source imported. Firmware builds for this module are awaiting Octamod verification.",
       "USB output only. Host-to-Octatrack USB input variants are outside this import.",
       "Requires the included internal USB MIDI dependency. Only one USB output layout can be composed.",
       "Windows and Linux hosts have not been measured in this record.",
@@ -74,7 +73,7 @@
   },
   "tests": {
     "report": "TESTING.md",
-    "summary": "Selected for the broadest recorded hardware evidence: MKI and MKII, sustained multi-track 24-bit captures and high MIDI receive traffic. The latest source includes track/MAIN alignment and a hardware-tested master-on CUE correction; startup artifacts and unmeasured host/platform cases remain. This import has no Octamod browser/native parity yet.",
+    "summary": "Selected for the broadest recorded hardware evidence: MKI and MKII, sustained multi-track 24-bit captures and high MIDI receive traffic. The latest source includes track/MAIN alignment and a hardware-tested master-on CUE correction; startup artifacts and unmeasured host/platform cases remain. Octamod native and actual-browser composition/packaging parity and rejection checks passed on 1 October 2026. The owner reported both combined test images working; this is a smoke report, not full feature/load qualification.",
     "hardwareStatus": "historical",
     "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
     "gates": [
@@ -86,10 +85,6 @@
     "repository": "https://github.com/sambanks/octabam",
     "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
     "path": "modules/usb-audio-out-tracks-main-cue"
-  },
-  "build": {
-    "status": "pending",
-    "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
   },
   "license": {
     "spdx": "MIT",
