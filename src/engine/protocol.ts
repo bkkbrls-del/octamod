@@ -18,5 +18,8 @@ export type EngineResponse =
 // Native byte-parity and rejection checks also passed through this worker
 // in the actual browser. See docs/VERIFICATION.md for the supported profiles.
 export const ENGINE_AVAILABLE = true
-export const DOWNLOADS_ENABLED = true
+// Paused: upstream octabam's first hardware test of the dynamic DSP loader (every composed image
+// contains it) showed DSP LOAD FAILED, no audio and a stopped sequencer. Re-enable only after a fix
+// is verified on hardware. See docs/VERIFICATION.md.
+export const DOWNLOADS_ENABLED = false
 export const FIRMWARE_VERSION = 'OCTAMOD79'

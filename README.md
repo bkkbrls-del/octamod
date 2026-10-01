@@ -4,7 +4,7 @@ A React / TypeScript web configurator for octabam, with a GitHub Pages frontend 
 
 The frontend, backend and octabam-derived developer SDK belong in one repository. The owner may self-host the backend later; storage adapters for that option remain pending. See [accepted decisions](docs/DECISIONS.md) and the complete [active project goal](GOAL.md).
 
-The browser now composes and downloads real firmware for the fixed seven-module catalog. Complete OS/container/upgrade bytes match native proofs, including actual-browser checks and rejection/cancellation behavior. Read [verification and remaining work](docs/VERIFICATION.md). Hardware qualification, approved source-to-package automation, the complete native SDK setup and real licensed captures still need work.
+The browser composes real firmware for the fixed seven-module catalog. **Downloads are paused** because upstream octabam's first hardware test of the dynamic DSP loader, which every composed image contains, failed (see `docs/VERIFICATION.md`). Complete OS/container/upgrade bytes match native proofs, including actual-browser checks and rejection/cancellation behavior. Read [verification and remaining work](docs/VERIFICATION.md). Hardware qualification, approved source-to-package automation, the complete native SDK setup and real licensed captures still need work.
 
 ## Run locally
 
