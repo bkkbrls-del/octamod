@@ -23,6 +23,7 @@ import { downloadSelection, parseSelection } from './config/selection'
 import { Icon } from './components/Icon'
 import { ModulePreview } from './components/ModulePreview'
 import { ModuleDetail } from './components/ModuleDetail'
+import { FaqPage } from './components/FaqPage'
 
 import { useWorkspace } from './hooks/useWorkspace'
 import { ConfigurationDialog } from './components/ConfigurationDialog'
@@ -40,7 +41,7 @@ export default function App() {
   const { session, catalog } = useCommunity()
   const communityModule = route.startsWith('community-module/') ? catalog.find(item => item.module_id === route.slice(17) && !isModulePaused(item.module_id)) : undefined
   const communityRoute = route === 'activity' || route === 'review' || route === 'admin' || route.startsWith('submit') || !!communityModule
-  const missingRoute=!['library',...MODULE_CATEGORIES,'module-sets','configuration','activity','review','admin'].includes(route)&&!route.startsWith('submit')&&!detailModule&&!communityModule&&!route.startsWith('module-set/')
+  const missingRoute=!['library',...MODULE_CATEGORIES,'module-sets','configuration','faq','activity','review','admin'].includes(route)&&!route.startsWith('submit')&&!detailModule&&!communityModule&&!route.startsWith('module-set/')
   const filter = MODULE_CATEGORIES.find(category => category === route) ?? 'all'
   const categoryLabels = { effects:'Effects', playback:'Playback', machines:'Machines & sequencer', scenes:'Scenes', 'midi-usb':'MIDI & USB' }
   const workspace = useWorkspace()
@@ -59,7 +60,7 @@ export default function App() {
   const [configDialog, setConfigDialog] = useState<'create' | 'rename' | 'duplicate' | 'delete' | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const mainRef = useRef<HTMLElement>(null)
-  useEffect(() => { mainRef.current?.scrollTo({ top: 0 });document.title=(detailModule?.name??(route==='configuration'?'Configuration':route.startsWith('submit')?'Submit a module':route==='activity'?'Your activity':(route==='review'||route==='admin')?'Admin workspace':route.startsWith('module-set')?'Module sets':'Module library'))+' · Octamod' }, [route,detailModule?.name])
+  useEffect(() => { mainRef.current?.scrollTo({ top: 0 });document.title=(detailModule?.name??(route==='faq'?'FAQ':route==='configuration'?'Configuration':route.startsWith('submit')?'Submit a module':route==='activity'?'Your activity':(route==='review'||route==='admin')?'Admin workspace':route.startsWith('module-set')?'Module sets':'Module library'))+' · Octamod' }, [route,detailModule?.name])
   const selection = resolveSelection(selectedIds)
   const availabilityError = moduleAvailabilityError(selectedIds)
   const conflicts = selectionConflicts(selectedIds, DSP_LOADER && (active?.keepStockFx2 ?? true))
@@ -120,6 +121,8 @@ export default function App() {
         <div className="sidebar-section-label configuration-label"><span>Configurations</span><button className="icon-button" aria-label="New configuration" disabled={!ready} onClick={() => setConfigDialog("create")}><Icon name="plus" size={18} /></button></div>
         <nav className="sidebar-nav configuration-nav" aria-label="Saved configurations">{workspace.configurations.map(item => <button key={item.id} className={item.id === active?.id ? 'active' : ''} aria-pressed={item.id === active?.id} onClick={() => changeConfiguration(item.id)}><Icon name="file" /><span>{item.name}</span><small>{item.moduleIds.length}</small></button>)}</nav>
         <div className="sidebar-section-label community-label">Community</div><nav className="sidebar-nav community-nav" aria-label="Community"><a href="#submit" className={route.startsWith('submit') ? 'active' : ''}><Icon name="plus"/><span>Submit a module</span></a><a href="#activity" className={route === 'activity' ? 'active' : ''}><Icon name="message"/><span>Your activity</span></a>{session.admin && <a href="#admin" className={route === 'admin'||route === 'review' ? 'active' : ''}><Icon name="shield"/><span>Admin workspace</span></a>}</nav>
+        <div className="sidebar-section-label help-label">Help</div>
+        <nav className="sidebar-nav help-nav" aria-label="Help"><a href="#faq" className={route === 'faq' ? 'active' : ''} aria-current={route === 'faq' ? 'page' : undefined}><Icon name="help" /><span>FAQ<span className="help-guide-label"> & flashing guide</span></span></a></nav>
         <div className="sidebar-spacer" />
         <div className="sidebar-build">
           <div className="sidebar-build-heading"><span className={'status-dot ' + (firmware ? 'verified' : '')} /><strong>{firmware ? 'Base firmware ready' : 'Your base firmware'}</strong></div>
@@ -132,13 +135,13 @@ export default function App() {
       {configDialog && <ConfigurationDialog mode={configDialog} initialName={configDialog === 'create' ? '' : configDialog === 'duplicate' ? (active?.name ?? '') + ' copy' : active?.name ?? ''} onSubmit={submitConfigurationDialog} onClose={() => setConfigDialog(null)} />}
       <div className="workspace">
         <header className="app-toolbar">
-          <div className="toolbar-title"><Icon name={configuration ? 'file' : 'grid'} size={17} /><span>{configuration ? 'Configuration' : communityRoute ? 'Community' : route.startsWith('module-set') ? 'Module sets' : 'Modules'}</span>{detailModule && <><span className="breadcrumb-divider">/</span><strong>{detailModule.name}</strong></>}<span className="preview-badge">Preview</span></div>
+          <div className="toolbar-title"><Icon name={route === 'faq' ? 'help' : configuration ? 'file' : 'grid'} size={17} /><span>{route === 'faq' ? 'FAQ & flashing guide' : configuration ? 'Configuration' : communityRoute ? 'Community' : route.startsWith('module-set') ? 'Module sets' : 'Modules'}</span>{detailModule && <><span className="breadcrumb-divider">/</span><strong>{detailModule.name}</strong></>}<span className="preview-badge">Preview</span></div>
           {['library',...MODULE_CATEGORIES,'module-sets'].includes(route) && <label className="search"><Icon name="search" size={15} /><input type="search" aria-label={route==='module-sets'?'Search module sets':'Search modules'} placeholder={route==='module-sets'?'Search module sets':'Search modules'} value={query} onChange={(event) => setQuery(event.target.value)} /></label>}
           <a className="mobile-account-link" href="#submit" aria-label="Submit a module"><Icon name="plus" size={17}/></a><a className="mobile-account-link" href="#activity" aria-label="Your activity"><Icon name="message" size={17}/></a><a className="configuration-button" href="#configuration" aria-label={"Open configuration, " + selection.length + " modules selected"}><Icon name="sliders" size={16} /><span>Configuration</span><span className="toolbar-count">{selection.length}</span></a>
         </header>
         <main className="workspace-content" id="main-content" ref={mainRef} tabIndex={-1}>
           {workspace.storageError && <div className="file-error" role="alert">{workspace.storageError} Export important configurations before closing this tab.</div>}
-          {!ready ? <div className="loading-panel" role="status">Opening your workspace…</div> : <>
+          {route === 'faq' ? <FaqPage /> : !ready ? <div className="loading-panel" role="status">Opening your workspace…</div> : <>
           {missingRoute?<div className="no-results"><h1>{pausedModule ? 'Module temporarily unavailable' : 'Page not found'}</h1><p>{pausedModule ? pausedModule.name + ' has been temporarily removed due to reported audio crackling.' : 'This module or page is not in the current catalog.'}</p><a className="button button-quiet" href="#library">Open module library</a></div>:route==='module-sets'||route.startsWith('module-set/')?<ModuleSets query={query} id={route.startsWith('module-set/')?route.slice(11):undefined} onUse={(name,ids)=>{workspace.importConfiguration(name,ids);window.location.assign('#configuration')}}/>:route === 'activity' ? <ActivityPage /> : route.startsWith('submit') ? <SubmissionPage key={route} moduleId={route.split('/')[1] ?? ''} /> : route === 'review'||route === 'admin' ? <AdminPage /> : communityModule ? <PublishedModulePage module={communityModule} /> : detailModule ? <ModuleDetail key={detailModule.id} module={detailModule} selected={selectedIds.includes(detailModule.id)} onToggle={() => toggleModule(detailModule.id)} /> : configuration ? (
             <div className="configuration-page">
               <div className="page-heading"><div><p className="page-kicker">YOUR WORKSPACE</p><h1>{active?.name}</h1><p>Changes save automatically on this device.</p></div><span className="pill">OS 1.40C</span></div>
@@ -153,6 +156,7 @@ export default function App() {
                 </div>
                 {fileError && <p className="file-error" role="alert">{fileError}</p>}
                 <div className="file-footnote"><span>{firmware ? (firmwareSaved ? 'Saved on this device and verified again each time you return.' : 'Verified for this session. Saving on this device…') : 'Saved in this browser after verification. Never uploaded.'}</span>{(firmware || fileState === 'reading') && <button className="text-button" onClick={clearFile}>Remove from device</button>}</div>
+                <p className="firmware-help"><a href="#faq">Where do I get the .bin? Read the FAQ & flashing guide <Icon name="arrow" size={14} /></a></p>
               </section>
               <section className="configuration-section" aria-labelledby="selection-title"><div className="section-title"><h2 id="selection-title">Selected modules <span className="subtle">{selection.length}</span></h2><a className="text-button" href="#library">Browse modules <Icon name="plus" size={14} /></a></div>
                 {availabilityError && <p className="file-error" role="alert">{availabilityError}</p>}
