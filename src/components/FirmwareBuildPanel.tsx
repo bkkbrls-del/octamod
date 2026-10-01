@@ -1,4 +1,4 @@
-import { trackUsage } from '../community/usage'
+import { trackFirmwareDownload } from '../community/usage'
 import { useState } from 'react'
 import type { useFirmwareBuild } from '../hooks/useFirmwareBuild'
 import { Icon } from './Icon'
@@ -17,7 +17,7 @@ export function FirmwareBuildPanel({build,available,downloadsEnabled,firmwareRea
     <section className="build-section" aria-labelledby="build-title" aria-busy={build.state==='building'||build.state==='validating'}>
       <div><h2 id="build-title">{finished?'Firmware ready':'Build firmware'}</h2><p id="engine-status" role={build.state==='error'?'alert':'status'}>{message}</p><span className="subtle">No firmware upload. Local validation does not qualify this configuration on hardware.</span></div>
       <div className="build-actions">
-        {build.state==='building'?<button className="button button-quiet" onClick={build.cancel}>Cancel build</button>:finished&&!downloadsEnabled?null:finished?<button className="button button-primary" disabled={!riskAccepted} aria-describedby="engine-status" onClick={()=>{saveFirmware(build.result!.buffer,configurationName);setDownloadedKey(build.key);trackUsage('firmware_download_requested')}}><Icon name="download" size={16}/>Download .bin</button>:<button className="button button-primary" disabled={!available||!ready||!riskAccepted} onClick={()=>void build.build()} aria-describedby="engine-status"><Icon name="sliders" size={16}/>Build firmware</button>}
+        {build.state==='building'?<button className="button button-quiet" onClick={build.cancel}>Cancel build</button>:finished&&!downloadsEnabled?null:finished?<button className="button button-primary" disabled={!riskAccepted} aria-describedby="engine-status" onClick={()=>{saveFirmware(build.result!.buffer,configurationName);setDownloadedKey(build.key);trackFirmwareDownload(build.report?.moduleIds??[])}}><Icon name="download" size={16}/>Download .bin</button>:<button className="button button-primary" disabled={!available||!ready||!riskAccepted} onClick={()=>void build.build()} aria-describedby="engine-status"><Icon name="sliders" size={16}/>Build firmware</button>}
         {build.state==='error'&&build.canRetry&&<button className="button button-quiet" onClick={build.retry}>Check again</button>}
         <button className="button button-quiet" onClick={onExport}><Icon name="download" size={16}/>Export configuration</button><p className="export-note" aria-live="polite">{exported?'Configuration exported as JSON.':'JSON backup · no firmware included'}</p>
       </div>

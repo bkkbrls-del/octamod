@@ -1,5 +1,7 @@
 import { apiUrl } from '../hosting'
 import type { UsageEvent } from './usage-contract'
+import { isModuleAvailable } from '../catalog/availability'
+import { moduleBuildPending } from '../catalog/build-support'
 const preferenceKey = 'octamod.usage.opt-out', visitorKey = 'octamod.usage.daily-visitor', configurationsKey = 'octamod.usage.started-configurations'
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/
 export function browserRequestsPrivacy() { return typeof navigator !== 'undefined' && (navigator.doNotTrack === '1' || (navigator as Navigator & {globalPrivacyControl?: boolean}).globalPrivacyControl === true) }
@@ -43,4 +45,15 @@ export function trackConfigurationStarted(id: string) {
     localStorage.setItem(configurationsKey,JSON.stringify([...ids.slice(-999),id]))
     trackUsage('configuration_started') // Local configuration IDs and contents never leave the device.
   } catch { /* Storage-disabled browsers are excluded. */ }
+}
+
+/** Call only after an enabled download of a completed build, using that build's reported module IDs. */
+export function trackFirmwareDownload(moduleIds: readonly string[]) {
+  trackUsage('firmware_download_requested')
+  if(!usageAllowed())return
+  const dailyVisitor=visitor();if(!dailyVisitor)return
+  for(const moduleId of new Set(moduleIds)) {
+    if(!isModuleAvailable(moduleId)||moduleBuildPending(moduleId))continue
+    try {void fetch(apiUrl('/usage/module-downloads'),{method:'POST',credentials:'omit',redirect:'error',referrerPolicy:'no-referrer',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({moduleId,eventId:crypto.randomUUID(),visitor:dailyVisitor})}).catch(()=>{})} catch { /* Counts never block a firmware download. */ }
+  }
 }

@@ -36,9 +36,27 @@ describe('anonymous usage reporting',()=>{
   expect(usage.setUsageAllowed(true)).toBe(true);usage.trackUsage('page_view');expect(request).toHaveBeenCalledTimes(1)
   usage.setUsageAllowed(false);expect(values.has('octamod.usage.daily-visitor')).toBe(false)
  })
+ it('reports a completed firmware request and each unique available module with independent event IDs',()=>{
+  usage.trackFirmwareDownload(['miniverb','tapeecho','miniverb','spectrum','unknown'])
+  expect(request).toHaveBeenCalledTimes(3)
+  const bodies=request.mock.calls.map(([url,options])=>({url,options,body:JSON.parse(options.body)}))
+  expect(bodies[0].body.event).toBe('firmware_download_requested')
+  expect(bodies.slice(1).map(item=>item.body.moduleId)).toEqual(['miniverb','tapeecho'])
+  expect(new Set(bodies.map(item=>item.body.eventId)).size).toBe(3)
+  for(const item of bodies.slice(1)) {
+   expect(item.url).toBe('/api/usage/module-downloads');expect(Object.keys(item.body).sort()).toEqual(['eventId','moduleId','visitor'])
+   expect(item.options.credentials).toBe('omit');expect(item.options.referrerPolicy).toBe('no-referrer');expect(item.options.headers).toEqual({'Content-Type':'application/json'})
+  }
+  usage.trackFirmwareDownload(['miniverb']);expect(request).toHaveBeenCalledTimes(5)
+ })
+ it('suppresses public module reporting for browser privacy and opt-outs',()=>{
+  vi.stubGlobal('navigator',{doNotTrack:'1'});usage.trackFirmwareDownload(['miniverb']);expect(values.size).toBe(0)
+  vi.stubGlobal('navigator',{globalPrivacyControl:true});usage.trackFirmwareDownload(['miniverb']);expect(values.size).toBe(0)
+  vi.stubGlobal('navigator',{});usage.setUsageAllowed(false);usage.trackFirmwareDownload(['miniverb']);expect(request).not.toHaveBeenCalled()
+ })
  it('never blocks local work when storage or the service is unavailable',async()=>{
   vi.stubGlobal('localStorage',{getItem:()=>{throw new Error('Unavailable')}});expect(()=>usage.trackUsage('page_view')).not.toThrow();expect(request).not.toHaveBeenCalled()
   vi.stubGlobal('localStorage',{getItem:()=>null,setItem:()=>{},removeItem:()=>{}});request.mockRejectedValue(new Error('Offline'))
-  expect(()=>usage.trackUsage('build_succeeded')).not.toThrow();await Promise.resolve()
+  expect(()=>usage.trackUsage('build_succeeded')).not.toThrow();expect(()=>usage.trackFirmwareDownload(['miniverb'])).not.toThrow();await Promise.resolve()
  })
 })

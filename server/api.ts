@@ -1,4 +1,5 @@
-import { recordUsage, usageStatistics } from './usage'
+import { recordUsage, recordModuleDownload, usageStatistics } from './usage'
+import { moduleStatistics } from './module-statistics'
 import recipes from '../src/catalog/module-sets.json'
 import type { Database, Env, Media, User } from './platform'
 import { ADMIN_ACTOR, authentication, currentUser, guest, isAdmin, throttle } from './auth'
@@ -21,6 +22,7 @@ export async function handleApi(request: Request, env: Env): Promise<Response> {
     const db = env.DB
     if (!db) throw new HttpError(503,'Community services are not connected yet. Your device workspace still works.')
     if (path === '/api/usage/events' && request.method === 'POST') return await recordUsage(request,env,db)
+    if (path === '/api/usage/module-downloads' && request.method === 'POST') return await recordModuleDownload(request,env,db)
     const user = await currentUser(request,db)
     const admin = await isAdmin(request,env,db)
     let match: RegExpMatchArray | null
@@ -40,7 +42,9 @@ export async function handleApi(request: Request, env: Env): Promise<Response> {
       const media = (await db.prepare("SELECT m.id,m.kind,m.caption,m.capture_type FROM media m JOIN module_publications p ON p.submission_id=m.submission_id WHERE p.module_id=?").bind(match[1]).all()).results
       const likes=await db.prepare('SELECT COUNT(*) AS count FROM likes WHERE module_id=?').bind(match[1]).first<{count:number}>()
       const liked=!!(user&&await db.prepare('SELECT user_id FROM likes WHERE module_id=? AND user_id=?').bind(match[1],user.id).first())
-      return response({comments,ratings,ownRating:ownRating?.value ?? 0,media,likes:likes?.count??0,liked})
+      const downloads=(await db.prepare('SELECT downloads FROM module_downloads WHERE module_id=?').bind(match[1]).first<{downloads:number}>())?.downloads??0
+      const downloadsStarted=(await db.prepare("SELECT value FROM module_download_meta WHERE key='collection_started'").first<{value:string}>())?.value??null
+      return response({comments,ratings,ownRating:ownRating?.value ?? 0,media,likes:likes?.count??0,liked,downloads,downloadsStarted})
     }
     if ((match = path.match(/^\/api\/modules\/([a-z0-9-]+)\/(comments|rating|like)$/)) && request.method === 'POST') {
       await knownModule(db,match[1])
@@ -101,7 +105,7 @@ export async function handleApi(request: Request, env: Env): Promise<Response> {
       }
       throw new HttpError(404,'API route not found.')
     }
-    if(path==='/api/community/summary'&&request.method==='GET')return response((await db.prepare('SELECT r.module_id,AVG(r.value) AS average,COUNT(*) AS count,(SELECT COUNT(*) FROM likes l WHERE l.module_id=r.module_id) AS likes FROM ratings r GROUP BY r.module_id').all()).results)
+    if(path==='/api/community/summary'&&request.method==='GET')return response(await moduleStatistics(db))
     throw new HttpError(404,'API route not found.')
   } catch (error) { return response({error:error instanceof HttpError ? error.message : 'The community service could not complete this request.'},error instanceof HttpError ? error.status : 500) }
 }
