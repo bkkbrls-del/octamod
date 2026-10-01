@@ -13,11 +13,12 @@ Use Node.js 24:
 ```sh
 npm install
 npm run check
+cp .dev.vars.example .dev.vars
 npm run db:local
 npm run dev:community
 ```
 
-In a second terminal, run `npm run dev` and open http://127.0.0.1:5173. Vite proxies /api to the local Cloudflare runtime on port 8788. Both D1 and R2 are emulated locally. Without the API, local configuration and firmware storage still work; community actions explain their unavailable state.
+In a second terminal, run `npm run dev` and open http://127.0.0.1:5173. Vite proxies /api to the local Cloudflare runtime on port 8788, with D1 emulated locally. `.dev.vars` (ignored) sets the local `APP_URL` and overrides the production values in `wrangler.worker.jsonc`. Without the API, local configuration and firmware storage still work; community actions explain their unavailable state.
 
 ## Local workspace
 
@@ -71,17 +72,17 @@ The private administrator workspace provides GitHub contribution entry points, p
 
 ## GitHub Pages and community API setup
 
-`.github/workflows/pages.yml` runs for every push to main (and on manual dispatch): it verifies the owner merge, compiles modules in isolation, checks the app with Node 24, builds static files and publishes `dist/` to GitHub Pages. Direct pushes without an owner-merged PR fail before anything is built. Actions, the runner image and the toolchain base image are pinned to exact versions; the container builds GNU binutils 2.47 for `m68k-elf` from the checksum-pinned official release, the same toolchain that produced the committed packages. Relative asset paths and hash navigation support repository URLs such as `https://<owner>.github.io/<repo>/` and root/custom-domain URLs. The public repository exists; Pages and the remote backend are not configured yet. The SDK belongs in this same repository; see [accepted decisions](docs/DECISIONS.md).
+`.github/workflows/pages.yml` runs for every push to main (and on manual dispatch): it verifies the owner merge, compiles modules in isolation, checks the app with Node 24, builds static files and publishes `dist/` to GitHub Pages. Direct pushes without an owner-merged PR fail before anything is built. Actions, the runner image and the toolchain base image are pinned to exact versions; the container builds GNU binutils 2.47 for `m68k-elf` from the checksum-pinned official release, the same toolchain that produced the committed packages. Relative asset paths and hash navigation support repository URLs such as `https://<owner>.github.io/<repo>/` and root/custom-domain URLs. The site is published at https://octamod.app. The SDK belongs in this same repository; see [accepted decisions](docs/DECISIONS.md).
 
-The community runs separately through `worker.ts` and `wrangler.worker.jsonc`, using Cloudflare Worker, D1 and R2 free allowances initially. No paid authentication or email provider is required. Free limits still apply. The frontend uses the public `VITE_COMMUNITY_API_URL` ending in `/api`; leave it blank for the local Vite proxy. Only JSON, original/licensed preview media and community session data reach the API. No firmware endpoint exists.
+The community runs separately through `worker.ts` and `wrangler.worker.jsonc`, using Cloudflare Worker and D1 free allowances; neither needs a payment method. The production API is `https://octamod-community.octamod.workers.dev/api`. Module screenshots and audio arrive through PRs and are served by the site, so no R2 bucket is bound; the read-only legacy media route stays inert without one. No paid authentication or email provider is required. Free limits still apply. The frontend uses the public `VITE_COMMUNITY_API_URL` ending in `/api`; leave it blank for the local Vite proxy. Only JSON, original/licensed preview media and community session data reach the API. No firmware endpoint exists.
 
-Before an authorized deployment:
+Production setup (completed 1 October 2026; repeat these steps for another environment):
 
 1. Enable GitHub Pages with GitHub Actions as its publishing source and protect `main` (required PR, owner review, required checks; no merge queue, which would change the merging account). Set the repository variables `MODULE_APPROVER_GITHUB_ID` to the owner's numeric GitHub user ID (`gh api users/<login> --jq .id`) and `COMMUNITY_API_URL` to the deployed backend URL ending in `/api`. For a custom domain, verify it for Pages and set it in the Pages settings; with Actions publishing no `CNAME` file is needed.
-2. Create D1 and R2 resources and replace the placeholder database ID and bucket binding in `wrangler.worker.jsonc`. Apply migrations 0001–0007 to the intended remote database.
-3. Set backend `APP_URL` to the full frontend URL **including its repository path and trailing slash**. Keep `SESSION_TRANSPORT=bearer` for separate domains.
+2. Create a D1 database with `npx wrangler d1 create octamod-community`, put its ID in `wrangler.worker.jsonc` and apply migrations 0001–0007 with `npx wrangler d1 migrations apply octamod-community --config wrangler.worker.jsonc --remote`.
+3. Set `APP_URL` in `wrangler.worker.jsonc` to the full frontend URL with its trailing slash (`https://octamod.app/`; include the repository path for a `github.io` project URL). Keep `SESSION_TRANSPORT=bearer` for separate domains.
 4. Run `npm run admin:key` locally. Keep the printed key in a password manager and store only its digest as the Worker secret `ADMIN_KEY_SHA256`; never as a frontend `VITE_` value.
-5. Deploy the Worker using `npm run deploy`, then manually run the frontend workflow. Publishing the frontend never approves a module update.
+5. Deploy the Worker with `npx wrangler deploy --config wrangler.worker.jsonc` (or `npm run deploy`), then run the frontend workflow so the site is rebuilt with `COMMUNITY_API_URL`. Publishing the frontend never approves a module update.
 
 Cross-origin requests do not depend on third-party cookies. Guest sessions are opaque tokens saved on the frontend origin and sent in an `Authorization` header; administrator sessions use a separate `X-Octamod-Admin` header and tab-scoped storage. CORS allows only the configured frontend origin and exposes only the guest session response header. No session token appears in a URL. All GitHub Pages sites of one account share the `<owner>.github.io` origin, so use a custom domain or a dedicated account/organization if other Pages sites live there.
 

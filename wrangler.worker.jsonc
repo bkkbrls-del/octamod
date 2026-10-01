@@ -1,23 +1,19 @@
 {
   "name": "octamod-community",
   "compatibility_date": "2026-09-30",
+  // Production values. Local development overrides vars through the ignored .dev.vars file.
   "vars": {
-    "APP_URL": "http://127.0.0.1:5173",
+    "APP_URL": "https://octamod.app/",
     "SESSION_TRANSPORT": "bearer"
   },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "octamod-community",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "ef3ad4a1-5554-45a6-a841-6314367e3cec",
       "migrations_dir": "migrations"
     }
   ],
-  "r2_buckets": [
-    {
-      "binding": "MEDIA",
-      "bucket_name": "octamod-media"
-    }
-  ],
+  // Module screenshots and audio arrive through PRs and are served by the site; no R2 bucket is needed.
   "main": "worker.ts"
 }
