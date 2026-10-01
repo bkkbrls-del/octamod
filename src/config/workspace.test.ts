@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { newConfiguration, validateConfiguration, configurationVersionError } from './workspace'
+import { MODULES } from '../catalog/modules'
 describe('persistent configuration version pins',()=>{
  it('starts empty with stock FX2 disabled while dynamic loading is unavailable',()=>{
   const configuration=newConfiguration('Empty')
@@ -9,7 +10,7 @@ describe('persistent configuration version pins',()=>{
  })
  it('pins new configurations but retains saved older versions until the user updates them',()=>{
   const current=newConfiguration('Current',['spectrum'])
-  expect(current.moduleVersions).toEqual({spectrum:'0.1.0-experimental'})
+  expect(current.moduleVersions).toEqual({spectrum:MODULES.find(module=>module.id==='spectrum')!.version})
   expect(configurationVersionError(current)).toBe('')
   const old=validateConfiguration({...current,moduleVersions:{spectrum:'0.0.9'}})
   expect(old.moduleVersions.spectrum).toBe('0.0.9')

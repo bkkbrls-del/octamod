@@ -4,9 +4,9 @@
   "license": "/licenses/octabam.txt",
   "sourceCommit": null,
   "moduleVersions": {
-    "spectrum": "0.1.0-experimental",
-    "modulation": "0.1.0-experimental",
-    "character": "0.1.0-experimental",
+    "spectrum": "0.1.1-experimental",
+    "modulation": "0.1.1-experimental",
+    "character": "0.1.1-experimental",
     "miniverb": "0.1.1-experimental",
     "tapeecho": "0.1.1-experimental",
     "euclid": "0.1.1-experimental",
@@ -98,7 +98,7 @@
     },
     {
       "id": "modulation",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "key": "MODULATION",
       "author": "sambanks",
       "sources": {
@@ -144,7 +144,7 @@
     },
     {
       "id": "spectrum",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "key": "SPECTRUM",
       "author": "sambanks",
       "sources": {

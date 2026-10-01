@@ -38,7 +38,7 @@ jobs:
         run: |
           # Compare with the last successful release, not the previous commit, so a failed module build is never skipped.
           last=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow pages.yml --branch main --status success --limit 1 --json headSha --jq '.[0].headSha // ""')
-          paths='sdk scripts/build-module-packages.py scripts/build-modules-isolated.sh scripts/import-module-build.mjs scripts/stamp-module-build.mjs scripts/module-source.mjs src/engine/assets src/release'
+          paths='sdk scripts/build-module-packages.py scripts/build-modules-isolated.sh scripts/import-module-build.mjs scripts/stamp-module-build.mjs scripts/module-source.mjs scripts/license-notices.mjs scripts/licenses.mjs src/engine/assets src/release'
           if [ -n "$last" ] && git cat-file -e "$last^{commit}" 2>/dev/null && git diff --quiet "$last" HEAD -- $paths; then
             echo "modules=false" >> "$GITHUB_OUTPUT"
             echo "No module change since the last successful release ($last): publishing the verified committed packages."
@@ -64,6 +64,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run modules:check
+      - run: npm run licenses:check
       - name: Prepare the pinned patched assembler toolchain
         run: docker build --file sdk/build/Dockerfile --tag octamod-source-tools .
       - name: Compile reviewed source without network, credentials or firmware
@@ -93,6 +94,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
+      - run: npm ci
       - if: needs.approval.outputs.modules == 'true'
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -110,7 +112,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           OCTAMOD_APPROVER_ID: ${{ vars.MODULE_APPROVER_GITHUB_ID }}
-      - run: npm ci
       - run: npm run check
         env:
           VITE_COMMUNITY_API_URL: ${{ vars.COMMUNITY_API_URL }}

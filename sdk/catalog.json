@@ -4,15 +4,15 @@
   "modules": [
     {
       "id": "spectrum",
-      "version": "0.1.0-experimental"
+      "version": "0.1.1-experimental"
     },
     {
       "id": "modulation",
-      "version": "0.1.0-experimental"
+      "version": "0.1.1-experimental"
     },
     {
       "id": "character",
-      "version": "0.1.0-experimental"
+      "version": "0.1.1-experimental"
     },
     {
       "id": "miniverb",

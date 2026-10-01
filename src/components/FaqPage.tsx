@@ -1,3 +1,4 @@
+import { INDEPENDENCE_NOTICE, FLASHING_RISKS } from '../firmware-notices'
 import { isValidElement, useState } from 'react'
 import type { ReactNode } from 'react'
 import { BASE_FIRMWARE } from '../engine/base'
@@ -40,7 +41,7 @@ const SECTIONS: FaqSection[] = [
         keywords: 'octabam custom experimental configurator endorsed supported warranty',
         answer: <>
           <p>Octamod lets you choose octabam modules and prepare a custom Octatrack firmware configuration in your browser. Each module page explains its controls, author and available test evidence.</p>
-          <p>This is an independent, experimental project. Elektron does not endorse or support it. Custom firmware can cause data loss or leave your device unusable, and local build checks cannot guarantee hardware safety.</p>
+          <p>{INDEPENDENCE_NOTICE} {FLASHING_RISKS} Local build checks cannot guarantee hardware safety.</p>
         </>,
       },
       {

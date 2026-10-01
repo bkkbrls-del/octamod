@@ -5,18 +5,20 @@ How to get an octabam image onto an Octatrack, and how to get back off it.
 walk-through for a first build.
 
 > **This is not official Elektron firmware.** Flashing a modified OS can
-> leave the unit unusable until you recover it, and puts your warranty in
-> question. Nothing here is endorsed by, supported by, or affiliated with
+> leave the unit unusable, cause data loss, affect warranty coverage and
+> prevent future official updates. Recovery is not guaranteed. This is an
+> independent, unofficial project. Nothing here is endorsed by, supported by, or affiliated with
 > Elektron. You flash at your own risk.
 >
 > **Do not redistribute images you build.** A built `.bin`/`.syx` contains
 > Elektron's copyrighted OS. Everyone builds against their own copy
 > (`make os`).
 
-**Learn how to recover before flashing.** A brick here is soft and
-recoverable: the Startup Menu (bootloader) lives in a region the OS update
-does not touch, so the unit can always be returned to the official OS over
-MIDI. Read §1 first.
+**Read the recovery procedure before flashing.** If the Startup Menu remains
+accessible, its MIDI UPGRADE option may let you reinstall the official OS.
+That is a recovery attempt, not a guarantee: firmware corruption, interrupted
+updates or hardware faults may prevent it from succeeding. Read §1 first
+and keep the official firmware and backups available.
 
 ## 0. What you need
 
@@ -46,7 +48,8 @@ The register of hardware failure modes (symptom → cause → fix) is
 
 ## 1. The recovery path
 
-If the unit shows a "Z" screen, will not boot, or hangs:
+If an update is still running, keep power connected. If it has finished
+and the unit shows a "Z" screen, will not boot, or hangs, try:
 
 1. Power off.
 2. Hold **[FUNC]** and power on → the **STARTUP MENU**.
@@ -55,14 +58,18 @@ If the unit shows a "Z" screen, will not boot, or hangs:
    your SysEx app, or `make midi-flash PORT=<port> SYX=downloads/extracted/OCTATRACK_OS1.40C.syx`.
 5. Wait through "PREPARING FLASH" → "UPDATING FLASH". Do not power off.
 
-This menu works even if the OS is corrupt: it is the bootloader, and a
-normal OS update never touches it. [TRIG 2] = EMPTY RESET clears the
-battery-backed RAM and settings, not the CF card.
+The Startup Menu can be available when the main OS will not boot, but it
+may also be inaccessible or unable to complete an update. If the menu does
+not appear or reinstalling the official OS fails, stop and contact
+[Elektron support](https://www.elektron.se/support) for advice; this project
+cannot promise a repair or support coverage. [TRIG 2] = EMPTY RESET clears
+battery-backed RAM and settings; it does not reinstall firmware.
 
 ## 2. Backup
 
-Flashing the OS does not touch the CF card. Back it up anyway (USB DISK
-MODE, copy everything), or at least the projects that matter. Any remix
+Back up the entire CF card before flashing (USB DISK MODE, copy everything),
+including the projects and samples that matter. Do not assume an update or
+recovery will preserve your data. Any remix
 carrying Octakit migrates Parts into Kits on project load; going back to
 stock can lose Kit data.
 
@@ -103,8 +110,9 @@ decodes the official file and validates its checksum, and round-trips ours.
 5. Send the file; the [TRIG] lights come on one by one. From this repo:
    `make midi-flash PORT=A SYX=<file.syx>` (`tools/hw/midi_flash.py`) paces
    the ~7,460 messages at the DIN rate through a named MIDI destination.
-   FILTER MIDI CLOCK on that port. Retry-safe: on a lost send, re-enter the
-   Startup Menu and run it again (`--ms 60` to slow it). If a SysEx app goes
+   FILTER MIDI CLOCK on that port. If a transfer fails before flashing
+   starts and the Startup Menu remains accessible, try the official OS
+   again (`--ms 60` to slow it). Do not interrupt an active flash. If a SysEx app goes
    too fast and the OT loses sync, increase the pause between messages
    (100–300 ms).
 6. "PREPARING FLASH", then "UPDATING FLASH". Do not power off or disconnect
@@ -135,9 +143,11 @@ decodes the official file and validates its checksum, and round-trips ours.
 
 ## 5. Reverting to the official firmware
 
-Reflash following §3 with `downloads/extracted/OCTATRACK_OS1.40C.syx`
-(MIDI) or the official `.bin` from Elektron's zip (card). The card and
-projects are not affected.
+If the unit still boots, try reinstalling the official `.bin` from
+Elektron's zip using §3a. If only the Startup Menu is accessible, try §1
+with the official `.syx`. Neither path guarantees recovery. Projects saved
+under custom firmware may be incompatible with the official OS; keep your
+backups and do not assume data will be preserved.
 
 ## Risk
 
@@ -146,6 +156,8 @@ projects are not affected.
   lock-step or under a guessed interleave, so no local test can show a
   cross-core bus timing defect absent. Emulator green is necessary, not
   sufficient.
-- The only delicate moment is "UPDATING FLASH": do not cut power there.
-- A hard (unrecoverable) brick: the rescue bootloader is not touched in a
-  normal OS update.
+- Do not interrupt the transfer, flash update or startup. An interrupted
+  update may leave the device unusable.
+- A working Startup Menu may offer a recovery path, but permanent failure
+  is possible. Recovery, warranty coverage and compatibility with future
+  official updates are not guaranteed.
