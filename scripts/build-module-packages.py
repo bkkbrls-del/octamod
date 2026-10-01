@@ -38,7 +38,7 @@ def validate_source(text):
 
 def source_hashes(root):
     files = {}
-    for group in ['modules', 'platform', 'tools', 'dsp']:
+    for group in ['modules', 'platform', 'tools', 'dsp', 'licenses']:
         for path in sorted((root / group).rglob('*')):
             if path.is_symlink(): raise ValueError('Source symlinks are not allowed: ' + str(path))
             # Finder metadata is never source; the release checkout never contains it.
@@ -389,11 +389,15 @@ def main():
     os.chdir(APP)
     destination.mkdir(parents=True)
     files = {}
+    notice_name = 'THIRD_PARTY_NOTICES.txt'
+    notice_bytes = (sdk / 'licenses' / notice_name).read_bytes()
+    (destination / notice_name).write_bytes(notice_bytes)
+    notices = {'name': notice_name, 'bytes': len(notice_bytes), 'sha256': HASH(notice_bytes)}
     for name in products:
         path = destination / name; dump(path, products[name]); files[name] = {'bytes': path.stat().st_size, 'sha256': HASH(path.read_bytes())}
     tree = HASH(json.dumps(sources, sort_keys=True, separators=(',', ':')).encode())
     dump(destination / 'module-build.json', {'schemaVersion': 1, 'kind': 'source-packages', 'sourceCommit': args.source_commit,
-        'nativeRevision': revision, 'sourceTreeSha256': tree, 'moduleVersions': versions, 'sources': sources, 'files': files,
+        'nativeRevision': revision, 'sourceTreeSha256': tree, 'moduleVersions': versions, 'sources': sources, 'files': files, 'notices': notices,
         'compilerSha256': HASH(Path(__file__).read_bytes()),
         'stockRead': False, 'qualification': 'assembly and relocation only; no new hardware, audio or stress qualification'})
     print('Stock-free source artifact written to ' + str(destination), flush=True)

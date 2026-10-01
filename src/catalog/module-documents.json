@@ -7,13 +7,15 @@
       "id": "spectrum",
       "key": "SPECTRUM",
       "name": "Spectrum",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "effects",
       "author": {
         "github": "sambanks",
         "credits": [
           "sambanks",
-          "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
+          "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md",
+          "audiojs/filter: Dmitry Iv (MIT)",
+          "Airwindows Capacitor2: Chris Johnson (MIT)"
         ]
       },
       "nativeManifest": "manifest.py",
@@ -138,7 +140,7 @@
       "license": {
         "spdx": "MIT",
         "file": "LICENSE",
-        "declaration": "Original module sources retain upstream authorship and permissive licences. See ../../THIRD_PARTY.md for component-specific credits and terms. No rights or hardware qualification are newly asserted by this import."
+        "declaration": "Project code is MIT; adapted components retain their own copyright notices and full terms in LICENSE and ../../licenses/THIRD_PARTY_NOTICES.txt. The SPDX expression covers the applicable component licences. No rights to Elektron firmware or new hardware qualification are asserted."
       },
       "media": []
     },
@@ -147,13 +149,16 @@
       "id": "modulation",
       "key": "MODULATION",
       "name": "Modulation",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "effects",
       "author": {
         "github": "sambanks",
         "credits": [
           "sambanks",
-          "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
+          "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md",
+          "Hera: J.P. Cimalando (ISC)",
+          "ChowPhaser: jatinchowdhury18 / Jatin Chowdhury (BSD-3-Clause)",
+          "Mutable Instruments Rings: Emilie Gillet (MIT)"
         ]
       },
       "nativeManifest": "manifest.py",
@@ -284,9 +289,9 @@
         ]
       },
       "license": {
-        "spdx": "MIT",
+        "spdx": "MIT AND ISC AND BSD-3-Clause",
         "file": "LICENSE",
-        "declaration": "Original module sources retain upstream authorship and permissive licences. See ../../THIRD_PARTY.md for component-specific credits and terms. No rights or hardware qualification are newly asserted by this import."
+        "declaration": "Project code is MIT; adapted components retain their own copyright notices and full terms in LICENSE and ../../licenses/THIRD_PARTY_NOTICES.txt. The SPDX expression covers the applicable component licences. No rights to Elektron firmware or new hardware qualification are asserted."
       },
       "media": []
     },
@@ -295,13 +300,14 @@
       "id": "character",
       "key": "CHARACTER",
       "name": "Character",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "effects",
       "author": {
         "github": "sambanks",
         "credits": [
           "sambanks",
-          "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
+          "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md",
+          "JSFXClones: JClones (MIT)"
         ]
       },
       "nativeManifest": "manifest.py",
@@ -436,7 +442,7 @@
       "license": {
         "spdx": "MIT",
         "file": "LICENSE",
-        "declaration": "Original module sources retain upstream authorship and permissive licences. See ../../THIRD_PARTY.md for component-specific credits and terms. No rights or hardware qualification are newly asserted by this import."
+        "declaration": "Project code is MIT; adapted components retain their own copyright notices and full terms in LICENSE and ../../licenses/THIRD_PARTY_NOTICES.txt. The SPDX expression covers the applicable component licences. No rights to Elektron firmware or new hardware qualification are asserted."
       },
       "media": []
     },

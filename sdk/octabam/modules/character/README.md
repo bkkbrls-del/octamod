@@ -107,3 +107,11 @@ bytes are stock LO-FI's until `ot_project.py stamp-defaults` writes ours.
 On Sam's unit since flash 4; the return confirmed on flash 7; the master
 shape (Character everywhere, RET by position, wet in front) flashed 13 Sep
 2026 as image 96; the return removed 20 Sep 2026.
+
+## Licence notices — 0.1.1-experimental
+
+This documentation update preserves component copyright notices and full terms in
+[LICENSE](LICENSE) and the [shared notice bundle](../../licenses/THIRD_PARTY_NOTICES.txt).
+Applicable SPDX expression: `MIT`. Project MIT terms do not
+replace the original component licences. DSP behavior has not changed or been
+newly qualified by this notice update.

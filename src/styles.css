@@ -870,3 +870,6 @@ h1 { font-size: 28px; }
 .module-popularity svg { flex-shrink: 0; }
 .popularity-note { color: #aaaab7; font-size: 12px; line-height: 1.6; margin: 16px 0; }
 .published-card .module-popularity { margin-bottom: 14px; }
+.project-notice { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 18px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #494650; font-size: 12px; line-height: 1.7; color: #b7b5c3; }
+.project-notice p { flex: 1 1 420px; margin: 0; }
+.project-notice a { color: #c8c3de; text-decoration: underline; text-underline-offset: 3px; }

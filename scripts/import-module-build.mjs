@@ -7,6 +7,7 @@ import { fetchOwnerApproval } from '../src/release/approval.ts'
 import { parseModuleDocument } from '../src/catalog/module-contract.ts'
 import { parseColdFireObject } from '../src/engine/coldfire-elf.ts'
 import { PACKAGE_FILES as expected, moduleSourcePaths, compiledModuleVersions } from './module-source.mjs'
+import { NOTICE_NAME, renderLicenseNotices } from './license-notices.mjs'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const args = process.argv.slice(2), folder = args[0] && resolve(args[0]), development = args.includes('--development'), checkOnly = args.includes('--check-only')
 if (!folder) throw new Error('Usage: node scripts/import-module-build.mjs artifact-directory [--development] [--check-only]')
@@ -38,12 +39,16 @@ const native = resolve(root,'sdk/octabam')
 const actual=await moduleSourcePaths(root)
 if(JSON.stringify(actual.sort())!==JSON.stringify(Object.keys(report.sources).sort()))throw new Error('Compiled source inventory is incomplete or stale.')
 for (const [path, fingerprint] of Object.entries(report.sources)) {
-  if (!/^(modules|platform|tools|dsp)\/[A-Za-z0-9._/-]+$/.test(path) || path.split('/').some(part => part === '..' || part === '.') || !hash(fingerprint) || /\.(bin|syx|exe|dll|dylib|zip)$/i.test(path)) throw new Error('Invalid source inventory path: ' + path)
+  if (!/^(modules|platform|tools|dsp|licenses)\/[A-Za-z0-9._/-]+$/.test(path) || path.split('/').some(part => part === '..' || part === '.') || !hash(fingerprint) || /\.(bin|syx|exe|dll|dylib|zip)$/i.test(path)) throw new Error('Invalid source inventory path: ' + path)
   const source = resolve(native,path); await regular(source,native)
   if (sha(await readFile(source)) !== fingerprint) throw new Error('Compiled source is stale: ' + path)
 }
 if (sha(JSON.stringify(Object.fromEntries(Object.entries(report.sources).sort(([a],[b]) => a < b ? -1 : a > b ? 1 : 0)))) !== report.sourceTreeSha256) throw new Error('Source tree fingerprint differs')
 const packages = new Map()
+const noticePath = resolve(folder, NOTICE_NAME)
+await regular(noticePath, folder)
+const noticeBytes = await readFile(noticePath)
+if (!report.notices || report.notices.name !== NOTICE_NAME || report.notices.bytes !== noticeBytes.length || report.notices.sha256 !== sha(noticeBytes) || noticeBytes.toString('utf8') !== await renderLicenseNotices(root)) throw new Error('Compiled artifact licence notices are missing, corrupt or stale')
 for (const name of expected) {
   const file = resolve(folder,name); await regular(file,folder); const bytes = await readFile(file), entry = report.files[name]
   if (!entry || entry.bytes !== bytes.length || entry.sha256 !== sha(bytes)) throw new Error('Corrupt compiled artifact: ' + name)

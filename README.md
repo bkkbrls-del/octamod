@@ -2,6 +2,7 @@
   <img src="public/favicon.svg" alt="Octamod logo" width="88" height="88" />
   <h1>Octamod</h1>
   <p><strong>SDK for developing effects and playback modules for the Elektron Octatrack.</strong></p>
+  <p>Independent and unofficial. Not affiliated with, endorsed by or supported by Elektron.</p>
   <p>
     <a href="#get-started">Get started</a> ·
     <a href="sdk/README.md">SDK guide</a> ·
@@ -18,6 +19,12 @@
 Write DSP effects in **DSP56300 assembly** or playback and system patches in **ColdFire assembly**, with Python manifests describing their controls, placement and compatibility. Source, documentation and module metadata live together in this repository.
 
 > **Experimental SDK.** Scaffolding and metadata checks are ready to use. Native builds require a locally prepared toolchain; portable setup and hardware qualification remain incomplete. See the [SDK guide](sdk/README.md#native-development) and [verification status](docs/VERIFICATION.md).
+
+> **Flashing risks.** Custom firmware can leave your device unusable, cause data loss, affect warranty coverage and prevent future official updates. Recovery is not guaranteed. Back up projects and samples, keep the original OS and read the [flashing and recovery procedure](sdk/octabam/docs/remixer/FLASHING.md) first. Flash at your own risk.
+>
+> **Do not share firmware images.** Original and generated `.bin` / `.syx` images contain Elektron's copyrighted firmware. Keep them on your own device; share configuration JSON and properly licensed module sources instead.
+
+Third-party copyright notices and full licence terms are preserved in the [SDK notice bundle](sdk/octabam/licenses/THIRD_PARTY_NOTICES.txt) and included in the published app and compiled module artifacts. See [component provenance](sdk/octabam/THIRD_PARTY.md).
 
 ## Get started
 
