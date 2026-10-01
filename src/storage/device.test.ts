@@ -43,7 +43,7 @@ describe('device persistence', () => {
 
 it('migrates old device configurations without changing selection and preserves explicit compact menus',async()=>{
  const created=newConfiguration('Legacy',['euclid']),{keepStockFx2,...legacy}=created
- expect(keepStockFx2).toBe(true);expect(validateConfiguration(legacy).keepStockFx2).toBe(true)
+ expect(keepStockFx2).toBe(false);expect(validateConfiguration(legacy).keepStockFx2).toBe(true)
  const db=await openDeviceDatabase('test-'+crypto.randomUUID()),store=deviceStore(db)
  await store.saveConfiguration({...created,keepStockFx2:false})
  expect((await store.listConfigurations())[0].keepStockFx2).toBe(false);db.close()

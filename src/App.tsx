@@ -4,6 +4,7 @@ import { MODULE_DOCUMENTS_BY_ID } from './catalog/documents'
 import { MODULE_CATEGORIES } from './catalog/module-contract'
 import { moduleBuildPending } from './catalog/build-support'
 import { api } from './community/api'
+import { selectionConflicts, type ConflictFix } from './catalog/selection-conflicts'
 import { CompatibilityPanel } from './components/CompatibilityPanel'
 import { useCommunity } from './community/context'
 import { ActivityPage } from './community/ActivityPage'
@@ -15,7 +16,7 @@ import type { ChangeEvent, DragEvent } from 'react'
 import { MODULES, resolveSelection } from './catalog/modules'
 import { AVAILABLE_MODULES, isModulePaused, moduleAvailabilityError } from './catalog/availability'
 import { DETAILS } from './catalog/details'
-import { ENGINE_AVAILABLE, DOWNLOADS_ENABLED } from './engine/protocol'
+import { ENGINE_AVAILABLE, DOWNLOADS_ENABLED, DSP_LOADER } from './engine/protocol'
 import { useFirmwareBuild } from './hooks/useFirmwareBuild'
 import { FirmwareBuildPanel } from './components/FirmwareBuildPanel'
 import { downloadSelection, parseSelection } from './config/selection'
@@ -61,6 +62,7 @@ export default function App() {
   useEffect(() => { mainRef.current?.scrollTo({ top: 0 });document.title=(detailModule?.name??(route==='configuration'?'Configuration':route.startsWith('submit')?'Submit a module':route==='activity'?'Your activity':(route==='review'||route==='admin')?'Admin workspace':route.startsWith('module-set')?'Module sets':'Module library'))+' · Octamod' }, [route,detailModule?.name])
   const selection = resolveSelection(selectedIds)
   const availabilityError = moduleAvailabilityError(selectedIds)
+  const conflicts = selectionConflicts(selectedIds, DSP_LOADER && (active?.keepStockFx2 ?? true))
   const visibleModules = AVAILABLE_MODULES.filter((module) =>
     (filter === 'all' || module.category === filter)
     && (family==='all'||DETAILS[module.id].family===family)
@@ -68,6 +70,11 @@ export default function App() {
   ).sort((a,b)=>sort==='name'?a.name.localeCompare(b.name):sort==='author'?a.authorName.localeCompare(b.authorName)||a.name.localeCompare(b.name):sort==='rated'?(statistics.find(item=>item.module_id===b.id)?.average??0)-(statistics.find(item=>item.module_id===a.id)?.average??0):0)
 
   function toggleModule(id: string) { workspace.toggleModule(id); setSaved(false); setRiskAccepted({key:'',accepted:false}) }
+  function fixConflict(fix: ConflictFix) {
+    for (const id of fix.removeIds ?? []) if (selectedIds.includes(id)) workspace.toggleModule(id)
+    if (fix.keepStockFx2 !== undefined) workspace.setKeepStockFx2(fix.keepStockFx2)
+    setSaved(false); setRiskAccepted({key:'',accepted:false})
+  }
   function chooseFile(event: ChangeEvent<HTMLInputElement>) {
     const file = event.currentTarget.files?.[0]
     event.currentTarget.value = ''
@@ -78,7 +85,7 @@ export default function App() {
     if (event.dataTransfer.files.length !== 1) { workspace.setFileError('Choose one firmware file at a time.'); return }
     void readFile(event.dataTransfer.files[0])
   }
-  function saveSelection() { downloadSelection(selectedIds, firmware, active?.name, active?.keepStockFx2, active?.moduleVersions); setSaved(true) }
+  function saveSelection() { downloadSelection(selectedIds, firmware, active?.name, DSP_LOADER && (active?.keepStockFx2 ?? true), active?.moduleVersions); setSaved(true) }
   async function importSelection(event: ChangeEvent<HTMLInputElement>) {
     const file=event.currentTarget.files?.[0]; event.currentTarget.value=''; if(!file)return
     setImportError('')
@@ -137,6 +144,7 @@ export default function App() {
               <div className="page-heading"><div><p className="page-kicker">YOUR WORKSPACE</p><h1>{active?.name}</h1><p>Changes save automatically on this device.</p></div><span className="pill">OS 1.40C</span></div>
               <div className="configuration-actions"><select aria-label="Choose configuration" value={active?.id ?? ''} onChange={event => changeConfiguration(event.target.value)}>{workspace.configurations.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select><button className="button button-primary" onClick={() => setConfigDialog('create')}><Icon name="plus" size={16} />New</button><button className="button button-quiet" onClick={() => setConfigDialog('rename')}>Rename</button><button className="button button-quiet" onClick={() => setConfigDialog('duplicate')}>Duplicate</button><button className="button button-quiet" onClick={() => setConfigDialog('delete')}>Delete</button><button className="button button-quiet" onClick={()=>importRef.current?.click()}>Import JSON</button></div><input ref={importRef} type="file" accept="application/json,.json" hidden onChange={event=>void importSelection(event)} aria-label="Import configuration backup"/>{importError&&<p className="file-error" role="alert">{importError}</p>}
               <input ref={inputRef} type="file" accept=".bin" onChange={chooseFile} hidden aria-label="Choose base firmware" />
+              <CompatibilityPanel ids={selectedIds} keepStockFx2={DSP_LOADER && (active?.keepStockFx2??true)} buildState={firmwareBuild.state} onFix={fixConflict}/>
               <section className="configuration-section" aria-labelledby="firmware-title"><div className="section-title"><h2 id="firmware-title">Base firmware</h2><span className="subtle">Read locally</span></div>
                 <div className={'firmware-drop ' + (dragging ? 'is-dragging ' : '') + (fileState === 'ready' ? 'is-verified' : '')} onDragOver={(event) => event.preventDefault()} onDragEnter={() => setDragging(true)} onDragLeave={() => setDragging(false)} onDrop={dropFile} aria-busy={fileState === 'reading'}>
                   <span className="file-symbol"><Icon name={firmware ? 'check' : 'file'} size={26} /></span>
@@ -150,13 +158,14 @@ export default function App() {
                 {availabilityError && <p className="file-error" role="alert">{availabilityError}</p>}
                 {selection.length ? <ul className="selected-list">{selection.map((module) => <li key={module.id}><a className="selected-module-link" href={'#module/' + module.id}><ModulePreview id={module.id} compact /><span><strong>{module.name}</strong><small>{isModulePaused(module.id) ? 'Temporarily unavailable' : module.detail} · {module.authorName}</small></span></a><button className="icon-button" aria-label={'Remove ' + module.name} onClick={() => toggleModule(module.id)}><Icon name="close" size={17} /></button></li>)}</ul> : <div className="selection-empty"><Icon name="grid" size={26} /><strong>No modules selected</strong><p>Find something in the library and add it to your configuration.</p><a className="button button-quiet" href="#library">Browse modules</a></div>}
               </section>
-              <section className="configuration-section chooser-options"><h2>Effect menus</h2><label><input type="checkbox" checked={active?.keepStockFx2??true} onChange={event=>workspace.setKeepStockFx2(event.target.checked)}/><span><strong>Keep stock FX2 effects</strong><small>All original FX1 effects remain available. With this on, only Repitch can be built. Turn it off to make room for other modules.</small></span></label></section>{firmwareBuild.error?.includes('Use current module versions')&&<button className="button button-quiet" onClick={workspace.updateModuleVersions}>Use current module versions</button>}<CompatibilityPanel ids={selectedIds} buildState={firmwareBuild.state}/><aside className="risk-note"><strong>Before you flash</strong><p>Custom firmware can make the device unusable or cause data loss. Back up your projects and samples, review the module test records, and keep the original OS. Flash at your own risk.</p><label className="risk-accept"><input type="checkbox" checked={riskAccepted.key===firmwareBuild.key&&riskAccepted.accepted} onChange={event => setRiskAccepted({key:firmwareBuild.key,accepted:event.target.checked})} />I understand the risks of flashing custom firmware.</label></aside>
+              {DSP_LOADER && <section className="configuration-section chooser-options"><h2>Effect menus</h2><label><input type="checkbox" checked={active?.keepStockFx2??true} onChange={event=>workspace.setKeepStockFx2(event.target.checked)}/><span><strong>Keep stock FX2 effects</strong><small>Keep the original FX2 effects alongside your modules.</small></span></label></section>}{firmwareBuild.error?.includes('Use current module versions')&&<button className="button button-quiet" onClick={workspace.updateModuleVersions}>Use current module versions</button>}<aside className="risk-note"><strong>Before you flash</strong><p>Custom firmware can make the device unusable or cause data loss. Back up your projects and samples, review the module test records, and keep the original OS. Flash at your own risk.</p><label className="risk-accept"><input type="checkbox" checked={riskAccepted.key===firmwareBuild.key&&riskAccepted.accepted} onChange={event => setRiskAccepted({key:firmwareBuild.key,accepted:event.target.checked})} />I understand the risks of flashing custom firmware.</label></aside>
               <FirmwareBuildPanel build={firmwareBuild} available={ENGINE_AVAILABLE} downloadsEnabled={DOWNLOADS_ENABLED} firmwareReady={!!firmware} moduleCount={selection.length} riskAccepted={riskAccepted.key===firmwareBuild.key&&riskAccepted.accepted} configurationName={active?.name??'Octamod configuration'} onExport={saveSelection} exported={saved}/>
 
             </div>
           ) : (
             <div className="library-page">
               <div className="page-heading"><div><p className="page-kicker">OCTAMOD / COLLECTION</p><h1>{filter === 'all' ? 'Module library' : categoryLabels[filter]}</h1><p>A different way to play your Octatrack.</p></div><span className="library-total">{visibleModules.length} modules</span></div>
+              {!!conflicts.length && <a className="selection-conflict-link" href="#configuration"><Icon name="sliders" size={18}/><span><strong>Your selection needs a change</strong><small>Some modules cannot run together. Choose a compatible set in your configuration.</small></span><Icon name="arrow" size={18}/></a>}
               <div className="library-subheading"><span>{query.trim() ? 'Results for “' + query.trim() + '”' : filter === 'all' ? 'Explore the collection' : filter === 'effects' ? 'Filters, texture & space' : 'New ways to play'}</span><span className="subtle">Octatrack · OS 1.40C</span></div>
               <div className="discovery-tools"><label>Type<select value={family} onChange={event=>setFamily(event.target.value)}><option value="all">All types</option>{Array.from(new Set(AVAILABLE_MODULES.map(m=>DETAILS[m.id].family))).map(value=><option key={value}>{value}</option>)}</select></label><label>Sort<select value={sort} onChange={event=>setSort(event.target.value)}><option value="collection">Collection order</option><option value="name">Name A–Z</option><option value="author">Author</option><option value="rated">Highest rated</option></select></label><button className="button button-quiet" disabled={comparison.length<2} onClick={()=>setCompareOpen(true)}>Compare{comparison.length?' ('+comparison.length+')':''}</button></div>
               <div className="module-grid">{visibleModules.map((module) => {

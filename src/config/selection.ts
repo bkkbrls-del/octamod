@@ -1,8 +1,9 @@
+import { DSP_LOADER } from '../engine/protocol'
 import { CATALOG_SOURCE, resolveSelection } from '../catalog/modules'
 import { BASE_FIRMWARE, type FirmwareInspection } from '../engine/base'
 import { cleanName, pinModuleVersions, normalizeModuleVersions } from './workspace'
 
-export function createSelection(ids: readonly string[], firmware: FirmwareInspection | null, keepStockFx2 = true, moduleVersions = pinModuleVersions(ids)) {
+export function createSelection(ids: readonly string[], firmware: FirmwareInspection | null, keepStockFx2 = DSP_LOADER, moduleVersions = pinModuleVersions(ids)) {
   return {
     schemaVersion: 3,
     options: { keepStockFx2 },
@@ -16,7 +17,7 @@ export function createSelection(ids: readonly string[], firmware: FirmwareInspec
   }
 }
 
-export function downloadSelection(ids: readonly string[], firmware: FirmwareInspection | null, name = "Octamod configuration", keepStockFx2 = true, moduleVersions = pinModuleVersions(ids)) {
+export function downloadSelection(ids: readonly string[], firmware: FirmwareInspection | null, name = "Octamod configuration", keepStockFx2 = DSP_LOADER, moduleVersions = pinModuleVersions(ids)) {
   const blob = new Blob([JSON.stringify({ ...createSelection(ids, firmware, keepStockFx2, moduleVersions), name }, null, 2) + '\n'], { type: 'application/json' })
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
