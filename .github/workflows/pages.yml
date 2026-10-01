@@ -9,12 +9,50 @@ concurrency:
   group: octamod-pages
   cancel-in-progress: false
 jobs:
+  approval:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+      actions: read
+    outputs:
+      modules: ${{ steps.changes.outputs.modules }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+      - name: Verify the owner merged this exact source commit
+        run: node scripts/verify-merge-approval.mjs "$RUNNER_TEMP/octamod-approval.json"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          OCTAMOD_APPROVER_ID: ${{ vars.MODULE_APPROVER_GITHUB_ID }}
+      - name: Rebuild modules only when module source changed since the last successful release
+        id: changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Compare with the last successful release, not the previous commit, so a failed module build is never skipped.
+          last=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow pages.yml --branch main --status success --limit 1 --json headSha --jq '.[0].headSha // ""')
+          paths='sdk scripts/build-module-packages.py scripts/build-modules-isolated.sh scripts/import-module-build.mjs scripts/stamp-module-build.mjs scripts/module-source.mjs src/engine/assets src/release'
+          if [ -n "$last" ] && git cat-file -e "$last^{commit}" 2>/dev/null && git diff --quiet "$last" HEAD -- $paths; then
+            echo "modules=false" >> "$GITHUB_OUTPUT"
+            echo "No module change since the last successful release ($last): publishing the verified committed packages."
+          else
+            echo "modules=true" >> "$GITHUB_OUTPUT"
+            echo "Module source changed since ${last:-the first release}: rebuilding in isolation."
+          fi
   source-packages:
+    needs: approval
+    if: needs.approval.outputs.modules == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     permissions:
       contents: read
-      pull-requests: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -24,11 +62,6 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - name: Verify the owner merged this exact source commit
-        run: node scripts/verify-merge-approval.mjs "$RUNNER_TEMP/octamod-approval.json"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          OCTAMOD_APPROVER_ID: ${{ vars.MODULE_APPROVER_GITHUB_ID }}
       - run: npm ci
       - run: npm run modules:check
       - name: Prepare the pinned patched assembler toolchain
@@ -44,7 +77,9 @@ jobs:
           retention-days: 30
           if-no-files-found: error
   frontend:
-    needs: source-packages
+    needs: [approval, source-packages]
+    # A skipped module rebuild must not skip the site; a failed one must stop it.
+    if: ${{ !cancelled() && needs.approval.result == 'success' && (needs.source-packages.result == 'success' || needs.source-packages.result == 'skipped') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
@@ -58,12 +93,20 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - if: needs.approval.outputs.modules == 'true'
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: octamod-source-${{ github.sha }}
           path: ${{ runner.temp }}/octamod-packages
       - name: Independently verify owner merge, versions, sources and artifact hashes
+        if: needs.approval.outputs.modules == 'true'
         run: node scripts/import-module-build.mjs "$RUNNER_TEMP/octamod-packages"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          OCTAMOD_APPROVER_ID: ${{ vars.MODULE_APPROVER_GITHUB_ID }}
+      - name: Confirm the committed packages still match their module source and record this approval
+        if: needs.approval.outputs.modules != 'true'
+        run: node scripts/stamp-module-build.mjs
         env:
           GITHUB_TOKEN: ${{ github.token }}
           OCTAMOD_APPROVER_ID: ${{ vars.MODULE_APPROVER_GITHUB_ID }}
@@ -77,6 +120,7 @@ jobs:
           path: dist
   deploy:
     needs: frontend
+    if: ${{ !cancelled() && needs.frontend.result == 'success' }}
     runs-on: ubuntu-24.04
     permissions:
       pages: write
