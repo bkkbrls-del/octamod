@@ -157,3 +157,11 @@ On Sam's unit since flash 4; the LADR voicing (PR #254) since image 21.
 - The remaining displaced moves are the SVF's cutoff ramp (g2run += dg,
   read twice per sample) and ISO's WDTH read; the other modes step g2run
   per block by n7·dg (`fs_gramp`), the same end value.
+
+## Licence notices — 0.1.1-experimental
+
+This documentation update preserves component copyright notices and full terms in
+[LICENSE](LICENSE) and the [shared notice bundle](../../licenses/THIRD_PARTY_NOTICES.txt).
+Applicable SPDX expression: `MIT`. Project MIT terms do not
+replace the original component licences. DSP behavior has not changed or been
+newly qualified by this notice update.

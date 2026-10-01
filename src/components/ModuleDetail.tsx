@@ -1,3 +1,4 @@
+import { assetUrl } from '../hosting'
 import { ModuleControls } from './ModuleControls'
 import { IssueReport } from '../community/IssueReport'
 import { ModuleCommunity } from '../community/ModuleCommunity'
@@ -45,9 +46,9 @@ export function ModuleDetail({ module, selected, onToggle }: { module: FirmwareM
         {tab === 'Overview' && <>
           <div className="overview-grid">
             <section className="detail-section"><h2>About this module</h2><p>{details.overview}</p><ul className="feature-list">{details.highlights.map((item) => <li key={item}><Icon name="check" size={15} />{item}</li>)}</ul></section>
-            <aside className="info-panel"><h2>Module information</h2><dl><div><dt>Author</dt><dd><a href={module.authorUrl} target="_blank" rel="noreferrer">{module.authorName} ↗</a></dd></div><div><dt>Location</dt><dd>{module.detail}</dd></div><div><dt>Base firmware</dt><dd>OS 1.40C</dd></div><div><dt>Module version</dt><dd>{module.version}</dd></div><div><dt>Catalog</dt><dd>Experimental</dd></div></dl><a className="source-link" href={getModuleSource(module)} target="_blank" rel="noreferrer">Module on octabam <Icon name="arrow" size={14} /></a></aside>
+            <aside className="info-panel"><h2>Module information</h2><dl><div><dt>Author</dt><dd><a href={module.authorUrl} target="_blank" rel="noreferrer">{module.authorName} ↗</a></dd></div><div><dt>Location</dt><dd>{module.detail}</dd></div><div><dt>Base firmware</dt><dd>OS 1.40C</dd></div><div><dt>Module version</dt><dd>{module.version}</dd></div><div><dt>Licence</dt><dd><a href={assetUrl('licenses/THIRD_PARTY_NOTICES.html')} target="_blank" rel="noreferrer">{moduleDocument.license.spdx}</a></dd></div><div><dt>Catalog</dt><dd>Experimental</dd></div></dl><a className="source-link" href={getModuleSource(module)} target="_blank" rel="noreferrer">Module on octabam <Icon name="arrow" size={14} /></a></aside>
           </div>
-          {moduleDocument.source && <section className="detail-section"><h2>Credits</h2><ul>{moduleDocument.author.credits.map(credit=><li key={credit}>{credit}</li>)}</ul></section>}
+          <section className="detail-section"><h2>Credits</h2><ul>{moduleDocument.author.credits.map(credit=><li key={credit}>{credit}</li>)}</ul></section>
           <IssueReport id={module.id} author={module.author} /><ModuleResources id={module.id} />
           <ModuleControls id={module.id}/>
           <ModuleCommunity id={module.id} />

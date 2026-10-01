@@ -1,27 +1,52 @@
 # Third-party sources
 
 What this repository carries from elsewhere, under which licence, and where.
-`LICENSE` covers this repository's own code and documentation (MIT). Nothing
-below is an Elektron byte: the firmware is the user's own copy, read at build
-time (`.incbin`, `make os`).
+`LICENSE` covers the project's own code and documentation (MIT). It does not
+replace the licences of adapted components or grant rights to Elektron firmware.
+The official OS must come from the user's own local copy; original and generated
+firmware images must not be uploaded, shared or redistributed.
+
+Full copyright notices and licence terms for retained components are in
+[`licenses/`](licenses/) and the generated
+[`THIRD_PARTY_NOTICES.txt`](licenses/THIRD_PARTY_NOTICES.txt). The same bundle is
+included in the static app and compiled module package artifacts. Its
+[`manifest.json`](licenses/manifest.json) maps components to retained paths and
+pins the upstream files used to verify each notice; those notice pins do not
+replace the module source provenance recorded in `../UPSTREAM.json`.
+
+Modulation's aggregate SPDX expression is **MIT AND ISC AND BSD-3-Clause**.
+Spectrum and Character remain MIT, with the additional component copyright
+notices and full terms retained in each module's `LICENSE`. An MIT project
+declaration never removes a component's attribution or distribution conditions.
+Keep the applicable notices with source subsets and binary distributions.
+
+Run `npm run licenses:generate` from the repository root after a notice update;
+`npm run licenses:check` rejects stale distribution copies, omitted module terms
+and inconsistent SPDX declarations. Reviewer verification remains necessary for
+new or changed sources; inclusion of notices is not automatic legal clearance.
+
+The upstream attribution record below also mentions historical or development
+components outside this SDK's retained subset. The notice manifest identifies
+the paths retained here. References to measurements and mathematical laws are
+attributions, not grants to copy manuals, papers, recordings or firmware.
 
 ## Transcribed into DSP modules
 
 | source | licence | copyright | used in |
 |---|---|---|---|
-| jpcima `rc-effect-playground` — Hera `HeraChorus.dsp`, `bbd_line.h` (Juno-60 chorus) | ISC | Jean Pierre Cimalando | `modules/modulation` JUNO |
+| jpcima `rc-effect-playground` — Hera (upstream `sources/chorus.dsp`, `sources/bbd_line.h`; historically called `HeraChorus.dsp` here) | ISC | Copyright (C) 2019-2020 J.P. Cimalando | `modules/modulation` JUNO; [full notice](licenses/hera.txt) |
 | pendragon-andyh Juno-60 chorus measurements | data | Andy Harman | `modules/modulation` JUNO (rates, delay ranges) |
 | Roland SDD-320 Dimension D service notes + published measurements | laws only | — | `modules/modulation` DIM (the mix amounts were voiced here, not taken from the notes) |
 | J. Dattorro, *Effect Design Part 2*, JAES 45(10), 1997 | paper (laws) | AES | `modules/modulation` FLNG (Table 6) |
-| Mutable Instruments Rings `string.h` / `string.cc` | MIT | Emilie Gillet | `modules/modulation` COMB |
-| ChowDSP ChowPhaser (Schulte Compact Phasing A model) | BSD-3-Clause | Jatin Chowdhury | `modules/modulation` PHSR |
+| Mutable Instruments Rings `string.h` / `string.cc` | MIT | Copyright 2015 Emilie Gillet | `modules/modulation` COMB; [full notice](licenses/rings.txt) |
+| ChowDSP ChowPhaser (Schulte Compact Phasing A model) | BSD-3-Clause | Copyright (c) 2020, jatinchowdhury18 | `modules/modulation` PHSR; [full notice](licenses/chowphaser.txt) |
 | Airwindows Pockey | MIT | Chris Johnson | `modules/character` TXTR, 13 to 22 Sep 2026 (removed; `git show OCTABAM43:modules/character/pockey_ref.py`) |
-| JClones TapeHead, DaTube, OInflator, AC1 (JSFX) | MIT | JClones | `modules/character` SAT (TAPE / TUBE / INFL), COMP / GLUE |
-| audiojs/filter `moogLadder`, `oberheim` (Zavalishin's zero-delay forms) | MIT | audiojs contributors | `modules/spectrum` LADR, LP / BP |
-| markandrus/octemu `custom/coldfire/usb-midi.s`, `custom/usb-midi.py` (descriptors) | MIT | markandrus | `modules/usb-midi` (his text; one ISA-B substitution, README) |
+| JClones TapeHead, DaTube, OInflator, AC1 (JSFX) | MIT | Copyright (c) 2026 JClones | `modules/character` SAT (TAPE / TUBE / INFL), COMP / GLUE; [full notice](licenses/jsfxclones.txt) |
+| audiojs/filter `moogLadder`, `oberheim` (Zavalishin's zero-delay forms) | MIT | Copyright (c) Dmitry Iv | `modules/spectrum` LADR, LP / BP; [full notice](licenses/audiojs-filter.txt) |
+| markandrus/octemu `custom/coldfire/usb-midi.s`, `custom/usb-midi.py` (descriptors) | MIT | markandrus | `platform/usb-midi` (his text; one ISA-B substitution, README) |
 | markandrus/octemu `custom/coldfire/usb-audio.s`, `custom/usb-audio.py` (descriptors) | MIT | markandrus | `modules/usb-audio-out-tracks-main-cue` (his shims, producer, packet builder and servo; the loader replaces his card payload machinery); `modules/usb-audio-out-tracks` and `modules/usb-audio-out-master` assemble the same source with fewer channels |
 | markandrus/octemu `src/board/ot-board.c` USB packet bench (line protocol) | MIT | markandrus | `tools/emu/ot_emu/usb.h` speaks the same protocol so his `tests/usb-host.py` drives the port; the model is written here |
-| Airwindows Capacitor2 | MIT | Chris Johnson | `modules/spectrum` ISO (`capacitor2_ref.py`) |
+| Airwindows Capacitor2 | MIT | Copyright (c) 2018 Chris Johnson | `modules/spectrum` ISO (`capacitor2_ref.py`); [full notice](licenses/airwindows.txt) |
 
 Retired transcriptions (in history only): jpcima `string-machine` (BSL-1.0,
 the Solina ensemble, removed 16 Sep 2026).
@@ -70,7 +95,12 @@ Ghidra file is committed.
 
 | what | licence | note |
 |---|---|---|
-| dsp56300 (DSP56300 emulator; `dsp_asm` / `dsp_host` are additions written here, under `tools/harness/dsp_host/`) | GPL-3.0 | patches in `tools/patches/`; built binaries are never distributed |
+| dsp56300 (DSP56300 emulator; `dsp_asm` / `dsp_host` are additions written here, under `tools/harness/dsp_host/`) | GPL-3.0-only | source patch retained in `tools/patches/`; [full terms](licenses/dsp56300.txt); built toolchain binaries are not bundled |
 | joelanders/mc68k-md-mm (Musashi-derived ColdFire core) | GPL-3.0 | pinned commit in `scripts/setup.sh` |
 | mischa85/elektron-firmware-tool | MIT, Copyright (c) 2026 Marcel Bierling | `tools/patches/elektron-firmware-tool.patch` |
-| Unicorn (via `.venv`, `make emu-setup`) | GPL-2.0 | `tools/patches/unicorn_emac_fractional.patch` |
+| Unicorn (via `.venv`, `make emu-setup`) | GPL-2.0; QEMU m68k helper/translation portions LGPL-2.1-or-later | `tools/patches/unicorn_emac_fractional.patch`; [GPL terms](licenses/unicorn.txt) and [QEMU copyright notices / LGPL terms](licenses/unicorn-lgpl.txt); built toolchain binaries are not bundled |
+
+React, React DOM and Scheduler used by the browser UI retain their MIT notice
+(Meta Platforms, Inc. and affiliates) in the shared bundle. The notice check
+compares all three installed runtime licences so dependency updates cannot
+silently change the terms being distributed.

@@ -7,7 +7,7 @@
   "receiverSourceSha256": "d85f446599a7f79d6586f2eb974ded6761d44febdea69f4da21daa8885aaf346",
   "character": {
     "id": "character",
-    "version": "0.1.0-experimental",
+    "version": "0.1.1-experimental",
     "key": "CHARACTER",
     "author": "sambanks",
     "sources": {
@@ -336,9 +336,9 @@
   ],
   "sourceCommit": null,
   "moduleVersions": {
-    "spectrum": "0.1.0-experimental",
-    "modulation": "0.1.0-experimental",
-    "character": "0.1.0-experimental",
+    "spectrum": "0.1.1-experimental",
+    "modulation": "0.1.1-experimental",
+    "character": "0.1.1-experimental",
     "miniverb": "0.1.1-experimental",
     "tapeecho": "0.1.1-experimental",
     "euclid": "0.1.1-experimental",

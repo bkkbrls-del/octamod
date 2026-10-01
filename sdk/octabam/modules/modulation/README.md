@@ -153,3 +153,11 @@ loop at 90 — on the wet before MIX, and at the line write — Sam: "c please"
 - Stored parts: MODE bytes 3..5 (FLNG/COMB/PHSR) mean one lower since ENS
   went; the page-1 order is RATE DPTH DLY FDBK LOFI MIX, page 2 MODE TONE
   WDTH. `stamp-defaults` before play.
+
+## Licence notices — 0.1.1-experimental
+
+This documentation update preserves component copyright notices and full terms in
+[LICENSE](LICENSE) and the [shared notice bundle](../../licenses/THIRD_PARTY_NOTICES.txt).
+Applicable SPDX expression: `MIT AND ISC AND BSD-3-Clause`. Project MIT terms do not
+replace the original component licences. DSP behavior has not changed or been
+newly qualified by this notice update.
