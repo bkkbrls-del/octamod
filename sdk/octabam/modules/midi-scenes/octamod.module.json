@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "version": "0.1.1-experimental",
+  "version": "0.2.0-experimental",
   "nativeManifest": "manifest.py",
   "media": [],
   "id": "midi-scenes",
@@ -10,24 +10,25 @@
   "author": {
     "github": "bkkbrls-del",
     "credits": [
-      "bkkbrls-del/midisc: MIDI scene locks, version 1.40MIDISC8.2",
-      "Sam Banks: relocatable octabam port"
+      "bkkbrls-del/midisc: MIDI scene locks, version MIDISC2.0",
+      "Sam Banks: relocatable octabam port (1.40MIDISC8.2 gas pin)"
     ]
   },
   "presentation": {
     "label": "SCENE MORPH",
     "family": "Scenes",
     "summary": "Lock MIDI track parameters to scenes and morph them with the crossfader.",
-    "overview": "MIDI Scenes brings scene locks to MIDI tracks. Hold a scene and edit MIDI parameters, then morph between scenes with the crossfader. Locks follow Part and project save/reload and scene clear, copy and paste.",
+    "overview": "MIDI Scenes brings scene locks to MIDI tracks. Hold a scene and edit MIDI parameters, then morph between scenes with the crossfader. Locks follow Part and project save/reload and scene clear, copy and paste. MIDISC2.0 also activates scenes before the first trig, lands changes on the real pattern/Part boundary, holds unscened live locks across refresh, sends CC before notes, and follows the playing pattern's Part as soon as the sequencer commits ACT.",
     "highlights": [
       "Scene A/B locks on MIDI tracks",
       "Crossfader morphing with step parameter locks",
-      "Part and project save/reload support"
+      "Part and project save/reload support",
+      "Pre-trig scenes / XF; pattern-commit Part sync (MIDISC2.0)"
     ],
     "usage": [
       "Hold scene A or B and turn a MIDI track parameter to create its scene lock. The lock indicator shows which scene holds values.",
       "Move the crossfader to morph between the two sides. An empty side uses a trig lock when present, otherwise the underlying track value.",
-      "Use the scene clear, copy and paste actions and Part Save/Reload. The upstream MIDI CONTROL CC48/55/56 filtering options are disabled."
+      "Use the scene clear, copy and paste actions and Part Save/Reload. Pattern changes update MIDI scenes with the new pattern's Part at sequencer commit. The upstream MIDI CONTROL CC48/55/56 filtering options are disabled."
     ]
   },
   "controls": [],
@@ -37,12 +38,14 @@
     "location": "MIDI tracks",
     "conflicts": [],
     "limitations": [
+      "Firmware builds for this module version are awaiting Octamod verification (relocatable MIDISC2.0 port pending).",
+      "Octamod native units remain the relocatable 8.2-derived gas pin; standalone MIDISC2.0 documentation is vendored separately.",
       "MIDI CONTROL CC48/55/56 filter rows are not included.",
       "Composition with Octakit requires its KITS RELOAD bridge; Octakit is outside this catalog."
     ]
   },
   "resources": {
-    "recorded": "14 Sep 2026 hardware; 1.40MIDISC8.2 source pin",
+    "recorded": "Standalone MIDISC2.0 author-reported 1 Oct 2026; Octamod composition pending for 0.2.0",
     "storage": {
       "label": "Lock state",
       "display": "4 KB live table",
@@ -64,7 +67,7 @@
   },
   "tests": {
     "report": "TESTING.md",
-    "summary": "The octabam port records hardware operation in OKMS1 with Octakit on 14 September. This import pins 1.40MIDISC8.2 and its regenerated GNU assembly. That earlier hardware result does not qualify this later pin or an Octamod composition. Octamod native and actual-browser composition/packaging parity and rejection checks passed on 1 October 2026. The owner reported both combined test images working; this is a smoke report, not full feature/load qualification.",
+    "summary": "Standalone MIDISC2.0 at midisc 4f9a894 is author-reported only. Octamod still packages relocatable 8.2-derived gas; this 0.2.0 catalog revision does not qualify Octamod firmware builds.",
     "hardwareStatus": "historical",
     "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
     "gates": [
@@ -75,6 +78,10 @@
     "repository": "https://github.com/sambanks/octabam",
     "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
     "path": "modules/midi-scenes"
+  },
+  "build": {
+    "status": "pending",
+    "reason": "Metadata updated to MIDISC2.0. Relocatable 2.0 port and browser/native parity gates are required before firmware builds."
   },
   "license": {
     "spdx": "MIT",

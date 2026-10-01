@@ -3,9 +3,10 @@ import { checkSelection } from './compatibility'
 import { selectionConflicts, selectionConflictError } from './selection-conflicts'
 
 const seven = ['miniverb', 'tapeecho', 'euclid', 'repitch', 'midi-scenes', 'usb-audio-out-tracks-main-cue', 'quantizer']
+const buildableSeven = seven.filter(id => id !== 'midi-scenes')
 describe('native selection conflicts', () => {
   it('shows verified Analog BD conflicts and offers both explicit choices', () => {
-    const ids = [...seven, 'analog-bassdrum']
+    const ids = [...buildableSeven, 'analog-bassdrum']
     const result = checkSelection(ids)
     expect(result.checked).toBe(false)
     expect(result.conflicts[0].moduleIds).toEqual(['analog-bassdrum', 'miniverb', 'tapeecho', 'euclid'])
