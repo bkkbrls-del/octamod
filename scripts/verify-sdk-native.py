@@ -23,7 +23,11 @@ cases = [next(p for p in proofs if p['moduleIds'] == ids and p['default'] == kee
 
 with tempfile.TemporaryDirectory(prefix='octamod-sdk-parity.') as directory:
     root = Path(directory)
-    for name in ['modules', 'platform', 'tools', 'dsp']:
+    # This historical proof is scoped to the initial seven; do not evaluate other module declarations.
+    (root / 'modules').mkdir()
+    for id in order:
+        shutil.copytree(sdk / 'modules' / id, root / 'modules' / id, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+    for name in ['platform', 'tools', 'dsp']:
         shutil.copytree(sdk / name, root / name, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
     (root / 'vendor').symlink_to(vendor, target_is_directory=True)
     (root / 'out/raw').mkdir(parents=True)
@@ -34,6 +38,7 @@ with tempfile.TemporaryDirectory(prefix='octamod-sdk-parity.') as directory:
     import toolpath
     from remix import registry
     from remix.schema import Remix
+    registry.PLATFORM_NAMES = ('dsp-dynload-stock', 'dsp-dynload-stock-b')
     known = registry.modules()
     public = sorted(m.name for m in known.values() if not m.is_stock and m.name not in registry.PLATFORM_NAMES)
     assert public == sorted(order), public

@@ -6,7 +6,7 @@ A React / TypeScript web configurator for octabam, with a GitHub Pages frontend 
 
 The frontend, backend and octabam-derived developer SDK belong in one repository. The owner may self-host the backend later; storage adapters for that option remain pending. See [accepted decisions](DECISIONS.md) and the complete [active project goal](../GOAL.md).
 
-The browser composes real firmware with the dynamic DSP loader disabled. Native composition proofs cover the original seven modules; Spectrum, Modulation and Character are temporarily paused in the public library. **Downloads are available for verified loader-free selections.** The four new source imports remain blocked pending Octamod firmware verification. All 256 selection/stock-FX2 profiles were checked against native output: 74 byte-identical images and 182 matching refusals. Four representative complete container/upgrade files and two actual-browser builds also match native identities. Read [verification and remaining work](VERIFICATION.md). Hardware qualification, the complete native SDK setup and real licensed captures still need work. Approved releases rebuild authored packages in isolation and require them to reproduce the locally verified packages. The catalog also includes Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer as source imports awaiting Octamod firmware verification.
+The browser composes real firmware with the dynamic DSP loader disabled. **Downloads are available for verified loader-free selections**, including Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer at `0.1.1-experimental`. Spectrum, Modulation and Character remain temporarily paused in the public library. The original 256 profiles retain 74 byte-identical images and 182 matching refusals; the requested 288 profiles add 156 byte identities and 132 matching refusals. Actual-browser full-file identities and altered-firmware rejection passed for the supported six- and five-module combinations. Read [verification and remaining work](VERIFICATION.md) for evidence and hardware limits. Approved releases rebuild authored packages in isolation and require them to reproduce the locally verified packages.
 
 ## Run locally
 
@@ -38,7 +38,7 @@ Only this fingerprint is distributed. No stock firmware is included.
 
 The catalog follows repeat98/octamad commit b8deefc88b2c3e5f3c6158e364eb741df1924e1d. Module links point to upstream sambanks/octabam; measurement links remain pinned to the fork revision.
 
-Control descriptions and starting values are extracted from the pinned module manifests. native-metadata.json records lightweight declaration / ledger results for the 127 nonempty selections of the original seven modules, including the native platform dependencies. Configuration does not run native stress tests, emulator gates or the octabam test suite.
+Control descriptions and starting values are extracted from the pinned module manifests. native-metadata.json records lightweight declaration / ledger results for the 127 nonempty original-module selections and all 255 nonempty subsets of the eight visible modules, including native platform dependencies. Configuration does not run native stress tests, emulator gates or the octabam test suite.
 
 These declaration checks do not prove final memory placement or hardware safety. The complete catalog is not hardware-qualified. Historical hardware records and emulator evidence are labelled separately. Tape Echo's pinned record specifically reports six instances working and a seventh freezing the unit.
 
@@ -48,7 +48,7 @@ Module thumbnails are original SVG illustrations. Actual licensed screenshots/au
 
 ## Module source and versions
 
-Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch are the original modules. The requested additions are Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer, with internal USB MIDI source. The four additions have pending build status and exact newer upstream pins; prior firmware parity evidence does not cover them. Source and website metadata live in `sdk/octabam/modules/<id>/`; the [SDK](../sdk/README.md) comes from a fresh, pinned, attributed octabam clone. The original platform integration passes native byte parity and has an approved source-build release pipeline; the four new imports still require integration and parity checks. See [the strict folder contract](MODULE_REPOSITORIES.md).
+Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch are the original modules. The requested additions are Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer, with internal USB MIDI source. The four additions retain exact newer upstream pins and have renewed loader-free composition, packaging and rejection proofs. Source and website metadata live in `sdk/octabam/modules/<id>/`; the [SDK](../sdk/README.md) comes from a fresh, pinned, attributed octabam clone. The original platform integration passes native byte parity and has an approved source-build release pipeline; the four requested imports now use the same approval and reproducibility gates. See [the strict folder contract](MODULE_REPOSITORIES.md).
 
 `octamod.module.json` schema 2 requires a semantic version, credits, descriptions, controls, compatibility, resource evidence, test provenance, licence and media declarations. `sdk/catalog.json` pins included versions; `npm run modules:generate` derives the frontend catalog. `npm run modules:check -- --base origin/main` rejects any module-folder update without a greater version. PR CI validates against the exact base commit without executing native manifests.
 
@@ -66,7 +66,7 @@ Comments, ratings and likes are public. Issue reports name the module author but
 
 Modules, code updates, documentation and media are submitted through GitHub PRs only. **The owner merging the PR is approval** for that version. There is no second website approval step. Require owner review and successful checks on the latest revision, protect main and never reuse a released version for changed contents. Pending PRs and failed release builds retain the previous publication.
 
-Module manifests import plain-text descriptions, controls, evidence and rights metadata from source folders. `.github/workflows/pages.yml` compiles each owner-merged main commit in a container without network, credentials or stock firmware, mounting only the tracked tree of that one commit. The publisher independently confirms the owner merge through the GitHub API (configured numeric `MODULE_APPROVER_GITHUB_ID`), current versions, the complete source inventory, the compiler and all eight artifact hashes. It publishes only if the build reproduces the committed packages, which were checked locally for native parity. Metadata generation alone cannot install arbitrary modules. See `docs/VERIFICATION.md` for what has and has not run.
+Module manifests import plain-text descriptions, controls, evidence and rights metadata from source folders. `.github/workflows/pages.yml` compiles each owner-merged main commit in a container without network, credentials or stock firmware, mounting only the tracked tree of that one commit. The publisher independently confirms the owner merge through the GitHub API (configured numeric `MODULE_APPROVER_GITHUB_ID`), current versions, the complete source inventory, the compiler and all nine artifact hashes. It publishes only if the build reproduces the committed packages, which were checked locally for native parity. Metadata generation alone cannot install arbitrary modules. See `docs/VERIFICATION.md` for what has and has not run.
 
 The website contribution route provides SDK/PR instructions and uses `VITE_REPOSITORY_URL` for the actual repository links. Until a repository is configured, it clearly says the repository is being prepared. The former submission, repository-import and website-review API routes return 410. Existing database publication/history records and media reads remain for migration; no new version can bypass PR approval.
 
@@ -189,13 +189,19 @@ node scripts/verify-composition-native.mjs /path/to/your/OCTATRACK_OS1.40C.bin
 /path/to/octamad-worktree/.venv/bin/python3 scripts/export-composition-proofs.py /path/to/octamad-worktree /tmp/composition-assets --app /path/to/octamod --stock-bin /path/to/your/OCTATRACK_OS1.40C.bin
 ```
 
-The historical dynamic-loader same-input packaging comparison passed for all eight profiles, including complete OS, ELEK container and flashable ELUP bytes; rerun it before enabling that path again. The actual browser worker also matched native full-file identities for two supported configurations, rejected overflowing stock-preserving placement, and supported cancellation/rebuild and download invalidation. Downloads remain paused. The active loader-free path keeps stock DSP code resident, places selected modules in the space of stock effects omitted from both menus and adds a sample-memory runtime only when Tape Echo or Euclid is selected. All 256 supported selection profiles have native composition/refusal proofs and every accepted profile has native packaging fingerprints. Verify all OS/refusal cases plus representative full files locally with:
+The historical dynamic-loader same-input packaging comparison passed for all eight profiles, including complete OS, ELEK container and flashable ELUP bytes; rerun it before enabling that path again. The actual browser worker also matched native full-file identities for two supported configurations, rejected overflowing stock-preserving placement, and supported cancellation/rebuild and download invalidation. Downloads are enabled for verified selections. The active loader-free path keeps stock DSP code resident, places selected modules in the space of stock effects omitted from both menus and adds a sample-memory runtime when Tape Echo, Euclid or a requested runtime module is selected. All 256 supported selection profiles have native composition/refusal proofs and every accepted profile has native packaging fingerprints. Verify all OS/refusal cases plus representative full files locally with:
 
 ```bash
 node scripts/verify-static-composition-native.mjs /path/to/your/OCTATRACK_OS1.40C.bin --packing=representative
 ```
 
-Omit the final option for exhaustive full-file comparisons. Only identities and format facts are committed; the user's firmware and generated images stay local. Custom choosers that free the stock curve bank still require a separate X-table placement profile and are not offered by this UI.
+Verify the requested selection matrix independently with:
+
+```bash
+node scripts/verify-requested-native.mjs /path/to/your/OCTATRACK_OS1.40C.bin src/engine/assets/requested-composition-proofs.json
+```
+
+Omit the static verifier’s final option for exhaustive original-profile full-file comparisons. Only identities and format facts are committed; the user's firmware and generated images stay local. Custom choosers that free the stock curve bank still require a separate X-table placement profile and are not offered by this UI.
 
 Keep download enabled only while real composition and native byte-parity/rejection evidence match the shipped catalog and engine. Keep packaging and conflict checks in the user build; do not run the full octabam test suite per configuration.
 
