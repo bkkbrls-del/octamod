@@ -40,3 +40,11 @@ The owner merging a module PR is the approval for that update; no separate websi
 ## No website sign-in — 1 October 2026
 
 At the owner's request, remove GitHub sign-in from the Octamod requirements. Visitors comment, review, rate, like and report issues as guests without accounts or email. Module contributions and version approval remain GitHub PRs with owner merge; that repository workflow does not require website OAuth. Keep the private moderation/admin workspace protected with separate backend access control, configured with the owner during backend setup. Existing OAuth scaffolding is obsolete and must be removed before release.
+
+## Catalog additions — 1 October 2026
+
+The owner requested the latest Analog BD, MIDI Scenes, USB Audio and Quantizer implementations from sambanks/octabam. This expands the previous seven-module scope to eleven public modules, with required internal dependencies. The import is pinned to `363861e31ee963c478fab2b190a0fabe1d7ce37b`; MIDI Scenes retains its author's `63ca127bc99638602957f2b05747f8ed3bd9ba52` (1.40MIDISC8.2), and Quantizer retains `525f4b19b04dc3ba3f3bae3b25abbf48df34a10a` (v2.9).
+
+Choose USB AUDIO OUT TRACKS MAIN CUE: it has the broadest documented hardware coverage (MKI and MKII, sustained multitrack captures and concurrent MIDI traffic). Import its required USB MIDI source internally under `sdk/octabam/platform/usb-midi/`. This selection is output-only; USB input and other output layouts are outside scope. Startup audio artifacts, host coverage gaps and remaining alignment limits stay documented. This is a judgment from the source evidence, not a new comparative hardware test.
+
+Preserve the existing native composition pin and proof records. The new source pins describe the additions separately. They can be explored, compared and saved in configurations, but firmware composition rejects them until source packaging and actual-browser/native parity and rejection tests cover them. No firmware/DSP/emulator/stress tests were run during the import. Owner PR merge remains required before publication; the local import grants no release approval. See [the import record](../sdk/imports/octabam-363861e.json) and each module's TESTING.md.

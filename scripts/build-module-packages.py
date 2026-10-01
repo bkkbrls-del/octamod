@@ -80,15 +80,23 @@ def main():
     sources = source_hashes(sdk)
     baseline = {name: json_file(APP / 'src/engine/assets' / name) for name in ASSET_NAMES}
     catalog = json_file(APP / 'sdk/catalog.json')
-    if [module['id'] for module in catalog['modules']] != ORDER: parser.error('This release compiler supports exactly the seven initial modules')
-    versions = {module['id']: module['version'] for module in catalog['modules']}
+    catalog_documents = {module['id']: json_file(sdk / 'modules' / module['id'] / 'octamod.module.json') for module in catalog['modules']}
+    for module in catalog['modules']:
+        if catalog_documents[module['id']]['version'] != module['version']: parser.error('Stale catalog module version: ' + module['id'])
+    buildable = [module for module in catalog['modules'] if catalog_documents[module['id']].get('build', {}).get('status') != 'pending']
+    if [module['id'] for module in buildable] != ORDER: parser.error('This release compiler supports exactly the seven verified modules; other catalog imports must remain pending')
+    versions = {module['id']: module['version'] for module in buildable}
     revision = catalog['sourceRevision']
     documents = {id: json_file(sdk / 'modules' / id / 'octamod.module.json') for id in ORDER}
     provenance = {'sourceCommit': args.source_commit, 'moduleVersions': versions}
     products = {}
     with tempfile.TemporaryDirectory(prefix='octamod-source-build.') as temporary:
         root = Path(temporary)
-        for group in ['modules', 'platform', 'tools', 'dsp']:
+        # Pending imports stay in the source fingerprint, but are never evaluated or compiled.
+        (root / 'modules').mkdir()
+        for id in ORDER:
+            shutil.copytree(sdk / 'modules' / id, root / 'modules' / id, ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.DS_Store'))
+        for group in ['platform', 'tools', 'dsp']:
             shutil.copytree(sdk / group, root / group, ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.DS_Store'))
         sys.path[:0] = [str(root / 'tools'), str(root / 'tools/build')]
         os.chdir(root)
@@ -100,6 +108,7 @@ def main():
         from remix.schema import Remix
         def deny_stock(): raise RuntimeError('Source builds never accept or resolve stock firmware')
         stock_guard._verified_image = deny_stock
+        registry.PLATFORM_NAMES = ('dsp-dynload-stock', 'dsp-dynload-stock-b')
         known = registry.modules()
         byid = {module.name: module for module in known.values()}
         public = sorted(module.name for module in known.values() if not module.is_stock and module.name not in registry.PLATFORM_NAMES)

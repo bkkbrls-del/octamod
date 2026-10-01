@@ -1,0 +1,1103 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/sambanks/octabam",
+  "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+  "modules": [
+    "analog-bassdrum",
+    "midi-scenes",
+    "usb-audio-out-tracks-main-cue",
+    "quantizer"
+  ],
+  "dependencies": {
+    "usb-audio-out-tracks-main-cue": [
+      "platform/usb-midi"
+    ]
+  },
+  "authorPins": {
+    "midi-scenes": {
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "version": "1.40MIDISC8.2"
+    },
+    "quantizer": {
+      "repository": "https://github.com/timhastie/octatrick-modules",
+      "revision": "525f4b19b04dc3ba3f3bae3b25abbf48df34a10a",
+      "version": "v2.9"
+    }
+  },
+  "status": "source-import; browser/native integration pending",
+  "files": [
+    {
+      "path": "modules/analog-bassdrum/CPU.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/CPU.md",
+      "sourceSha256": "b20288ccf080f0f3409479b228dea7ca4f3b3e40a7a0727a285df6cbcd637385",
+      "vendoredSha256": "b20288ccf080f0f3409479b228dea7ca4f3b3e40a7a0727a285df6cbcd637385"
+    },
+    {
+      "path": "modules/analog-bassdrum/DSP808.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/DSP808.md",
+      "sourceSha256": "528cdd99c073af6dad381fd863ea67deb85f66bc8d2dbc8ae86caf52791d37b3",
+      "vendoredSha256": "528cdd99c073af6dad381fd863ea67deb85f66bc8d2dbc8ae86caf52791d37b3"
+    },
+    {
+      "path": "modules/analog-bassdrum/DSP909.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/DSP909.md",
+      "sourceSha256": "bde115d77eff4cb940003bf96ad27af83af01da1407a51fb5ad4928be4f58a4b",
+      "vendoredSha256": "bde115d77eff4cb940003bf96ad27af83af01da1407a51fb5ad4928be4f58a4b"
+    },
+    {
+      "path": "modules/analog-bassdrum/README.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/README.md",
+      "sourceSha256": "4876d9613e5e65de0aefeef7ddd60ef6d0d5642c61b1fde60b97fc0f72255f68",
+      "vendoredSha256": "57743ee073204e2a1b51ed7abad7ddf44eae95faddc90d397ca707d30a2bdfed"
+    },
+    {
+      "path": "modules/analog-bassdrum/REFERENCE.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/REFERENCE.md",
+      "sourceSha256": "b455aed01b9c59ce04378ec18c261f943a6f061aa4608bf293eb98a206b2d7ed",
+      "vendoredSha256": "b455aed01b9c59ce04378ec18c261f943a6f061aa4608bf293eb98a206b2d7ed"
+    },
+    {
+      "path": "modules/analog-bassdrum/REVIEW.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/REVIEW.md",
+      "sourceSha256": "aedf04202bca6671ac3b7c496599da392f090be647f00fa9107dc9a277920ddf",
+      "vendoredSha256": "aedf04202bca6671ac3b7c496599da392f090be647f00fa9107dc9a277920ddf"
+    },
+    {
+      "path": "modules/analog-bassdrum/SCHEMATIC.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/SCHEMATIC.md",
+      "sourceSha256": "89aaf167a4e2cf29c07885ce56249a5a1599b36ad60c424444232fda83ef12c6",
+      "vendoredSha256": "89aaf167a4e2cf29c07885ce56249a5a1599b36ad60c424444232fda83ef12c6"
+    },
+    {
+      "path": "modules/analog-bassdrum/ab_glue.asm",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/ab_glue.asm",
+      "sourceSha256": "c78dc31dfcfc7a0c6f10ae24b39744a88bed5211346bcae4f6931e2e6489223c",
+      "vendoredSha256": "c78dc31dfcfc7a0c6f10ae24b39744a88bed5211346bcae4f6931e2e6489223c"
+    },
+    {
+      "path": "modules/analog-bassdrum/bd808.asm",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/bd808.asm",
+      "sourceSha256": "e7306bd284e9bca067cffc54dcbfb18ae7a0fc7b3a27253a246e58898ae9ee92",
+      "vendoredSha256": "e7306bd284e9bca067cffc54dcbfb18ae7a0fc7b3a27253a246e58898ae9ee92"
+    },
+    {
+      "path": "modules/analog-bassdrum/bd909.asm",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/bd909.asm",
+      "sourceSha256": "db1b2871957bb89bfd4184fc7556e5e46c44f3be1a889ba11fc1a679c4b1841e",
+      "vendoredSha256": "db1b2871957bb89bfd4184fc7556e5e46c44f3be1a889ba11fc1a679c4b1841e"
+    },
+    {
+      "path": "modules/analog-bassdrum/control.c",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/control.c",
+      "sourceSha256": "29f392c7e007aaa695076eff0c897729a941676ff582e4bb17957074d56ceac5",
+      "vendoredSha256": "29f392c7e007aaa695076eff0c897729a941676ff582e4bb17957074d56ceac5"
+    },
+    {
+      "path": "modules/analog-bassdrum/control.s",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/control.s",
+      "sourceSha256": "644f10fbc534d8351424e55ee96c2d0ff2f39a1b691ad8a695422d1c05e37a3f",
+      "vendoredSha256": "644f10fbc534d8351424e55ee96c2d0ff2f39a1b691ad8a695422d1c05e37a3f"
+    },
+    {
+      "path": "modules/analog-bassdrum/dsp808.py",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/dsp808.py",
+      "sourceSha256": "6500cfffad2be75c0be43f57bb91a5582b7406fe0bb36be120d412884d23da28",
+      "vendoredSha256": "6500cfffad2be75c0be43f57bb91a5582b7406fe0bb36be120d412884d23da28"
+    },
+    {
+      "path": "modules/analog-bassdrum/dsp909.py",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/dsp909.py",
+      "sourceSha256": "c45ef4357cd66369181523784de0f5b328b8b18a58f3c19c60983d1173dd3195",
+      "vendoredSha256": "c45ef4357cd66369181523784de0f5b328b8b18a58f3c19c60983d1173dd3195"
+    },
+    {
+      "path": "modules/analog-bassdrum/engine.c",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/engine.c",
+      "sourceSha256": "9ed63ee4348aa470eb592506d7bda1e36a48e4fa56d39b4ccad2223bd2e5fda0",
+      "vendoredSha256": "9ed63ee4348aa470eb592506d7bda1e36a48e4fa56d39b4ccad2223bd2e5fda0"
+    },
+    {
+      "path": "modules/analog-bassdrum/engine.h",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/engine.h",
+      "sourceSha256": "61bc45ef955db23b8f25eb5b0c6bd3dd01d9f71df7933d466845bb30e7c67a2b",
+      "vendoredSha256": "61bc45ef955db23b8f25eb5b0c6bd3dd01d9f71df7933d466845bb30e7c67a2b"
+    },
+    {
+      "path": "modules/analog-bassdrum/engine.s",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/engine.s",
+      "sourceSha256": "c86a6ac24326fb52f71dd766b1ccc25e5dfd8511028b162459447c279da48425",
+      "vendoredSha256": "c86a6ac24326fb52f71dd766b1ccc25e5dfd8511028b162459447c279da48425"
+    },
+    {
+      "path": "modules/analog-bassdrum/exact-render.json",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/exact-render.json",
+      "sourceSha256": "41a17cba7c5c40ab2f32973ee4427da74d023e70cc502074f047a9b2d9900a09",
+      "vendoredSha256": "41a17cba7c5c40ab2f32973ee4427da74d023e70cc502074f047a9b2d9900a09"
+    },
+    {
+      "path": "modules/analog-bassdrum/fit909.json",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/fit909.json",
+      "sourceSha256": "e1e97b493b6c232bf6602ca224212e19f2aef3cff65fff404e7876648d228390",
+      "vendoredSha256": "e1e97b493b6c232bf6602ca224212e19f2aef3cff65fff404e7876648d228390"
+    },
+    {
+      "path": "modules/analog-bassdrum/generate.py",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/generate.py",
+      "sourceSha256": "62c5e6eca1df9179229c1b1de419114e3162813f99724dc9b40fa29c84191b88",
+      "vendoredSha256": "62c5e6eca1df9179229c1b1de419114e3162813f99724dc9b40fa29c84191b88"
+    },
+    {
+      "path": "modules/analog-bassdrum/machine.s",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/machine.s",
+      "sourceSha256": "07dc37b1c0bd0f061aabe27782c67df9dcd22769e9c080efbfdf354530d83b8d",
+      "vendoredSha256": "07dc37b1c0bd0f061aabe27782c67df9dcd22769e9c080efbfdf354530d83b8d"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/manifest.py",
+      "sourceSha256": "06645bcb4bf0aac4dd7e0b668877b271a561212c502918a156aa162fa94c1e7b",
+      "vendoredSha256": "20fa1f744630354b3986a3ad82ac6a41744345796dc783891a4c9f0bd81c787e"
+    },
+    {
+      "path": "modules/analog-bassdrum/tables.inc",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/analog-bassdrum/tables.inc",
+      "sourceSha256": "baec565139910e89e12563272f9f8ef934845ddd98f90d8234be15873571e01d",
+      "vendoredSha256": "baec565139910e89e12563272f9f8ef934845ddd98f90d8234be15873571e01d"
+    },
+    {
+      "path": "modules/midi-scenes/README.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/midi-scenes/README.md",
+      "sourceSha256": "6210403449aec741d1f388a525f2b3b2df083a7c762ba4f110f770c070d9b492",
+      "vendoredSha256": "bb1b4b9f5babe96ad4455c9d639a1eadcbaa4dd8a7b373f0179369493c2ff078"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/midi-scenes/manifest.py",
+      "sourceSha256": "3645942749db209c878d5bca8dbe60990df4a875c1f2fdd3995dfc65c794aa3c",
+      "vendoredSha256": "387bc68fcd8293b291f6ccf89e2af27237934fee6122f381026bce44e5e3078f"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/README.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/usb-audio-out-tracks-main-cue/README.md",
+      "sourceSha256": "29178fb2e5f4897de68981d011abb93a15d2ef2e79a39964431640c10f3b84f1",
+      "vendoredSha256": "e4dbbca399a112ae15ff2faa6449570fb1208ad7b3808ffb8beb72f16d7f6bfb"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/manifest.py",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/usb-audio-out-tracks-main-cue/manifest.py",
+      "sourceSha256": "0fc269981f4588a266a2743d3430eb219602d6cbb34993ba8617f78a0f20ed93",
+      "vendoredSha256": "8efa9d46375f50d173b64bdab2441597d3377350ed4b41b8381d999523d91c6a"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/usbaudio.s",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/usb-audio-out-tracks-main-cue/usbaudio.s",
+      "sourceSha256": "9bb4979ec3014b975aada07fd13f5eed9c92d541a285cd45c9ee931d2131a5ad",
+      "vendoredSha256": "9bb4979ec3014b975aada07fd13f5eed9c92d541a285cd45c9ee931d2131a5ad"
+    },
+    {
+      "path": "modules/quantizer/README.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/quantizer/README.md",
+      "sourceSha256": "7361d0da558aac29b9d02752bab6c9cc7d569d83d81a843988df767e29bb3c69",
+      "vendoredSha256": "7ffc975e6de64f77478f4f9bdce8ee2b43dbe5a0a704bff0acfa0e61f2cf0a65"
+    },
+    {
+      "path": "modules/quantizer/manifest.py",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/quantizer/manifest.py",
+      "sourceSha256": "0cb4a79f7cd68e1881cd1076a0f6ba2e132b1c199da3a2d4923906b443797602",
+      "vendoredSha256": "0cb4a79f7cd68e1881cd1076a0f6ba2e132b1c199da3a2d4923906b443797602"
+    },
+    {
+      "path": "platform/usb-midi/README.md",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/usb-midi/README.md",
+      "sourceSha256": "2b3612f3a7e0325b5fefd001d6a11248c3d17ba3caf2d1834565baa885cdbbcd",
+      "vendoredSha256": "2b3612f3a7e0325b5fefd001d6a11248c3d17ba3caf2d1834565baa885cdbbcd"
+    },
+    {
+      "path": "platform/usb-midi/cfg.s",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/usb-midi/cfg.s",
+      "sourceSha256": "debd4b34b4d02b40b8b27e13f0322f685f289687110d8eed3b2f73dc2d0a3506",
+      "vendoredSha256": "debd4b34b4d02b40b8b27e13f0322f685f289687110d8eed3b2f73dc2d0a3506"
+    },
+    {
+      "path": "platform/usb-midi/clamp.s",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/usb-midi/clamp.s",
+      "sourceSha256": "2a5588143c00cd8d1b3e425ba3c6e12c3258083379f03e03f66fd2538dc85af2",
+      "vendoredSha256": "2a5588143c00cd8d1b3e425ba3c6e12c3258083379f03e03f66fd2538dc85af2"
+    },
+    {
+      "path": "platform/usb-midi/descriptors.py",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/usb-midi/descriptors.py",
+      "sourceSha256": "06fdbd0b0245c44a8ef28d6a62da76ba8d4ae56c1b6c809305268795996fcea9",
+      "vendoredSha256": "06fdbd0b0245c44a8ef28d6a62da76ba8d4ae56c1b6c809305268795996fcea9"
+    },
+    {
+      "path": "platform/usb-midi/manifest.py",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/usb-midi/manifest.py",
+      "sourceSha256": "97e907d364c7e05f9046c5f47f5b3a4ee8b5f7d8d184999a075c272aabbf4a8f",
+      "vendoredSha256": "7aeb6260aa9c490abb413ec2d088c5ee391ad74b948bf11de42a252e03e5dce6"
+    },
+    {
+      "path": "platform/usb-midi/usbmidi.s",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "sourcePath": "modules/usb-midi/usbmidi.s",
+      "sourceSha256": "97c7e161711e2a515b97558367e9226d019810ca3c1709e7e75d81289fe3dd6b",
+      "vendoredSha256": "97c7e161711e2a515b97558367e9226d019810ca3c1709e7e75d81289fe3dd6b"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/README.md",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "README.md",
+      "sourceSha256": "fe45f26033bb7f9f2c881344555702725679a0bc5898950adda620ed2d399cb6",
+      "vendoredSha256": "fe45f26033bb7f9f2c881344555702725679a0bc5898950adda620ed2d399cb6"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/LICENSE",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "LICENSE",
+      "sourceSha256": "2048f5fcd57ceacf696906d3c6e9077b17aa2c91b6afabedb8fabe45b16a1b27",
+      "vendoredSha256": "2048f5fcd57ceacf696906d3c6e9077b17aa2c91b6afabedb8fabe45b16a1b27"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/cave2.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/cave2.s",
+      "sourceSha256": "08cde1817555e511823b7e57384b4c805f62755e69ed53405d2586a3e921a5f0",
+      "vendoredSha256": "08cde1817555e511823b7e57384b4c805f62755e69ed53405d2586a3e921a5f0"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/code2.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/code2.s",
+      "sourceSha256": "89e7480718dd0562bdbe3e2387ff63b8889923f627735d71689cd4f3c488a963",
+      "vendoredSha256": "89e7480718dd0562bdbe3e2387ff63b8889923f627735d71689cd4f3c488a963"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/enc_unlock.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/enc_unlock.s",
+      "sourceSha256": "025657b030854d096db5ee2678d0e63d255f7f62c73b10b432c7bbc434f2e601",
+      "vendoredSha256": "025657b030854d096db5ee2678d0e63d255f7f62c73b10b432c7bbc434f2e601"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/msc.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/msc.s",
+      "sourceSha256": "e75f2f7283bf3f9da222a1d8dff4db46888c5eabec8956a5569e944fdf2b1bee",
+      "vendoredSha256": "e75f2f7283bf3f9da222a1d8dff4db46888c5eabec8956a5569e944fdf2b1bee"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/project_cave.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/project_cave.s",
+      "sourceSha256": "a7ce871e51d4ae4944b73ae020b73a81cf2e14a4d88dc9e2380bf7dab618c0d3",
+      "vendoredSha256": "a7ce871e51d4ae4944b73ae020b73a81cf2e14a4d88dc9e2380bf7dab618c0d3"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/reload_cave.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/reload_cave.s",
+      "sourceSha256": "b3c77bd609143bb7207545f44ac905bbb0c0d6143e9eb2f186ed44379f397fa8",
+      "vendoredSha256": "b3c77bd609143bb7207545f44ac905bbb0c0d6143e9eb2f186ed44379f397fa8"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/safe_cave.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/safe_cave.s",
+      "sourceSha256": "8b3f06a1c0f8db6ba0070741f091a5974fbfe97e341173f843dbc136ee868657",
+      "vendoredSha256": "8b3f06a1c0f8db6ba0070741f091a5974fbfe97e341173f843dbc136ee868657"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/scene_paste.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/scene_paste.s",
+      "sourceSha256": "d23106d2aafc8b24cdf81ad1d79bebbbf47b8be2abb922aca3761fd50f8e57d5",
+      "vendoredSha256": "d23106d2aafc8b24cdf81ad1d79bebbbf47b8be2abb922aca3761fd50f8e57d5"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/seam.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/seam.s",
+      "sourceSha256": "4e8d77dc7c4273668bbb4ca9778070c2f34c9d053622a0b7ffd66c3d36c23c5b",
+      "vendoredSha256": "4e8d77dc7c4273668bbb4ca9778070c2f34c9d053622a0b7ffd66c3d36c23c5b"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/seam_bank.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/seam_bank.s",
+      "sourceSha256": "5f919bdabbd5ae25a3693b7349525f86fc8ee40c0538f91d0bbe71cb2b81f135",
+      "vendoredSha256": "5f919bdabbd5ae25a3693b7349525f86fc8ee40c0538f91d0bbe71cb2b81f135"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/state.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/state.s",
+      "sourceSha256": "8804ffe10a450480e34a46107c24a90688777a251b2262bc5fb34900a51f6c8e",
+      "vendoredSha256": "8804ffe10a450480e34a46107c24a90688777a251b2262bc5fb34900a51f6c8e"
+    },
+    {
+      "path": "modules/midi-scenes/upstream/gas/stub.s",
+      "repository": "https://github.com/bkkbrls-del/midisc",
+      "revision": "63ca127bc99638602957f2b05747f8ed3bd9ba52",
+      "sourcePath": "gas/stub.s",
+      "sourceSha256": "8985492aa7878b2f4fb282d850cbb9ceef829c8f71ea6193f67e73bc1e09bc9a",
+      "vendoredSha256": "8985492aa7878b2f4fb282d850cbb9ceef829c8f71ea6193f67e73bc1e09bc9a"
+    },
+    {
+      "path": "modules/quantizer/upstream/README.md",
+      "repository": "https://github.com/timhastie/octatrick-modules",
+      "revision": "525f4b19b04dc3ba3f3bae3b25abbf48df34a10a",
+      "sourcePath": "README.md",
+      "sourceSha256": "d97fb507a8eb6ecbf2c549ff088a4628d816bb42a6485eb13e88bf0d60f016f2",
+      "vendoredSha256": "d97fb507a8eb6ecbf2c549ff088a4628d816bb42a6485eb13e88bf0d60f016f2"
+    },
+    {
+      "path": "modules/quantizer/upstream/LICENSE",
+      "repository": "https://github.com/timhastie/octatrick-modules",
+      "revision": "525f4b19b04dc3ba3f3bae3b25abbf48df34a10a",
+      "sourcePath": "LICENSE",
+      "sourceSha256": "a8fe424c82a030f34f2e3f88df1f2585f97ae61710e1b799f2e6e818120396a0",
+      "vendoredSha256": "a8fe424c82a030f34f2e3f88df1f2585f97ae61710e1b799f2e6e818120396a0"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/README.md",
+      "repository": "https://github.com/timhastie/octatrick-modules",
+      "revision": "525f4b19b04dc3ba3f3bae3b25abbf48df34a10a",
+      "sourcePath": "quantizer/README.md",
+      "sourceSha256": "25b9e9a1d1fb4be217514727374922e60010fc0067fe8c5c3f17ced909c8d94e",
+      "vendoredSha256": "25b9e9a1d1fb4be217514727374922e60010fc0067fe8c5c3f17ced909c8d94e"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/core.s",
+      "repository": "https://github.com/timhastie/octatrick-modules",
+      "revision": "525f4b19b04dc3ba3f3bae3b25abbf48df34a10a",
+      "sourcePath": "quantizer/core.s",
+      "sourceSha256": "2992b6c85cff440de03ae84eb22dee8b8a83a84f23e94b699404d28940b6f958",
+      "vendoredSha256": "2992b6c85cff440de03ae84eb22dee8b8a83a84f23e94b699404d28940b6f958"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/keys.s",
+      "repository": "https://github.com/timhastie/octatrick-modules",
+      "revision": "525f4b19b04dc3ba3f3bae3b25abbf48df34a10a",
+      "sourcePath": "quantizer/keys.s",
+      "sourceSha256": "e2ffdbfae34b0828794a4eb4cc229e3efcaed25dc953bf7c05c13f6e37f65587",
+      "vendoredSha256": "e2ffdbfae34b0828794a4eb4cc229e3efcaed25dc953bf7c05c13f6e37f65587"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "repository": "https://github.com/timhastie/octatrick-modules",
+      "revision": "525f4b19b04dc3ba3f3bae3b25abbf48df34a10a",
+      "sourcePath": "quantizer/manifest.py",
+      "sourceSha256": "b28a9a120e3e6e5e4a5719404f8ff56667c22b582a0fd4595315b4d20ac7d9a4",
+      "vendoredSha256": "3a8ba2d366320ce702b02129386e3d384f0e9d6ae7df64e4811b32f3e08e4011"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/quantizer.s",
+      "repository": "https://github.com/timhastie/octatrick-modules",
+      "revision": "525f4b19b04dc3ba3f3bae3b25abbf48df34a10a",
+      "sourcePath": "quantizer/quantizer.s",
+      "sourceSha256": "91f34be65891fdc61988a3d3a7736b55457572355ffc42d0f423df688e1698fb",
+      "vendoredSha256": "91f34be65891fdc61988a3d3a7736b55457572355ffc42d0f423df688e1698fb"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/scale.s",
+      "repository": "https://github.com/timhastie/octatrick-modules",
+      "revision": "525f4b19b04dc3ba3f3bae3b25abbf48df34a10a",
+      "sourcePath": "quantizer/scale.s",
+      "sourceSha256": "82242c407847ac61a6f60fe15bdc5b0b4fc852bac82c39745b5c838ec9389c64",
+      "vendoredSha256": "82242c407847ac61a6f60fe15bdc5b0b4fc852bac82c39745b5c838ec9389c64"
+    }
+  ],
+  "stockGuards": [
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074232156,
+      "bytes": 6,
+      "sha256": "fc4b77b1c83703e8c61dda0b64b9ec139541c633433304b843f270cd461c6370"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074190212,
+      "bytes": 8,
+      "sha256": "74c9188127d3241e9b2f750392fda1550a0be1780b7e06291e415aaa6d20de19"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074237924,
+      "bytes": 8,
+      "sha256": "fa7132fac15d6e498fd0e73744e1f94218824f3f54d5b3bad6083b60363e9f14"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1073951960,
+      "bytes": 6,
+      "sha256": "d6c9f1f60272197a17511f496fc19dd21ddd7df5f1f1ec0cab7a16cad60b0609"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1073989928,
+      "bytes": 6,
+      "sha256": "237cd1acd4da7acb61dc7fda7c88e648a5186b36732f433b4dd91966c5a669af"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1073993496,
+      "bytes": 6,
+      "sha256": "53b8d23acf2c3fe0f794c0a5f37475b17c3433bc6a466e0e1861515989cfecda"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074053994,
+      "bytes": 6,
+      "sha256": "53b8d23acf2c3fe0f794c0a5f37475b17c3433bc6a466e0e1861515989cfecda"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1073990016,
+      "bytes": 6,
+      "sha256": "237e017ccd95444195ca390a3e6ca6076fbfa1f0931f2e7dfbdbee8c5ec72ca3"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074235080,
+      "bytes": 4,
+      "sha256": "f829e3570d9d9e95b7d7b9b0433b1aad2f13c0ac087873dbf981482521301309"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074103772,
+      "bytes": 10,
+      "sha256": "22fb6e2bea4520003d2fae7035c0cd57bcd6fe6f2cfdd5b70580a3f6f2a68034"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074078238,
+      "bytes": 10,
+      "sha256": "8f0fa4f7d6db857f695996b185b38b788fa6af0eacd86d7dd01e2ff61201ffed"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074235526,
+      "bytes": 10,
+      "sha256": "fe6cb52458c7d968dc467c1cd7721d832baf6bc2fac1826c8c10ed07fee2e7f8"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1073946228,
+      "bytes": 8,
+      "sha256": "bba32826863751ec568719c202735da1ba8f06560e4d375a80637ae6653caa8f"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074239516,
+      "bytes": 6,
+      "sha256": "89c50ac3ca041fdf5647ec5ee2c3580f9a67dd79f0b5cc15ceadda4b9e9bede0"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074112022,
+      "bytes": 6,
+      "sha256": "7a7350a69423ec41ec468a189ba167059626cb7f499d9862394d2388a23c8b59"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074112592,
+      "bytes": 6,
+      "sha256": "7a7350a69423ec41ec468a189ba167059626cb7f499d9862394d2388a23c8b59"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1073980718,
+      "bytes": 8,
+      "sha256": "cae34bf50383462ed4f92d8044e3021247edb8bf69c17a9c7ead62f6edf79510"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1073991064,
+      "bytes": 8,
+      "sha256": "ed71ef874312890edc87cef7e19cd8c0f8ac4ac9b90182c2364f78d3a4567f45"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1073750808,
+      "bytes": 8,
+      "sha256": "3d25d06bf11f3a7bccef894d0016b52adbb4ae468a0f475dd497d7b5966e2694"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074238024,
+      "bytes": 4,
+      "sha256": "8fbd3190028fe564c11b56e3e73e8eaf36925cbabf94164176eeb4c4f57bc6ac"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074103802,
+      "bytes": 4,
+      "sha256": "8fbd3190028fe564c11b56e3e73e8eaf36925cbabf94164176eeb4c4f57bc6ac"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1073989968,
+      "bytes": 2,
+      "sha256": "74d01dadcbe6a57ef61bc53a5a65404cd8446c6738ff0ac86b1b1a78d8ae7d41"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074235000,
+      "bytes": 2,
+      "sha256": "04cd1c6d463ba6752ff68f9125991b1c4af983ae355b62366122ba2d47eee3b2"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074235086,
+      "bytes": 2,
+      "sha256": "04cd1c6d463ba6752ff68f9125991b1c4af983ae355b62366122ba2d47eee3b2"
+    },
+    {
+      "path": "modules/analog-bassdrum/manifest.py",
+      "address": 1074239748,
+      "bytes": 2,
+      "sha256": "577d7ba37f9786ab02a7dc9eeb612bb55936018179b550b14f4b9f000a89bf20"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074083022,
+      "bytes": 10,
+      "sha256": "0a34a9dae47506440d691aa67432e14ddd2067beefb8fd0a710b9d2602bd2ab6"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074081486,
+      "bytes": 10,
+      "sha256": "c48200c62540f2bbf816fc02f6345c909f39c4a82c6e6db5871503b874f94aa6"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074062152,
+      "bytes": 6,
+      "sha256": "655d6cde4464d3fc4b96a5d4042196495b50b875d84102083b78853d87049b33"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073955772,
+      "bytes": 6,
+      "sha256": "ef8b9ca3b718a0a3a2211fe3c4f46e8929feb159071ae75a8020b3428fefe195"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073955934,
+      "bytes": 6,
+      "sha256": "ef8b9ca3b718a0a3a2211fe3c4f46e8929feb159071ae75a8020b3428fefe195"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073955816,
+      "bytes": 6,
+      "sha256": "a6b7abe55b36f6f401bdf3e42ae6914e7ed8bab6e6c8aeb2679c6bc3d5aa3617"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073955982,
+      "bytes": 6,
+      "sha256": "6e095c0ed8bb13c8e2f1ed5964cc2aa9e525bc73af9a5e48dce20afec3af21f0"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073956708,
+      "bytes": 6,
+      "sha256": "a6b7abe55b36f6f401bdf3e42ae6914e7ed8bab6e6c8aeb2679c6bc3d5aa3617"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073957200,
+      "bytes": 6,
+      "sha256": "a6b7abe55b36f6f401bdf3e42ae6914e7ed8bab6e6c8aeb2679c6bc3d5aa3617"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073946436,
+      "bytes": 8,
+      "sha256": "ca0e2748da716f189ef5678b1f45efd14403edf3e213734eda507773d491e9b4"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074017482,
+      "bytes": 6,
+      "sha256": "4fc2250cd387d3091460994656740d63a8f1278f4b4d68e746740952ccfc2f16"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074089142,
+      "bytes": 6,
+      "sha256": "a94cfc1a5ffc3afea8bb6e6462532b16371415b1f68bf30a7831840c08f56ed8"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074147108,
+      "bytes": 6,
+      "sha256": "1b5449969cf7d2e5e4ad604545148cb6f6ae52abf834b0ca1cf51be4fbc00e48"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074147262,
+      "bytes": 6,
+      "sha256": "95a65977926591c138e4e38d6934e763c743f4abc11d2744cbb6ee5fefb074ac"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074146876,
+      "bytes": 6,
+      "sha256": "17d3a295805f15920e3c1faae63ec3f70244430c108aa6b0e00a461c123db360"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073932328,
+      "bytes": 6,
+      "sha256": "e0790c8446179e7e7631acc3cce1fc78c56b72899c36ed1272f16a8db3fa769f"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074084510,
+      "bytes": 10,
+      "sha256": "94cfbe1bad48e5e4815e66723dc09019463cada7a7d6dd797ee097b800be568d"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074086802,
+      "bytes": 10,
+      "sha256": "99f93dbc184930d7c5fcef6f3b40b01f0d69c1e0992588d311f2f7686dd4c7ed"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074000802,
+      "bytes": 6,
+      "sha256": "5962065952cddcc9abd772416a3f5a49d83d6bb967439bcdc2e8ff04a048cab3"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074142840,
+      "bytes": 6,
+      "sha256": "da273da9ea374a8f9bc12ec7e2f622d1d5ce7e78d2d655e93655ae9977286e2d"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074146354,
+      "bytes": 6,
+      "sha256": "e98feec5aee0adf15225ef81ddf90c904a73d8f3b086fd3aa2eebf4719eb0c96"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074080480,
+      "bytes": 6,
+      "sha256": "8bba7275f6d14bc415fde1897a16d9e4a95dc8ae741ade0e062abe0a870f6c65"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074080272,
+      "bytes": 6,
+      "sha256": "8bba7275f6d14bc415fde1897a16d9e4a95dc8ae741ade0e062abe0a870f6c65"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074090890,
+      "bytes": 8,
+      "sha256": "2d6e09987ff507dbdb14dd2b4e1036b3d9f36c5796205447cf16d47c1b10fb5f"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074385374,
+      "bytes": 10,
+      "sha256": "b8c681ab6db08000f18dfba4a3641067372a0fb5abc576b2055f49851744e643"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073929490,
+      "bytes": 6,
+      "sha256": "9baa9fb225a4812b3da68abdc177cb33292fa2cee05d0139476818d7977a194f"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073929558,
+      "bytes": 6,
+      "sha256": "e3a25614d992a47510ed88acb1be409d15ccd8e17b57bd97863cf48108ac307c"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074126938,
+      "bytes": 6,
+      "sha256": "e3a25614d992a47510ed88acb1be409d15ccd8e17b57bd97863cf48108ac307c"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074143914,
+      "bytes": 6,
+      "sha256": "20f4db6e89e2ca275d05fe67bd35c50968fbf1171358af7a97d5210201a230bd"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074298180,
+      "bytes": 6,
+      "sha256": "20f4db6e89e2ca275d05fe67bd35c50968fbf1171358af7a97d5210201a230bd"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073871824,
+      "bytes": 6,
+      "sha256": "20f4db6e89e2ca275d05fe67bd35c50968fbf1171358af7a97d5210201a230bd"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073896098,
+      "bytes": 6,
+      "sha256": "20f4db6e89e2ca275d05fe67bd35c50968fbf1171358af7a97d5210201a230bd"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074143942,
+      "bytes": 6,
+      "sha256": "afad0d9908862e673b0130a710d92307779db90afc4d4f985f7cc058a5b9f1a9"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073929428,
+      "bytes": 6,
+      "sha256": "70a7c68740cd38dfb8585d9708da810bc6709b021c989f39012925a23162363d"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073919386,
+      "bytes": 6,
+      "sha256": "7c8333d86904fe92c238f0bd9ef23551df1f712ec5901abac19f10333dd18692"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073920248,
+      "bytes": 6,
+      "sha256": "7c8333d86904fe92c238f0bd9ef23551df1f712ec5901abac19f10333dd18692"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074047228,
+      "bytes": 6,
+      "sha256": "7c8333d86904fe92c238f0bd9ef23551df1f712ec5901abac19f10333dd18692"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073912568,
+      "bytes": 6,
+      "sha256": "156ec3ed8b04117cf3baac21cf3e71e6d4e9ffed5ff1cdc8858221b9704da891"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073956692,
+      "bytes": 2,
+      "sha256": "7bdb08fa04994418cc3888650522434eddc440782c695752b17696658db61575"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1073957182,
+      "bytes": 2,
+      "sha256": "a89aad5cb9834d06e8ebfa5695b54d1ac6bdba2c3deb109738472e69db48b911"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074047408,
+      "bytes": 2,
+      "sha256": "9d6c12aea7e359d0e9e45a0331a6190ace7f782aeb9762700846c8fd5a1af54b"
+    },
+    {
+      "path": "modules/midi-scenes/manifest.py",
+      "address": 1074047630,
+      "bytes": 2,
+      "sha256": "9d6c12aea7e359d0e9e45a0331a6190ace7f782aeb9762700846c8fd5a1af54b"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/manifest.py",
+      "address": 1073863940,
+      "bytes": 6,
+      "sha256": "3bb0c07995b814d9b68c9fe7705b47b484a246631bc6d15296b6b51f9ce8d7e0"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/manifest.py",
+      "address": 1073862692,
+      "bytes": 6,
+      "sha256": "b7af10bdbb07e409a3549af2716077cbf1f52e8c4c26b68b57f338d447c55ab2"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/manifest.py",
+      "address": 1073864292,
+      "bytes": 6,
+      "sha256": "868378f30d4ed1251a28851782180b919dbfbd18ea839b594142244f6e06fb8a"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/manifest.py",
+      "address": 1073861810,
+      "bytes": 6,
+      "sha256": "ab0cbd2f401f4120ff21c07bb467c402a69a55bec648a66e48c7f15f4dc08926"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/manifest.py",
+      "address": 1073797536,
+      "bytes": 6,
+      "sha256": "37a52c3300cbe2e0b5453bac91ed193defe49493058e8a287b2f9a1c47a325b9"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/manifest.py",
+      "address": 1073866246,
+      "bytes": 6,
+      "sha256": "2fc3d5168f6ee3ffb4b419a9cbbe48a7837d42e9e47db7bb5bced5cd13b62dc0"
+    },
+    {
+      "path": "modules/usb-audio-out-tracks-main-cue/manifest.py",
+      "address": 1074667524,
+      "bytes": 3,
+      "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+    },
+    {
+      "path": "platform/usb-midi/manifest.py",
+      "address": 1073863114,
+      "bytes": 6,
+      "sha256": "65ff3635f24fa02328d135abf8590188c4ae5f1a399f6747c196a9f1c8b4f2db"
+    },
+    {
+      "path": "platform/usb-midi/manifest.py",
+      "address": 1073866246,
+      "bytes": 6,
+      "sha256": "2fc3d5168f6ee3ffb4b419a9cbbe48a7837d42e9e47db7bb5bced5cd13b62dc0"
+    },
+    {
+      "path": "platform/usb-midi/manifest.py",
+      "address": 1073810376,
+      "bytes": 8,
+      "sha256": "ba7573adceae0b4d98e7fca043628b41525f9bf3ec50663e051c89a57a79cb35"
+    },
+    {
+      "path": "platform/usb-midi/manifest.py",
+      "address": 1073809584,
+      "bytes": 6,
+      "sha256": "48904c9ab44972c2a8aad8d9544735e58fe9a7e98b8ad8ddbff57f5abc16274b"
+    },
+    {
+      "path": "platform/usb-midi/manifest.py",
+      "address": 1073863404,
+      "bytes": 6,
+      "sha256": "effa769bdedb0e393f0b05f3920eb7cc91977b77c87f424480b99748334893aa"
+    },
+    {
+      "path": "platform/usb-midi/manifest.py",
+      "address": 1073862744,
+      "bytes": 6,
+      "sha256": "ce8e3c8561e797040ed32749c3daacef88676d43c50fe2b7d0e65139e39ef86a"
+    },
+    {
+      "path": "platform/usb-midi/manifest.py",
+      "address": 1073862806,
+      "bytes": 6,
+      "sha256": "ce8e3c8561e797040ed32749c3daacef88676d43c50fe2b7d0e65139e39ef86a"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074090352,
+      "bytes": 6,
+      "sha256": "dc6543d672cdf223fc2ec7cc3c04b8a584dbd6e7bb1e3590b91cd3e469e0b324"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074073184,
+      "bytes": 10,
+      "sha256": "ccf689e403ebd88a651c829b4ae191d609c85baa2a99409bd0a2870d20aaa73e"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074068568,
+      "bytes": 10,
+      "sha256": "ddfca03eed59b4f4fffffc9061b138ce3e2a33c30712b5e377d94d054fa7b0f0"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074068446,
+      "bytes": 6,
+      "sha256": "7daba4e508057c5320565e7ccc62d4e55d0fa501b0c2586445df51ff9503b3de"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074068478,
+      "bytes": 8,
+      "sha256": "f974dcd132df96148fe8c38e662bf638aba29290a8ca4467402e8ac707eba123"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074068628,
+      "bytes": 8,
+      "sha256": "617ecbc4d5386f7ed57bfdc6e37dd7a1e1cc60850934d5c635ead626999e847e"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074068704,
+      "bytes": 8,
+      "sha256": "e31f7bb195174d49c320879317409c3d2187cc42f337ac0845f41acaebf509bf"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074068742,
+      "bytes": 6,
+      "sha256": "c8e4de3e3a3d28c808f812c9316fd22097f36ec2afb558ef6b81b2a8d66cebe7"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074068768,
+      "bytes": 6,
+      "sha256": "902ec18f60fbd1fe19c6a380f31a74290976edd45422b224a3905d550636c94f"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074070100,
+      "bytes": 8,
+      "sha256": "cee8c24bcad796ec96a96aad2d0073265ca9900179292d7c1c942604aeafd8c3"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074026776,
+      "bytes": 8,
+      "sha256": "112b7d2434bae65950506429fa2e8d01b20316d7ab6d1848ba91f10c451e11ac"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074022760,
+      "bytes": 8,
+      "sha256": "d6d1c7b3caf3215f6590e479a282b5c09d27c1d52c221d596ba9c7fa293896e9"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074022840,
+      "bytes": 8,
+      "sha256": "ba228773be7f5a27bf35390c81bc6b1947b642d5fd23ea9b5153ad3b48b54ff6"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074158538,
+      "bytes": 6,
+      "sha256": "484a241b3cea4a13c5b18550e3ab44eaffc021673bd5677a424bb05cc6486a37"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074292428,
+      "bytes": 8,
+      "sha256": "de4845a149f0373201be2e55cd61ae41f52a03afd7c4cb717b70d9c6bd64c5ad"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074292642,
+      "bytes": 8,
+      "sha256": "51d1dc3c3bf8d2441df47bad2355b22c942d333b44557d35171c891cb573f3fb"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074301098,
+      "bytes": 8,
+      "sha256": "ef2b6bc9ba56b8cd1d05117b22c2fafc71e1aa07952c0999da4d4eb54e0489e6"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1073807890,
+      "bytes": 6,
+      "sha256": "8728078b48ce7f9e9ac9b2d41c454e293ecc0dc4af302ea1885264064442c9e4"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1073896130,
+      "bytes": 6,
+      "sha256": "46484a409ff4c92ca7811222b2a050a935c53122a69184d8a18db71d69820ca9"
+    },
+    {
+      "path": "modules/quantizer/upstream/quantizer/manifest.py",
+      "address": 1074158716,
+      "bytes": 4,
+      "sha256": "a3e547e08c1f288e512f2e52ac9becc3502ccd0dcfcf55e5ab9863859f34e2bc"
+    }
+  ]
+}

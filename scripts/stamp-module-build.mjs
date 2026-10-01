@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { fetchOwnerApproval } from '../src/release/approval.ts'
-import { PACKAGE_FILES, moduleSourceFingerprint } from './module-source.mjs'
+import { PACKAGE_FILES, moduleSourceFingerprint, compiledModuleVersions } from './module-source.mjs'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..'), assets = resolve(root, 'src/engine/assets')
 const sha = bytes => createHash('sha256').update(bytes).digest('hex')
 const json = async path => JSON.parse(await readFile(path, 'utf8'))
@@ -15,7 +15,7 @@ const record = await json(resolve(assets, 'module-build.json')), catalog = await
 if (record.schemaVersion !== 1 || record.kind !== 'source-packages' || record.nativeRevision !== catalog.sourceRevision) throw new Error('Invalid committed module build record.')
 if (record.compilerSha256 !== sha(await readFile(resolve(root, 'scripts/build-module-packages.py')))) throw new Error('The module compiler changed; rebuild the packages.')
 if (await moduleSourceFingerprint(root) !== record.sourceTreeSha256) throw new Error('Module source changed; rebuild the packages.')
-const versions = Object.fromEntries(catalog.modules.map(item => [item.id, item.version]))
+const versions = await compiledModuleVersions(root, catalog)
 if (JSON.stringify(Object.entries(record.moduleVersions ?? {}).sort()) !== JSON.stringify(Object.entries(versions).sort())) throw new Error('Committed packages do not match the catalog versions.')
 for (const name of PACKAGE_FILES) {
   const bytes = await readFile(resolve(assets, name)), entry = record.files?.[name]

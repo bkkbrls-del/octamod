@@ -1,4 +1,5 @@
 import { compiledModuleSource } from './module-build.ts'
+import { moduleBuildError } from '../catalog/build-support.ts'
 // Complete local OS composition. Packaging / the download flow are enabled
 // separately only after full native output and rejection verification.
 import { composeChoosers, type ChooserProfile } from './choosers.ts'
@@ -11,6 +12,8 @@ import { createPlatformOsWrites } from './platform-writes.ts'
 import { applyGuardedOsWrites, OS_LOAD_ADDRESS } from './os-patches.ts'
 import { DSP_LOADER } from './protocol.ts'
 export async function composeOs(original: Uint8Array, ids: readonly string[], profile?: ChooserProfile, { loader = DSP_LOADER }: { loader?: boolean } = {}) {
+  const pending = moduleBuildError(ids)
+  if (pending) throw new Error(pending)
   compiledModuleSource()
   const menus = await composeChoosers(original, ids, profile), cores = await recoverStockDsp(original)
   if (!loader) {

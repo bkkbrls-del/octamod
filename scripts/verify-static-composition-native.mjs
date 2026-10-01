@@ -8,6 +8,7 @@ import assert from 'node:assert/strict'
 import { composeOs } from '../src/engine/compose-os.ts'
 import { defaultChoosers, validateChoosers } from '../src/engine/choosers.ts'
 import { CATALOG_SOURCE, MODULES } from '../src/catalog/modules.ts'
+import { moduleBuildPending } from '../src/catalog/build-support.ts'
 const file = process.argv[2]
 const packingMode = process.argv[3] ?? '--packing=all'
 if (!file || !['--packing=all', '--packing=representative'].includes(packingMode) || process.argv.length > 4) {
@@ -22,11 +23,12 @@ const fixtures = JSON.parse(readFileSync(new URL('../src/engine/assets/static-co
 if (fixtures.schema !== 1 || fixtures.revision !== CATALOG_SOURCE.revision || fixtures.staticStock !== true) throw new Error('Static proofs do not match the pinned catalog.')
 assert.ok(fixtures.packing, 'same-input native packaging source identity')
 const profileKey = proof => [...proof.moduleIds].sort().join('+') + ':' + proof.keepStockFx2
+const verifiedModules = MODULES.filter(module => !moduleBuildPending(module.id))
 const coverage = new Set(fixtures.proofs.map(profileKey))
-assert.equal(fixtures.proofs.length, 2 ** MODULES.length * 2, 'every module subset and chooser setting')
+assert.equal(fixtures.proofs.length, 2 ** verifiedModules.length * 2, 'every module subset and chooser setting')
 assert.equal(coverage.size, fixtures.proofs.length, 'unique proof profiles')
-for (let mask = 0; mask < 2 ** MODULES.length; mask++) for (const keepStockFx2 of [true, false]) {
-  const moduleIds = MODULES.filter((_, bit) => mask >> bit & 1).map(module => module.id)
+for (let mask = 0; mask < 2 ** verifiedModules.length; mask++) for (const keepStockFx2 of [true, false]) {
+  const moduleIds = verifiedModules.filter((_, bit) => mask >> bit & 1).map(module => module.id)
   assert.ok(coverage.has(profileKey({ moduleIds, keepStockFx2 })), 'complete native proof coverage')
 }
 const hash = bytes => createHash('sha256').update(bytes).digest('hex')

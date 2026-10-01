@@ -10,7 +10,11 @@
     "modulation",
     "repitch",
     "spectrum",
-    "tapeecho"
+    "tapeecho",
+    "analog-bassdrum",
+    "midi-scenes",
+    "usb-audio-out-tracks-main-cue",
+    "quantizer"
   ],
   "transforms": [
     {
@@ -56,10 +60,28 @@
   ],
   "notes": [
     "Fresh upstream clone, then exact fork source pin used by browser proofs.",
-    "No Git history, submodules, firmware, downloads, vendor binaries or extracted output imported.",
+    "No Git history, Git submodules, firmware, downloads, vendor binaries or extracted output imported. Required author-source subsets for MIDI Scenes and Quantizer are vendored as plain files at exact pins.",
     "Displaced ColdFire stock instruction expectations are replaced by guarded local reads.",
     "Required platform migration now passes two native composition identities and the crowded-selection rejection; portable setup and source-release automation remain pending.",
     "Removed tools/remix/stock_labels.json: copied stock label data must be recovered locally, not carried by the SDK.",
-    "Required dynamic-loader infrastructure is isolated under platform/, outside the seven-module catalog; native SDK composition parity passed."
+    "Required dynamic-loader infrastructure is isolated under platform/, outside the public module catalog; native SDK composition parity passed.",
+    "The revision and native identities above cover the initial seven only. Later imports retain their own pinned provenance; they do not update or inherit native proof."
+  ],
+  "imports": [
+    {
+      "record": "imports/octabam-363861e.json",
+      "repository": "https://github.com/sambanks/octabam",
+      "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+      "modules": [
+        "analog-bassdrum",
+        "midi-scenes",
+        "usb-audio-out-tracks-main-cue",
+        "quantizer"
+      ],
+      "internalDependencies": [
+        "usb-midi"
+      ],
+      "status": "source import; browser/native integration pending"
+    }
   ]
 }

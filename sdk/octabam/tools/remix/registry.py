@@ -25,7 +25,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1])); import too
 from remix.schema import NO_FALLBACK, on_the_bus  # noqa: E402
 MODULES_DIR = ROOT / "modules"
 PLATFORM_DIR = ROOT / "platform"
-PLATFORM_NAMES = ("dsp-dynload-stock", "dsp-dynload-stock-b")
+PLATFORM_NAMES = ("dsp-dynload-stock", "dsp-dynload-stock-b", "usb-midi")
 
 _cache: dict[str, object] | None = None
 

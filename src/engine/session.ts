@@ -6,6 +6,7 @@ import { composeOs } from './compose-os'
 import { defaultChoosers } from './choosers'
 import { explainBuildFailure } from './build-errors'
 import { checkSelection } from '../catalog/compatibility'
+import { moduleAvailabilityError } from '../catalog/availability'
 import { CATALOG_SOURCE, resolveSelection } from '../catalog/modules'
 import { FIRMWARE_VERSION, type BuildReport, type EngineRequest, type EngineResponse } from './protocol'
 export function createEngineSession(reply: (response: EngineResponse, transfer?: Transferable[]) => void) {
@@ -24,6 +25,8 @@ export function createEngineSession(reply: (response: EngineResponse, transfer?:
       const original = base, current = generation
       if (!original) throw new Error('Choose and verify your base firmware first.')
       const modules = resolveSelection(request.moduleIds)
+      const unavailable = moduleAvailabilityError(request.moduleIds)
+      if (unavailable) throw new Error(unavailable)
       if (!modules.length) throw new Error('Add at least one module before building custom firmware.')
       if (typeof request.keepStockFx2 !== 'boolean') throw new Error('Choose whether to keep the stock FX2 effects.')
       const claims = checkSelection(request.moduleIds)

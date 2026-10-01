@@ -7,6 +7,11 @@ parser.add_argument('--raw-os', type=Path, required=True, help='Your locally ext
 parser.add_argument('--vendor', type=Path, required=True, help='Your patched native toolchain vendor directory; read only')
 args = parser.parse_args()
 app = Path(__file__).resolve().parents[1]
+catalog = json.loads((app / 'sdk/catalog.json').read_text())
+pending = [item['id'] for item in catalog['modules']
+           if json.loads((app / 'sdk/octabam/modules' / item['id'] / 'octamod.module.json').read_text()).get('build', {}).get('status') == 'pending']
+if pending:
+    parser.error('The SDK has source imports awaiting native integration: ' + ', '.join(pending) + '. Existing composition proofs cover only the initial seven. No imported source was evaluated.')
 raw_os = args.raw_os.resolve()
 vendor = args.vendor.resolve()
 if not raw_os.is_file() or not vendor.is_dir(): parser.error('Local original OS and patched vendor directory are required')

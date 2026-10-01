@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 2,
+  "version": "0.1.0-experimental",
+  "nativeManifest": "manifest.py",
+  "media": [],
+  "id": "usb-audio-out-tracks-main-cue",
+  "key": "USB AUDIO OUT TRACKS MAIN CUE",
+  "name": "USB Audio",
+  "category": "midi-usb",
+  "author": {
+    "github": "markandrus",
+    "name": "Mark Roberts",
+    "credits": [
+      "Mark Roberts (markandrus/octemu): USB audio and MIDI implementation, MIT",
+      "Bryan T (bryantysinger): MAIN/CUE channels and hardware alignment findings",
+      "Sam Banks: octabam port, layouts and stream alignment"
+    ]
+  },
+  "presentation": {
+    "label": "20 CHANNELS",
+    "family": "USB audio",
+    "summary": "Record eight stereo tracks, MAIN and CUE over USB at 44.1 kHz and 24 bits.",
+    "overview": "This is octabam’s 20-channel USB output implementation. At high speed it sends each track after its effects and before its fader, plus the final MAIN and CUE buses. At full speed it sends the tracks’ stereo sum. Required USB MIDI support is included in the SDK source.",
+    "highlights": [
+      "20 channels at high speed: eight tracks plus MAIN and CUE",
+      "44.1 kHz, 24-bit class-compliant UAC2 output",
+      "Recorded hardware evidence on both MKI and MKII"
+    ],
+    "usage": [
+      "Connect the Octatrack’s USB port to your recording host and choose its USB audio input. Use high-speed USB for all twenty channels.",
+      "Channels 1–16 are track 1–8 stereo pairs, 17–18 MAIN, and 19–20 CUE. Track channels are post-effects and pre-fader; MAIN/CUE include the mixdown.",
+      "Allow the stream to settle before recording: upstream reports reordered startup samples around 0.5–1.5 seconds after opening. Full-speed USB carries a stereo track sum."
+    ]
+  },
+  "controls": [],
+  "compatibility": {
+    "firmware": "1.40C",
+    "effectId": null,
+    "location": "USB",
+    "conflicts": [
+      "usb-audio-out-main",
+      "usb-audio-out-main-cue",
+      "usb-audio-out-master",
+      "usb-audio-out-tracks"
+    ],
+    "limitations": [
+      "Source imported. Firmware builds for this module are awaiting Octamod verification.",
+      "USB output only. Host-to-Octatrack USB input variants are outside this import.",
+      "Requires the included internal USB MIDI dependency. Only one USB output layout can be composed.",
+      "Windows and Linux hosts have not been measured in this record.",
+      "A startup sample-reordering burst remains open. Master-on MAIN remains 32 samples behind track taps; toggling master can leave up to 32 stale CUE frames."
+    ]
+  },
+  "resources": {
+    "recorded": "29 Sep 2026 (upstream record)",
+    "storage": {
+      "label": "Audio rings",
+      "display": "88 KB + DMA buffers",
+      "value": 90112,
+      "unit": "bytes",
+      "method": "static",
+      "conditions": "Two rings: 1,024 × 80 bytes plus 1,024 × 8 bytes = 90,112 bytes (88 KiB). Four 32-byte dTDs and four 960-byte packet buffers add 3,968 bytes, before code and MIDI state.",
+      "source": "README.md"
+    },
+    "processing": {
+      "label": "CPU load",
+      "display": "Not measured",
+      "value": null,
+      "unit": "bytes",
+      "method": "unmeasured",
+      "conditions": "Upstream records sustained hardware captures and MIDI traffic, not a comparable hardware CPU utilization percentage.",
+      "source": "README.md"
+    }
+  },
+  "tests": {
+    "report": "TESTING.md",
+    "summary": "Selected for the broadest recorded hardware evidence: MKI and MKII, sustained multi-track 24-bit captures and high MIDI receive traffic. The latest source includes track/MAIN alignment and a hardware-tested master-on CUE correction; startup artifacts and unmeasured host/platform cases remain. This import has no Octamod browser/native parity yet.",
+    "hardwareStatus": "historical",
+    "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+    "gates": [
+      "tools/verify/verify_usb.py",
+      "tools/verify/verify_usb_align.py"
+    ]
+  },
+  "source": {
+    "repository": "https://github.com/sambanks/octabam",
+    "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+    "path": "modules/usb-audio-out-tracks-main-cue"
+  },
+  "build": {
+    "status": "pending",
+    "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
+  },
+  "license": {
+    "spdx": "MIT",
+    "file": "LICENSE",
+    "declaration": "Imported original/MIT-licensed sources with upstream copyright, author attribution and exact commit pins retained. No firmware, extracted stock routines, recordings or screenshots imported. Contributor licensing statements are retained in LICENSE; owner/reviewer verification is required before publication and is not automatic legal clearance."
+  }
+}

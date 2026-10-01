@@ -1,11 +1,12 @@
 import { MODULE_DOCUMENTS } from './documents.ts'
+import type { ModuleDocument } from './module-contract.ts'
 export const CATALOG_SOURCE = {
   repository: 'https://github.com/repeat98/octamad',
   revision: 'b8deefc88b2c3e5f3c6158e364eb741df1924e1d',
   branch: 'codex/dsp-dynload',
 } as const
 
-export type ModuleCategory = 'effects' | 'playback'
+export type ModuleCategory = ModuleDocument['category']
 export type FirmwareModule = {
   id: string
   key: string
@@ -14,6 +15,7 @@ export type FirmwareModule = {
   description: string
   detail: string
   author: string
+  authorName: string
   authorUrl: string
   sourcePath: string
   fxId?: number
@@ -23,12 +25,13 @@ export type FirmwareModule = {
 export const MODULES: readonly FirmwareModule[] = MODULE_DOCUMENTS.map(document=>({
   id:document.id,key:document.key,name:document.name,category:document.category,
   description:document.presentation.summary,detail:document.compatibility.location,
-  author:document.author.github,authorUrl:'https://github.com/'+document.author.github,
+  author:document.author.github,authorName:document.author.name??document.author.github,authorUrl:'https://github.com/'+document.author.github,
   sourcePath:'sdk/octabam/modules/'+document.id+'/manifest.py',version:document.version,fxId:document.compatibility.effectId??undefined,
 }))
 
 export function getModuleSource(module: FirmwareModule): string {
-  return 'https://github.com/sambanks/octabam/tree/main/modules/' + module.id
+  const source = MODULE_DOCUMENTS.find(document => document.id === module.id)?.source
+  return source ? source.repository + '/tree/' + source.revision + '/' + source.path : CATALOG_SOURCE.repository + '/tree/' + CATALOG_SOURCE.revision + '/modules/' + module.id
 }
 
 export function resolveSelection(ids: readonly string[]): FirmwareModule[] {

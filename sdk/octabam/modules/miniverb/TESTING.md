@@ -1,5 +1,10 @@
 # Mini Verb testing
 
+Version: 0.1.1-experimental · author: [Jannik Aßfalg](https://github.com/repeat98)
+
+This revision updates author credits only. The historical evidence below is retained; no new hardware or DSP qualification is claimed.
+
+
 ## Source evidence
 
 Evidence source: repeat98/octamad commit `b8deefc88b2c3e5f3c6158e364eb741df1924e1d`. Read [the original record](README.md).

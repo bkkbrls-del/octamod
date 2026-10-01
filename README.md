@@ -4,7 +4,7 @@ A React / TypeScript web configurator for octabam, with a GitHub Pages frontend 
 
 The frontend, backend and octabam-derived developer SDK belong in one repository. The owner may self-host the backend later; storage adapters for that option remain pending. See [accepted decisions](docs/DECISIONS.md) and the complete [active project goal](GOAL.md).
 
-The browser composes real firmware for the fixed seven-module catalog with the dynamic DSP loader disabled. **Downloads remain paused pending owner approval** of this loader-free build. All 256 selection/stock-FX2 profiles were checked against native output: 74 byte-identical images and 182 matching refusals. Four representative complete container/upgrade files and two actual-browser builds also match native identities. Read [verification and remaining work](docs/VERIFICATION.md). Hardware qualification, approved source-to-package automation, the complete native SDK setup and real licensed captures still need work.
+The browser composes real firmware for the fixed seven-module catalog with the dynamic DSP loader disabled. **Downloads remain paused pending owner approval** of this loader-free build. All 256 selection/stock-FX2 profiles were checked against native output: 74 byte-identical images and 182 matching refusals. Four representative complete container/upgrade files and two actual-browser builds also match native identities. Read [verification and remaining work](docs/VERIFICATION.md). Hardware qualification, approved source-to-package automation, the complete native SDK setup and real licensed captures still need work. The catalog also includes Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer as source imports awaiting Octamod firmware verification.
 
 ## Run locally
 
@@ -36,7 +36,7 @@ Only this fingerprint is distributed. No stock firmware is included.
 
 The catalog follows repeat98/octamad commit b8deefc88b2c3e5f3c6158e364eb741df1924e1d. Module links point to upstream sambanks/octabam; measurement links remain pinned to the fork revision.
 
-Control descriptions and starting values are extracted from the pinned module manifests. native-metadata.json records lightweight declaration / ledger results for the 127 nonempty selections of the seven catalog modules, including the native platform dependencies. Configuration does not run native stress tests, emulator gates or the octabam test suite.
+Control descriptions and starting values are extracted from the pinned module manifests. native-metadata.json records lightweight declaration / ledger results for the 127 nonempty selections of the original seven modules, including the native platform dependencies. Configuration does not run native stress tests, emulator gates or the octabam test suite.
 
 These declaration checks do not prove final memory placement or hardware safety. The complete catalog is not hardware-qualified. Historical hardware records and emulator evidence are labelled separately. Tape Echo's pinned record specifically reports six instances working and a seventh freezing the unit.
 
@@ -46,7 +46,7 @@ Module thumbnails are original SVG illustrations. Actual licensed screenshots/au
 
 ## Module source and versions
 
-Only Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch are included initially. Source and website metadata live in `sdk/octabam/modules/<id>/`; the [SDK](sdk/README.md) comes from a fresh, pinned, attributed octabam clone. Required platform integration passes native byte parity; portable setup and approved source-build releases remain pending. See [the strict folder contract](docs/MODULE_REPOSITORIES.md).
+Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch are the original modules. The requested additions are Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer, with internal USB MIDI source. The four additions have pending build status and exact newer upstream pins; prior firmware parity evidence does not cover them. Source and website metadata live in `sdk/octabam/modules/<id>/`; the [SDK](sdk/README.md) comes from a fresh, pinned, attributed octabam clone. Required platform integration passes native byte parity; portable setup and approved source-build releases remain pending. See [the strict folder contract](docs/MODULE_REPOSITORIES.md).
 
 `octamod.module.json` schema 2 requires a semantic version, credits, descriptions, controls, compatibility, resource evidence, test provenance, licence and media declarations. `sdk/catalog.json` pins included versions; `npm run modules:generate` derives the frontend catalog. `npm run modules:check -- --base origin/main` rejects any module-folder update without a greater version. PR CI validates against the exact base commit without executing native manifests.
 
@@ -212,7 +212,7 @@ functions/        Cloudflare Pages entrypoint
 migrations/       D1 schema
 public/_headers   Cloudflare fallback security headers; no analytics or third-party fonts
 public/licenses/  licenses for adapted source and documentation
-sdk/              pinned native source, seven module folders, templates and SDK guide
+sdk/              pinned native source, eleven module folders, internal dependencies, templates and SDK guide
 ```
 
 npm run check runs lint, small domain / API tests, type checks and a production build. API tests use an in-memory SQLite database and synthetic media, never real firmware. CPU-heavy octabam checks remain paused.
