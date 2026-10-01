@@ -3,7 +3,19 @@
   "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
   "sourceSha256": "164f31224bf61181e3f50e7dec40df9afcae5b16dbf6e4c0d0cc5e986af0a84e",
   "staticStock": true,
-  "packing": null,
+  "packing": {
+    "version": "OCTAMOD79",
+    "sourceUpgradeSha256": "34695b606eb00e1b4dded5fd0c4b66f3a460522a632e47d7416dbd220599e1ad",
+    "oracleSha256": "7c9cc005b48ae2cd14953c38159f592333a33b2db059604e0b2ca0ad1acb3414",
+    "sources": {
+      "vendor/elektron-firmware-tool/main.c": "eedd11769bf3c4fa2b88107b49e83e654e600bffcd8be4ce019dd43e9710b165",
+      "vendor/elektron-firmware-tool/compress.c": "f7af548480e9e49f571ffe4cf4d5b6957cde9d5eaaef123c73c2e951abf7a223",
+      "vendor/elektron-firmware-tool/decompress.c": "9f2c1f3f7889544d34bfbe48731cc2d9d9024ce74a809b8b7a9ae374a8b930d0",
+      "vendor/elektron-firmware-tool/integrity.c": "89d1d117331c63f499eef46bc4129079b894da8a38884ea5d9c0eb7c95d1c99f",
+      "tools/build/bin_decode.py": "d092430bf99d30d39c6fa81a186a746f0bfc5c6875636a03f48d800e59a05144",
+      "tools/build/make_bin.py": "755ed65e1f5de29bb1d19949828a0dc85a7cd38609907d73787ea4e0c9a8851a"
+    }
+  },
   "proofs": [
     {
       "moduleIds": [],
@@ -42,7 +54,14 @@
       "bytes": 1112560,
       "sha256": "3c3a72fbc69912ffb5377f99a0c38e16c4531c04ca1aaeb77169e8936d9641f6",
       "osSha256": "3c3a72fbc69912ffb5377f99a0c38e16c4531c04ca1aaeb77169e8936d9641f6",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445619,
+        "containerSha256": "96128fbe9a34e62d852324b8dfd882a851bf1240c959d88a6c0a139918b971ac",
+        "bytes": 445636,
+        "sha256": "020b13203cd93396d849e6a0fbbf4ae87c240482db6b6d3f56952a0799fedc47"
+      }
     },
     {
       "moduleIds": [],
@@ -66,7 +85,14 @@
       "bytes": 1112560,
       "sha256": "1a6aa5afef713988da434e3f02e9b35cc64dea580d8e6d0ff91994ed0f264c39",
       "osSha256": "1a6aa5afef713988da434e3f02e9b35cc64dea580d8e6d0ff91994ed0f264c39",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445615,
+        "containerSha256": "72301a651b60e0b1a60102982ae5946e1c6f3063537a99e4443a4b7cf9e121f9",
+        "bytes": 445632,
+        "sha256": "f7ea5f95e5c2e20032bbd15dd1ed449f800e87f97eb1f06c1f4d7746a90b75c6"
+      }
     },
     {
       "moduleIds": [
@@ -136,7 +162,14 @@
       "bytes": 1112560,
       "sha256": "ab73c2eb7c658f39eaa5e9d45f91d57c013425153efb6b13c83a44c3040d39d8",
       "osSha256": "ab73c2eb7c658f39eaa5e9d45f91d57c013425153efb6b13c83a44c3040d39d8",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445557,
+        "containerSha256": "6e427d47a261b9acabbb3969e256097354ffb5668dbad415fd7092a9f914af42",
+        "bytes": 445576,
+        "sha256": "836fca3fa3f78d0530ba8f3ae30950ca3184317684be3fba4ad20bb3882764ed"
+      }
     },
     {
       "moduleIds": [
@@ -206,7 +239,14 @@
       "bytes": 1112560,
       "sha256": "e52c97fb39754c4d6845ab62ba7a586700d14e63cc5627b56f925dc7edd11b8a",
       "osSha256": "e52c97fb39754c4d6845ab62ba7a586700d14e63cc5627b56f925dc7edd11b8a",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445592,
+        "containerSha256": "413c6c2dac74ee6381806193c68c7617094f68e19b5e2d2195f22cf6ec183e1b",
+        "bytes": 445608,
+        "sha256": "fde570dba5edd0c71f0f68957335f81f34135f9d6bfd6e45e9ef656b974f1947"
+      }
     },
     {
       "moduleIds": [
@@ -349,7 +389,14 @@
       "bytes": 1112560,
       "sha256": "3f4e38d100aeeaadde7c0f2b4e4e3390bc58c89dffb642cfa12e5af4bc93ee30",
       "osSha256": "3f4e38d100aeeaadde7c0f2b4e4e3390bc58c89dffb642cfa12e5af4bc93ee30",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445806,
+        "containerSha256": "cbc9512225c19c83acabedc795ee15935be49d446b6e79cb79040596d4f10f1d",
+        "bytes": 445824,
+        "sha256": "7afb725753994afdc42870742830bb5807882ad53488979c90ad368ee9c44e9d"
+      }
     },
     {
       "moduleIds": [
@@ -425,7 +472,14 @@
       "bytes": 1112560,
       "sha256": "ac7729ceaa6c343534881c8cb303f0859694718e88f1363014b3a031244f43eb",
       "osSha256": "ac7729ceaa6c343534881c8cb303f0859694718e88f1363014b3a031244f43eb",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445678,
+        "containerSha256": "24d862e638ddadab6530f3e456a01514b58c9bff4411494ca1c0aa76ee1fc6e4",
+        "bytes": 445696,
+        "sha256": "44497bd6e8af7b6349e36bb139bb0300346d7bc3bd713f39265e82976215c7ef"
+      }
     },
     {
       "moduleIds": [
@@ -501,7 +555,14 @@
       "bytes": 1112560,
       "sha256": "573615c164052e00be1ff776dabced7ea0b6325f3ad7930b06f683b948137085",
       "osSha256": "573615c164052e00be1ff776dabced7ea0b6325f3ad7930b06f683b948137085",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445501,
+        "containerSha256": "123d837c750b1db104a2c7356cc7c5813ac0cff9cd995a93fec3d4560ec21567",
+        "bytes": 445520,
+        "sha256": "6ad215d04632675f8e7db92d13b35930bd1af9f8736cd52e3254a1357302cd39"
+      }
     },
     {
       "moduleIds": [
@@ -647,7 +708,14 @@
       "bytes": 1112560,
       "sha256": "f3df245e44caa485502ea2c896f8850dce6a9de93121f71e765e192729e95a49",
       "osSha256": "f3df245e44caa485502ea2c896f8850dce6a9de93121f71e765e192729e95a49",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445562,
+        "containerSha256": "ee7a8da117a216f10a2f82173e59231595b3eb28c1a7ab76ef841acb6509bfd7",
+        "bytes": 445580,
+        "sha256": "612b4e6c441e787421d69f42d7da65927dd5d2485396f40923a35d0c6bdb00e1"
+      }
     },
     {
       "moduleIds": [
@@ -722,7 +790,14 @@
       "bytes": 1112560,
       "sha256": "798eb36577770c719257cc5f0452388a0a9d7652430fa90076c825f9fdef9f92",
       "osSha256": "798eb36577770c719257cc5f0452388a0a9d7652430fa90076c825f9fdef9f92",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445665,
+        "containerSha256": "27dee10524748811ba37410049c9339b1fcb1b7a4de167cad4742ec7084f7479",
+        "bytes": 445684,
+        "sha256": "e21438d589e0e84ad9a9259c0031b1207d3d9d20ae6e26344c81465f5dbe945a"
+      }
     },
     {
       "moduleIds": [
@@ -797,7 +872,14 @@
       "bytes": 1112560,
       "sha256": "a1a00eca26fed90c4a511228c7f318eff5df5402a8887a23818d8b651012314d",
       "osSha256": "a1a00eca26fed90c4a511228c7f318eff5df5402a8887a23818d8b651012314d",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445537,
+        "containerSha256": "799aa1a62bd3c33cd97fc177b3fea6347dba3b5526a413151438ce0875530521",
+        "bytes": 445556,
+        "sha256": "7f646033127541eadcb15761dfec31d46fae226b6dd12d89fd0dc83eb0df29de"
+      }
     },
     {
       "moduleIds": [
@@ -950,7 +1032,14 @@
       "bytes": 1112560,
       "sha256": "ba64915c220215d341925e850ca7582ee123943b1c51c1e084c9d0bbf4fb3b6c",
       "osSha256": "ba64915c220215d341925e850ca7582ee123943b1c51c1e084c9d0bbf4fb3b6c",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445646,
+        "containerSha256": "f26befb4467dcc6f75e532254b45887e128b8cba859e15f27cad7860720d5252",
+        "bytes": 445664,
+        "sha256": "8b00d319b99612c6e32f0183da03d2abd43a30d1044b53830a1a1d9988b3682f"
+      }
     },
     {
       "moduleIds": [
@@ -1257,7 +1346,14 @@
       "bytes": 1215051,
       "sha256": "f65baeb74fc4f1ab956de0166a4fa7ad406ddb0536691e56ea8dad569fefa02b",
       "osSha256": "705825b260a43a0a69749ab0dc085dfe6130b7fb8d3862a6844e80093704b351",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 557964,
+        "containerSha256": "fca7f9d6c4c16ec263eb66bc9cef1ed356ecb1329dab99397ad77f968e73c852",
+        "bytes": 557980,
+        "sha256": "b994e15a3163f7ec12407b51e5a37bafc0dabde7b7769cc962557e80713e6ee0"
+      }
     },
     {
       "moduleIds": [
@@ -1332,7 +1428,14 @@
       "bytes": 1215051,
       "sha256": "e6aad98d84ad4a3243816cc38ce626290c9c541533f9e5c964877d165b3e382e",
       "osSha256": "b6693c1328b443da5e3e38bdf316378416930e81159c6f8aa9bfaadee69e3e05",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 557881,
+        "containerSha256": "1f79cefbb0180f6956e0746cb6c5d33260892e70a52c191ce5b78e1138b9ea4a",
+        "bytes": 557900,
+        "sha256": "1e446a9cb14205be1fb9fe2b3d7c2538aa103970109954f02e24e403bb2ff942"
+      }
     },
     {
       "moduleIds": [
@@ -1407,7 +1510,14 @@
       "bytes": 1215051,
       "sha256": "a3eb099745b78667158feff97fb6f6aa0be333ed72ead1b9042830dbdd242394",
       "osSha256": "bf88e91f1f31d6603e54d82ccee6b15d2e971108051d2e6b2a5fa35cd7d15c9c",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 557930,
+        "containerSha256": "851cb3f97f74513510f5363c7ce6c5bee00564e138ef401422d7a357ce2078ff",
+        "bytes": 557948,
+        "sha256": "90f8025fe95bedf2b7bec8f8574c79809bbcd5f3bfaf28dce6cd90a3a09ecc62"
+      }
     },
     {
       "moduleIds": [
@@ -1560,7 +1670,14 @@
       "bytes": 1215051,
       "sha256": "154c8664b3048c915da3eaee6c1e90d4034d9e47d3d538525d83f397b8ba72e4",
       "osSha256": "d2d748a72f1bb4e371b8511b29fd1649b27344261a33103e38b7cf64ae9ca40c",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558126,
+        "containerSha256": "6d77a3595b88c8e67a7dc1c70cf607b99ca8acbb02419f692a446773a4a3c96a",
+        "bytes": 558144,
+        "sha256": "0b29c6066756cb3df35d3e7c0d9d580fa2a2ec46d1c536411f7bc33206096fa0"
+      }
     },
     {
       "moduleIds": [
@@ -1641,7 +1758,14 @@
       "bytes": 1215051,
       "sha256": "bbcc40fcea06640e5163427ffaa9ae048a9337447a11812b0cebb7fe22bbb8aa",
       "osSha256": "6aa5184f15a5496156192119aad28c04d2763bf085bc4008ea5d6ee9b2d49ea9",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 557997,
+        "containerSha256": "d21c833814b39c90a8411dba51433f23108a99537a286120e6b0c76f90b15832",
+        "bytes": 558016,
+        "sha256": "2222fc1b38184b1d3bad65c12659f5809db72f4066625deb4382e0cf9e3448ba"
+      }
     },
     {
       "moduleIds": [
@@ -1722,7 +1846,14 @@
       "bytes": 1215051,
       "sha256": "3835d85a27e79c63f1a57c5f4d48265d1fab8cdcd9d3524368c2c5037372a815",
       "osSha256": "c0b09e47f6a425abeaa644b5f4fffe79cf0e2feb638329752f440f7369fd9f14",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 557821,
+        "containerSha256": "b4e112a61a4cd64dd82ebcfc9f17564f29ad01e48759de06eee0e2ae4c3538e2",
+        "bytes": 557840,
+        "sha256": "5dbc5a978bdb5af18eaae71824fa09030757cd0119eff8d2bfc88e573c53f191"
+      }
     },
     {
       "moduleIds": [
@@ -1877,7 +2008,14 @@
       "bytes": 1215051,
       "sha256": "a104fdeaf86b4cd1bfd1c7375b3c2640952a6a86ce62e3da2b39d0e64cb5ef78",
       "osSha256": "ca7278af9a4d798c3ca38b0167c1bc230c85ecc23f78297f4897945616bcd0b5",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 557889,
+        "containerSha256": "004730c8be169d43c4e06cb7c2534253866c1ff2476a348a9c07eec5e77c6c38",
+        "bytes": 557908,
+        "sha256": "d1141564c62e31cdcc346b983638e29b889c3cdb69cbbfd56fdc2dcc2c820d30"
+      }
     },
     {
       "moduleIds": [
@@ -1956,7 +2094,14 @@
       "bytes": 1215051,
       "sha256": "7b1df4b4a7ab344c726627a60cf5f783d241f95327fd818d1d12fcc9d0192b66",
       "osSha256": "caaeb4dfcaefb849920fdb64f83bd8d686f64dc063c0f0b7e7be5cc6e110b688",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 557990,
+        "containerSha256": "24429fb8a5e7dc0a33bb340a3319726857fc9fb6efb9099bfe16f8b5c2d6e371",
+        "bytes": 558008,
+        "sha256": "97075d0e370682b8a2cb643c93b8bc8e67c88ee66f3ba7e9dcff55351bd6774f"
+      }
     },
     {
       "moduleIds": [
@@ -2035,7 +2180,14 @@
       "bytes": 1215051,
       "sha256": "927f2367b9e962a777587c010a74369c11bc8f984672a05ac72d3ab298c8c6c4",
       "osSha256": "979c4b4ddd0bd4ba88dfa8182f0397912ca8b753e47a52d1342f96f1692acd04",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 557868,
+        "containerSha256": "96ba69d26957b27f74fcb409268c3995626ef89768b8482c28ac31b63c950f61",
+        "bytes": 557884,
+        "sha256": "d6d645fe8323d9f77b2081ba169613bdc9472d88ae40c759feb00b5cfcd05a84"
+      }
     },
     {
       "moduleIds": [
@@ -2196,7 +2348,14 @@
       "bytes": 1215051,
       "sha256": "9f2f914af130d4952e5e00737ad17038ebbd87a064584daa7d9afac4d3c95c25",
       "osSha256": "f59e96828c521f667b9a9575879ecbd44b9cd833d4fff33ad4131557e33b3b4b",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 557973,
+        "containerSha256": "30a241fb7d4304bc6c104a750ff0f434740f9e425b8163908e39bbf3ec572ec2",
+        "bytes": 557992,
+        "sha256": "dd65bb958deb43a88879885410665bb63d057f78da19ea591ff452d82b40e907"
+      }
     },
     {
       "moduleIds": [
@@ -2517,7 +2676,14 @@
       "bytes": 1114981,
       "sha256": "90f3b8a345431c36563f520d8a1101e770fb2932ad4142ef8802b4032cb578a2",
       "osSha256": "8101e76e34a351d997d2b89ed6a4bde6092af1086afaa6e01ef16a36684ca644",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449076,
+        "containerSha256": "ac4c6264a1d95e38f1dd76a12a673132daf283e61b03a87f1c04cc4c7a676a55",
+        "bytes": 449092,
+        "sha256": "020c2bbc6291390f6a0f54fcfa4ffafb2c500283642c3fc8527df13e79beaf4a"
+      }
     },
     {
       "moduleIds": [
@@ -2594,7 +2760,14 @@
       "bytes": 1114981,
       "sha256": "ef5bf217fd4fd823f17f745a38c389d3e89be235669df2af9de20d7d4e31f2bb",
       "osSha256": "7043544d8796779a50bcc12843e91c4a7d1e49527442bc2ee8bf57b0969f4d31",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 448944,
+        "containerSha256": "1d89f7fb6ba9d29ba8dc98db59b175e259a558b8e39430b257c0109b361791c5",
+        "bytes": 448960,
+        "sha256": "509ec4ce9f7f3bb7c4f171db37514e42510388ed55e673476cff42fd2c0f23c6"
+      }
     },
     {
       "moduleIds": [
@@ -2671,7 +2844,14 @@
       "bytes": 1114981,
       "sha256": "173d040c949c43a5ec059676063e83bbbff528fefc2361ea2ac549c5384e82c7",
       "osSha256": "ba6affb6d347923951db086d0c1150e6aa4fab111e676d3359d85039d47d2ca5",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 448922,
+        "containerSha256": "2789caf5ed0243a4495fca48edc23cbf1ec7a4032ccd71a671a9d86c3c805d40",
+        "bytes": 448940,
+        "sha256": "61a9e0e347105a4c7f2e5e2821cd716c94e6dd77d632f7d85b3779382d64b31e"
+      }
     },
     {
       "moduleIds": [
@@ -2828,7 +3008,14 @@
       "bytes": 1114981,
       "sha256": "75bbbd8aa56a56e950ba28a468ca80c767b335f8ae5c2954d1e0e82d00459d9b",
       "osSha256": "668efd3ec10bc2a6fd100996d1f004707e1dac1e58ea499c07a2ccafc2725c57",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449059,
+        "containerSha256": "64058ae0937a045feafe8bbb16d3a388a787249bb9113fd9a2c486653300450a",
+        "bytes": 449076,
+        "sha256": "3900a0336497527c01ca2645297c37d33ff406e0514630521aae4fbd480b53f5"
+      }
     },
     {
       "moduleIds": [
@@ -3147,7 +3334,14 @@
       "bytes": 1114981,
       "sha256": "1840f74d940d02fbda44d2951988ea6d037bce11e450fe1c18fdf9c23e5c8417",
       "osSha256": "a5917387a88167f3819cfff618199c765cac8f6167d5ce586d80d1750a9690a1",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 448976,
+        "containerSha256": "f29c0983eada231dc58b70697b5ce4801af7a8faffc040485795d24d6aa10dfc",
+        "bytes": 448992,
+        "sha256": "94f15e8b0cecd33f5a831a47712992de4044bba55a009fe2627ef6729d1b5a9b"
+      }
     },
     {
       "moduleIds": [
@@ -3228,7 +3422,14 @@
       "bytes": 1114981,
       "sha256": "6d38fcba3c80f0f94fd35abde5d8fc583dc8937cb7646615f7be5f4ffc65e676",
       "osSha256": "296f3eb29b478446f4879475eeaa14b163760735ff32595aa544ad8c7228a36e",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 448822,
+        "containerSha256": "01267a07e3298f351961502d21dd719ae01d550e28c8a8679acc3d0eae172e7b",
+        "bytes": 448840,
+        "sha256": "c342c2ab072b61be99d81fdbb488870f07bf30c5797bda1ec723c7eaed98ffb4"
+      }
     },
     {
       "moduleIds": [
@@ -3309,7 +3510,14 @@
       "bytes": 1114981,
       "sha256": "05ddb038a602a4ca2c15d929d6963f4e0c0dc3b32c6787bbc3a8e20f317da809",
       "osSha256": "015b56413517cf5ad0c619276d6ad1a88974f54d26f3c39d973825312a046483",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 448745,
+        "containerSha256": "2909cddf465893343994f4d5bb42158f1b37dcae3a54934a08886824dc9185d7",
+        "bytes": 448764,
+        "sha256": "719aa5eaf3be32821bfccde053d6af42d2f6e7a5dc40d442046595e3d77195c0"
+      }
     },
     {
       "moduleIds": [
@@ -3474,7 +3682,14 @@
       "bytes": 1114981,
       "sha256": "79bd59ae0c149c15e53349c89be2f2972bfbc019620d9f7e4472433a548c62f5",
       "osSha256": "90cc15539bc4f52110d62fa9781661d341891dd476ceed49d4d7b951381cefe8",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449165,
+        "containerSha256": "765fe656a6b66b4356645edb0e5ec0ed1f2198c97289e9374f009ae30f4b9406",
+        "bytes": 449184,
+        "sha256": "3521186037ba504520f0cb9895810113a8dc378658510564a1c3bdde7fe04564"
+      }
     },
     {
       "moduleIds": [
@@ -3805,7 +4020,14 @@
       "bytes": 1217159,
       "sha256": "af2e85c410371e84283b3748288d89569e23c478f54d8b77cdb2e8d38a4d552e",
       "osSha256": "bde599927ac3a23f242768907deb31d75a5245a2d86ef44150c3494e9bb1ab95",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560576,
+        "containerSha256": "2ab1624efc02513bb63ed42b8f432ed2a31e4aaf6ae0ba6424468c9b2632ea60",
+        "bytes": 560592,
+        "sha256": "083e31103ccc8993908677597412ae1dea2e83cf15e9535eee65d7c204ac4e3d"
+      }
     },
     {
       "moduleIds": [
@@ -3886,7 +4108,14 @@
       "bytes": 1217159,
       "sha256": "bf177fa68e30dc66affebe14dae963d829603824cea6a6854ce7ac303231bc15",
       "osSha256": "cb5c50b7be3e09251bee2198c84047f399c6ec42ed4892e5eb6f1ecdaa9dcf02",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560454,
+        "containerSha256": "8d072e8951bc75f3557003e53a272311adef928e5657da8ca549005a09e57d3a",
+        "bytes": 560472,
+        "sha256": "5400ec70a8d2ac2d3eddf21d5aa375c495c50dbd2f235807f64e9cfd9036b3f0"
+      }
     },
     {
       "moduleIds": [
@@ -3967,7 +4196,14 @@
       "bytes": 1217159,
       "sha256": "93b8f2ae0f01c3789ead65a3b9bc9d512d880f094adb63f60f9fc8bf8d665965",
       "osSha256": "4d6f9ac5d39186d83abfd0b3723412eedc988c0c2bf5a968279bd4991bf8d63f",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560422,
+        "containerSha256": "a9c67b870f5fa4ac256499ad4fc2640824f92fb400da8213b1457df031a86e8c",
+        "bytes": 560440,
+        "sha256": "ef0c4ea97a439b62cfd03ce4a03289207eb5b532b3d45c685f3b8f0263233218"
+      }
     },
     {
       "moduleIds": [
@@ -4132,7 +4368,14 @@
       "bytes": 1217159,
       "sha256": "12c450c3dbc3034a20d4203c4befbd196677d8dcd533894b125d7d6f0956d3e9",
       "osSha256": "94e7b941a66b90bcf158f5f1f4aa5231aad1b545863f3bb1c57e8749807dd916",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560568,
+        "containerSha256": "642d56d6b3705ad7b1e831778563e182b49a862c900187c98279731a2a96dc13",
+        "bytes": 560584,
+        "sha256": "223d070f6f8f31f002ba38b893c8b7bf2f1077747bbcb364681ea1dac6338704"
+      }
     },
     {
       "moduleIds": [
@@ -4467,7 +4710,14 @@
       "bytes": 1217159,
       "sha256": "7bd5ad368054a95be30182ca6d5a4e3403424262fed017881d199d3a55c27457",
       "osSha256": "d67da613c32e596a82b7173e0377cd1f3c4df38b55a9dcab1edd5371e5011cac",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560476,
+        "containerSha256": "a9384a66166faff1f4c1c355f8c55c263bc8ea2d27d206ec1f38c4be7696736e",
+        "bytes": 560492,
+        "sha256": "61052f4112751d87296a18f3df72820af04c59e21980c7881c6172f3c988e2fa"
+      }
     },
     {
       "moduleIds": [
@@ -4552,7 +4802,14 @@
       "bytes": 1217159,
       "sha256": "7bac7e563d2110918355f22e3ed9dc26bf36befd85dceee8962c6ef2192eae25",
       "osSha256": "2c0f828fa544d1216cde683887752b95377820f6b6a950ad6d7f31515dfca378",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560325,
+        "containerSha256": "05044c08c5dd0bd49f488131e0b8e2fcbba7f24c6add821956faf61bcc43a023",
+        "bytes": 560344,
+        "sha256": "4ccc6e1173ac21390b0b1d031de830913aaa1cb810afd8f58526b998f40e1d53"
+      }
     },
     {
       "moduleIds": [
@@ -4637,7 +4894,14 @@
       "bytes": 1217159,
       "sha256": "1be5cb7970ddee8a4803a596f56bd145ad637f6444bcc6dec749ba2ce226f110",
       "osSha256": "d0462e6a1d6edd4e3936d587241b0f60f389f32da76c61201e00649981e89029",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560244,
+        "containerSha256": "a59b18e03063613bec33d1ae66b6da8b62246d2895ae2be401940390767d1b73",
+        "bytes": 560260,
+        "sha256": "2d30c6d10695b59966d57c7866883a19a0b7b0b214f339358d845d1905ad8bd6"
+      }
     },
     {
       "moduleIds": [
@@ -4810,7 +5074,14 @@
       "bytes": 1217159,
       "sha256": "10444a381e39404c2f846df431281b7a8dcc713fa667162874ddd45fd3e9d524",
       "osSha256": "ae3ce49235cb44444c9dbd45006d31397f438b155a4e2165f72e8f81238d4508",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560665,
+        "containerSha256": "02cd5f8bf87af7d22e471cb3c86c35d87c0dd7b1cfd02aff1edba2f0cb404b37",
+        "bytes": 560684,
+        "sha256": "504e03c494906982db51feb6e1f50f02c5b8562c57d0a7e446f349bb8c13fc16"
+      }
     },
     {
       "moduleIds": [
@@ -5121,7 +5392,14 @@
       "bytes": 1112560,
       "sha256": "f2555851696a0da70e63d434fe6ca7d877061000c990dadde925014f17dc2482",
       "osSha256": "f2555851696a0da70e63d434fe6ca7d877061000c990dadde925014f17dc2482",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 446051,
+        "containerSha256": "72fff8872c8de460dd7418f4f1ebdd407ca7a6b157f025d431212cac2c7a392c",
+        "bytes": 446068,
+        "sha256": "d5f90041a2a01d56f251fc736a8f246e331ac594c194e9b4e6b7249375846d9c"
+      }
     },
     {
       "moduleIds": [
@@ -5147,7 +5425,14 @@
       "bytes": 1112560,
       "sha256": "0639f301725e13f76ffd11e8ba6dbc12945f77c46f7a1e6e9d906beb904ca182",
       "osSha256": "0639f301725e13f76ffd11e8ba6dbc12945f77c46f7a1e6e9d906beb904ca182",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 446050,
+        "containerSha256": "43c3251a940387989d1dad2b53390e89d4a8ae6c545f3e46767807b2846fc90c",
+        "bytes": 446068,
+        "sha256": "6c985fce7c4eee9cc8e67923a142d515f5227b4db8d46cfc8a453a3077120cd2"
+      }
     },
     {
       "moduleIds": [
@@ -5219,7 +5504,14 @@
       "bytes": 1112560,
       "sha256": "19eaeb01ef198633fc82bda6f533e66444843e45103a348e056854b8a942d2bf",
       "osSha256": "19eaeb01ef198633fc82bda6f533e66444843e45103a348e056854b8a942d2bf",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445976,
+        "containerSha256": "aa788a4c2892cb0b134fe829187384cfd5b134d318508af9013082de9c162db8",
+        "bytes": 445992,
+        "sha256": "471e458f65e76c8288c114c752ba01311eb61643731edb0804a1c96054eb873e"
+      }
     },
     {
       "moduleIds": [
@@ -5291,7 +5583,14 @@
       "bytes": 1112560,
       "sha256": "52b4b5b12d6bff6187eeda7d01d11f8d9f7f94cc5e6a0da314a69972eaa3f0bd",
       "osSha256": "52b4b5b12d6bff6187eeda7d01d11f8d9f7f94cc5e6a0da314a69972eaa3f0bd",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 446013,
+        "containerSha256": "0b92fc9532d936d798278e1f8cba0b0206a7dfb017f2a5c11eaee902b0b81ca8",
+        "bytes": 446032,
+        "sha256": "31c72d3b0d79819924d43038922788006ace7cde0112509af0b74ca59bfb0b2f"
+      }
     },
     {
       "moduleIds": [
@@ -5438,7 +5737,14 @@
       "bytes": 1112560,
       "sha256": "379ec7107dc540f1be1901cbf96d44f22697a0b95d916ba278c5adc74ac7215d",
       "osSha256": "379ec7107dc540f1be1901cbf96d44f22697a0b95d916ba278c5adc74ac7215d",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 446224,
+        "containerSha256": "5294862fdb69283de40709f69db44ebd2fd238e21017da571a2b4058b6aadd05",
+        "bytes": 446240,
+        "sha256": "3fa3248ab3c26043a8394e691e372875d729c160fb4d49827067dcf7bb75f985"
+      }
     },
     {
       "moduleIds": [
@@ -5516,7 +5822,14 @@
       "bytes": 1112560,
       "sha256": "6b6ce9278f7c13ff91f3392328871150f49654e73026b82b6e782b16b44fee8d",
       "osSha256": "6b6ce9278f7c13ff91f3392328871150f49654e73026b82b6e782b16b44fee8d",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 446099,
+        "containerSha256": "470ed0e09c6b4d6e439a387708efc93f58a1ecf95885cd80d2161aa8e3058efd",
+        "bytes": 446116,
+        "sha256": "cd8411987a8fc88f3bdfca0159167f7f27ea5332b7447c1f4c38372fec85f288"
+      }
     },
     {
       "moduleIds": [
@@ -5594,7 +5907,14 @@
       "bytes": 1112560,
       "sha256": "9ae8fbb6a44d0c5fed9cd67c7004c36cd5c7c78e62cc6f788251259217c0bdaf",
       "osSha256": "9ae8fbb6a44d0c5fed9cd67c7004c36cd5c7c78e62cc6f788251259217c0bdaf",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445921,
+        "containerSha256": "23eff29569b8bd3e87e11ced5ae8c2514b35a1ea7fb6e9e0c22fa9638391e6b8",
+        "bytes": 445940,
+        "sha256": "b8a533aebc7d6371ea8717348e84cd5d8b34948a29f1ffbf22ae411219995da5"
+      }
     },
     {
       "moduleIds": [
@@ -5744,7 +6064,14 @@
       "bytes": 1112560,
       "sha256": "67d2f4b587e86ad7f93ccdb18fd9cda5c41c8e51134b52ace59bdd3da20bdd90",
       "osSha256": "67d2f4b587e86ad7f93ccdb18fd9cda5c41c8e51134b52ace59bdd3da20bdd90",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445983,
+        "containerSha256": "ec5542494f01e12fa6ad54ff50bdc5abfd8fe01855515fb9cca168ce54b62793",
+        "bytes": 446000,
+        "sha256": "2feb8625eef8bfefcbbd180975cf41c16ce0ec34cff9e4ffce23142e1a942918"
+      }
     },
     {
       "moduleIds": [
@@ -5821,7 +6148,14 @@
       "bytes": 1112560,
       "sha256": "e6a50e69f072e671e67a7d1a2867360093c363b7878325f185606f7efb37f4d6",
       "osSha256": "e6a50e69f072e671e67a7d1a2867360093c363b7878325f185606f7efb37f4d6",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 446087,
+        "containerSha256": "bd6834e9e21ecdefaa203d2630be3b53d021256b83f709b0010c698cd411663d",
+        "bytes": 446104,
+        "sha256": "6749236f8f9ba036f72dc98b3f203a661c6258e7f8ebb7518fe4a6db09d5daeb"
+      }
     },
     {
       "moduleIds": [
@@ -5898,7 +6232,14 @@
       "bytes": 1112560,
       "sha256": "0f6bb287b8e580e2c6bd80a8944a76f7c73119e0aa01d4113477509b51252181",
       "osSha256": "0f6bb287b8e580e2c6bd80a8944a76f7c73119e0aa01d4113477509b51252181",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 445955,
+        "containerSha256": "8ef9364d170ae7db63b3754a4020ead8c8b26121b22c970dce6275ef965b0983",
+        "bytes": 445972,
+        "sha256": "54b41f761ba1f97af88c51e3e168a989d654021c45f1f605ce1e0c3106596641"
+      }
     },
     {
       "moduleIds": [
@@ -6055,7 +6396,14 @@
       "bytes": 1112560,
       "sha256": "3f4ced72a734b68abe5de7098e5bf58e4a68e104a617a35461fec841b41e0b36",
       "osSha256": "3f4ced72a734b68abe5de7098e5bf58e4a68e104a617a35461fec841b41e0b36",
-      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "appendSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 446066,
+        "containerSha256": "1cc36dc061be947d4a152240c403fd9bc5655cc6e5d5681037bda5caf304e223",
+        "bytes": 446084,
+        "sha256": "341655a3319f2ede8bc70349d2ad8080a623847fbb6cc941bd0fbd121d2e98da"
+      }
     },
     {
       "moduleIds": [
@@ -6370,7 +6718,14 @@
       "bytes": 1215051,
       "sha256": "c8302e0556ca05cdc650bc34a9a4d1d9a21caa22fbe7d6f9718946bc6560de89",
       "osSha256": "8d418cab1b9ef33007e619d56f13c9f818443241c3cb796e9883c08932411edf",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558383,
+        "containerSha256": "373a08ac032566f0004c150ec4fd0255a8157af82e1cc7ce3f49a6d5469de533",
+        "bytes": 558400,
+        "sha256": "06269a825ddb2c06412405af87c83ca2fa2e718cb25113e1d167638c293a8a03"
+      }
     },
     {
       "moduleIds": [
@@ -6447,7 +6802,14 @@
       "bytes": 1215051,
       "sha256": "e349f0fffe85ebee918bf68128cedb6aad3414dace39449b79d4a77983676775",
       "osSha256": "51662857560e1e2537abfe8b82bd7172586387621535855059c24c287dbbc19d",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558294,
+        "containerSha256": "614ec1a7826fed7306dd2c24375df145d12f454c075c5146e1878a6427e739c0",
+        "bytes": 558312,
+        "sha256": "bcd300139cdadd0f6c63bb1ad208ddb59cafb3e47d633b3aa202332df263d118"
+      }
     },
     {
       "moduleIds": [
@@ -6524,7 +6886,14 @@
       "bytes": 1215051,
       "sha256": "d191d5d775831e5ec0e05c3c4e1ea79cca4ce618b131e51f09871842323ed603",
       "osSha256": "a586b5473ca6ef7097ca8492631d897d3e5e33e71cb2fb6f8811d00a502631ae",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558338,
+        "containerSha256": "84d2618a2f1627eb54140820849412910122d7582e7cc8dba11bf7cf44f66a62",
+        "bytes": 558356,
+        "sha256": "b2750b3cef4abd3f29d1de30d1d74265a8e87fe79c919483a7c7e66291fad6a2"
+      }
     },
     {
       "moduleIds": [
@@ -6681,7 +7050,14 @@
       "bytes": 1215051,
       "sha256": "038475ae796a2331ac704b64618e9bf194cb9a823415c6899e1b69646182876b",
       "osSha256": "a12f9d717c150069a333de5cb64460ee77a9947a63ebbb2079f932b9c8dbba45",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558544,
+        "containerSha256": "271df128c58c816e98d925cfd9737bae70855cef58b73df4f846a0f0cc22da5a",
+        "bytes": 558560,
+        "sha256": "ffed660635a6e763b36852a18630c25c2e80e737ba3093b269457908c144a296"
+      }
     },
     {
       "moduleIds": [
@@ -6764,7 +7140,14 @@
       "bytes": 1215051,
       "sha256": "2af1d7d72db4caf655ac2077f6cff76680a789c045ebd78c6029072fabd98c75",
       "osSha256": "f7364ef1312ba4e697af304a639e9b98768a4cdc906016e5cbb99c2951cfa3da",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558415,
+        "containerSha256": "3148c75b3a25499a52a1144b6a03a895432e7a14ec9e3582bb430928f8edb465",
+        "bytes": 558432,
+        "sha256": "2445338cbce34d367d95dbe9d845d9cbdd7015fbf05c2535463464f55b00fbed"
+      }
     },
     {
       "moduleIds": [
@@ -6847,7 +7230,14 @@
       "bytes": 1215051,
       "sha256": "857e3204bc421e487fd11b33d2fafb2ea2d49f11cb55300b9577a1da60b635ed",
       "osSha256": "7ea82988095df825af83b2239e98ddb779abed086a77c818a60556f3c0c39837",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558237,
+        "containerSha256": "e50bf4ef29c3f040ccdb93986b2264520808ad9d648dc1c42f79ad7b9a64886b",
+        "bytes": 558256,
+        "sha256": "9f5a4dc4dde81f730d1e9b59ea0452f635c0147e047ab99a600f6def0cfa3a06"
+      }
     },
     {
       "moduleIds": [
@@ -7006,7 +7396,14 @@
       "bytes": 1215051,
       "sha256": "61b09a3a7acf0b41f215c5b5da45586c82389a6c10ec60024dbfc00b7d30a59e",
       "osSha256": "a3a11944dd77aea516028a0c973a62debe1188c7be74b479a37af0ba86021922",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558307,
+        "containerSha256": "f88923d15914ebd3b16678cd2c1307d7871f6445a37975a29d8dfd0417e2c2b1",
+        "bytes": 558324,
+        "sha256": "845d105207cce17bcda81cd9a2346cf5c254a6e4b84160dc92b238bcd5d3fc55"
+      }
     },
     {
       "moduleIds": [
@@ -7087,7 +7484,14 @@
       "bytes": 1215051,
       "sha256": "286d6ec7f6564ed525238326c6f88ad8515878a9a6aa9efc072825763f4a0f23",
       "osSha256": "88c9ef457a821cbe8d71f0441bf735255036e4c9f0d3770cde6844eda0207b8e",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558408,
+        "containerSha256": "6aebd117efb5e40a7699e08e3d8e492e5b5b1ab23586d65f4c28b9f796621ae6",
+        "bytes": 558424,
+        "sha256": "6ec88a3cf9528aa58708427db3a7e301ff705304664412af050654ea98fd0234"
+      }
     },
     {
       "moduleIds": [
@@ -7168,7 +7572,14 @@
       "bytes": 1215051,
       "sha256": "32056be7e3f19cfed532e70dc8dbc044d4788f4da0e4c65b20197212d93ce2e4",
       "osSha256": "3bcbf5ffda80719300cb259d3d19eb40e3793e0942cf94a7edc0ac2c465e21d8",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558283,
+        "containerSha256": "8a202bf5935c7d3a085da5c803a619d5631b2e71da7591ea84dfe661c604a1a9",
+        "bytes": 558300,
+        "sha256": "e955140c2d87ab7c3bc015c88f5978a36413c599ce5483dedf7fbb5b8ffba63b"
+      }
     },
     {
       "moduleIds": [
@@ -7333,7 +7744,14 @@
       "bytes": 1215051,
       "sha256": "876cd1e152848b2b0c8dc56ca6763077ec8518340076c0ed30e152a8a1f23c6b",
       "osSha256": "90e6651c009c7d165473375bb48cf2febf47057fc5cdf23f675c2a9a279907e2",
-      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65"
+      "appendSha256": "2ec657accb658eec3f4539d4203880b76bda7751c431e6fc59a04dd8c27bad65",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 558392,
+        "containerSha256": "6b8d6db5cd2c267c2c5324cb45485286aed44941b07da39be77c4043c65f9209",
+        "bytes": 558408,
+        "sha256": "b492860124e1a275758e110f41a60f44977625885eeece47a00963e284e72e76"
+      }
     },
     {
       "moduleIds": [
@@ -7662,7 +8080,14 @@
       "bytes": 1114981,
       "sha256": "ee6159fce6a37656f306e0d162b4ac3f4785c149bb517fc2b8481d41c8744567",
       "osSha256": "03dc542e175ed61c1f33b4d7e036d1c2a3ef2a2b54f9fadb633e7d07471ac103",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449483,
+        "containerSha256": "73dfd609ffc357b134648415e90346b932d82c4bfb8ed66e148b662c0a06bd6a",
+        "bytes": 449500,
+        "sha256": "87e2d6f49f69e7bb4b0e3fb264798b643e5c49618918d3bc053f3671af2aa973"
+      }
     },
     {
       "moduleIds": [
@@ -7741,7 +8166,14 @@
       "bytes": 1114981,
       "sha256": "7d9607589262d6e1dc96094e3ce35dcc69102eedd8d44eeaed2884e3955a741f",
       "osSha256": "5cdeaf685123cb815e3f217cc13d881e10057b6289e6cfadfa94891e2aa3372b",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449352,
+        "containerSha256": "6510faff4bb12a5f2d7d69e56585ad7ef6e84b67317fa9f86dfdbcae1a25ac3f",
+        "bytes": 449368,
+        "sha256": "17124a4100c1e8de80ec6573e6ac9c6fb86e60e21834b7eb6e1e1b51db895714"
+      }
     },
     {
       "moduleIds": [
@@ -7820,7 +8252,14 @@
       "bytes": 1114981,
       "sha256": "126b55624ea0682873c83083829336bd8d739ac1c72c0ed5a2e2efa9bdeb040a",
       "osSha256": "9c3abac07e5c2cd20d60251c57301a2b871a2960f21691e249b8907c79e36ddc",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449326,
+        "containerSha256": "523d70a9fd243b7a8edd292dc36ea153d161aa424b65cea6caed1a57e00ff4a3",
+        "bytes": 449344,
+        "sha256": "2bbe58398264f92f0aa0ec7b0f5290424267778b908e18d6f8789d07aa96cd15"
+      }
     },
     {
       "moduleIds": [
@@ -7981,7 +8420,14 @@
       "bytes": 1114981,
       "sha256": "645fb32b4ed20888777de6422311a36944cac5c39244c9da6044ef2e9706b6cf",
       "osSha256": "e9d04eaccca2ebdd0afcf0b35ee238e486cdf5311d67964dd6c10b04df9a9c46",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449467,
+        "containerSha256": "57d787e3a6481a6bc8cdad677f516f230ebb08b43ba07ade0e22a5a50357b148",
+        "bytes": 449484,
+        "sha256": "8b9ab2addfbc311c4d7c42ae935d47a6442e1bb13ea7cb7a9311b4bbd9d0dc83"
+      }
     },
     {
       "moduleIds": [
@@ -8308,7 +8754,14 @@
       "bytes": 1114981,
       "sha256": "2573945b49cd2a0cd1b54e7260b1e951098c1a5cef6c7547d426eca7e827d058",
       "osSha256": "23a3b5af22e8f327e8a394f29b1cd3d0e6045719acf7ee841df7bfa9b7f50ac2",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449388,
+        "containerSha256": "69cc94b5d16d11b8f9c01743db8890eb074deed8045aee574856bfcb347e8d56",
+        "bytes": 449404,
+        "sha256": "6257f8d075c2178dbf1b2273d4e3d7103e046c96f83a1095d86db92461193293"
+      }
     },
     {
       "moduleIds": [
@@ -8391,7 +8844,14 @@
       "bytes": 1114981,
       "sha256": "a3e8d00867b40b6e9c17099a00f9d56ad7034ba825d0b79cb08cf604a6f8ce16",
       "osSha256": "6d7245a88ee2d0cbc55e80fe8cd120c6b59df23968dce638beca9b695b70e819",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449227,
+        "containerSha256": "59d38fc7365dd85ef30009bfd180b2310fbdec4566663242b808c4c9839b16fd",
+        "bytes": 449244,
+        "sha256": "9973558a4e997625fd8449e5c5124ed21ef7613b9be80c558d6e46a9ba86ecee"
+      }
     },
     {
       "moduleIds": [
@@ -8474,7 +8934,14 @@
       "bytes": 1114981,
       "sha256": "f2365c3aacaf68a4cd495eebb66ba185a540b86ab5b2ddf380834f42c2be8878",
       "osSha256": "e074417f8e265cb01f6c10abdf742720f6263d6610c3f3c08992a46806ba56b6",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449148,
+        "containerSha256": "4b25cfca156864d70e7ec14054f0110129b952e82ddcff4aca7d762dfbcfff66",
+        "bytes": 449164,
+        "sha256": "c88f51e2692b1524f9b2def541a2bb1c45919f2328bb24397543f6715606e2bf"
+      }
     },
     {
       "moduleIds": [
@@ -8643,7 +9110,14 @@
       "bytes": 1114981,
       "sha256": "eb37d5260110eb67a9fd4767c6844e3e508a933bcf92a8e50d5fa6169fc2b008",
       "osSha256": "b4640f2f1e302784ff866475577fffb05c82644ff199feb35441589cf05ab390",
-      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868"
+      "appendSha256": "d75586370bcc199de30e4c655b109506bf402e59629addfe1280f15667c6d868",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 449572,
+        "containerSha256": "f53f3929cb9eb0e36fb2d244b678564466362e7a5a0af2b67f9c1ffe306b0828",
+        "bytes": 449588,
+        "sha256": "be9bc784b152c631226492a28897a51ac4ab75ea5368efcc7d3c1d76984a31af"
+      }
     },
     {
       "moduleIds": [
@@ -8982,7 +9456,14 @@
       "bytes": 1217159,
       "sha256": "a92a62d36307171a6d81020877750475596acd815a8af1375c586d943e0327bd",
       "osSha256": "87f117921e735ffef0b9a39fe424cf482ea476e080c94d443c4adc0446e23efa",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560980,
+        "containerSha256": "1eb3687480e1e16967144d1611da0d964abec953ee1d706a4fb4803361909b40",
+        "bytes": 560996,
+        "sha256": "91a1287dcddd744399713ee02faa58622fc390efe78b82d06e274304a33ff406"
+      }
     },
     {
       "moduleIds": [
@@ -9065,7 +9546,14 @@
       "bytes": 1217159,
       "sha256": "fce320a583d67768d9ec9a5b02de6f7242527e00633bca33c1ab0ea99f93a665",
       "osSha256": "bb6aeebf260c3c9200acd7319e1837b824b4cd06022bb9c4132ae9eae6334849",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560864,
+        "containerSha256": "51ff675101c511351420526749019661cea81e18c13976e66ed8b8324aa222df",
+        "bytes": 560880,
+        "sha256": "16d68bfcd7bbf9bada474bd0ba34e6c26f64ae04417ea02b94b5f1cc3eca7577"
+      }
     },
     {
       "moduleIds": [
@@ -9148,7 +9636,14 @@
       "bytes": 1217159,
       "sha256": "c4cd8efd60763ba4c58e317d6731f58e50a98c0ce01d0f41b86ea7a4275f152b",
       "osSha256": "69c0f85bed1b761b1232fb9f5d79a09e982c07b3e2713d2f061203e7a8a1e402",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560834,
+        "containerSha256": "b8697f3f8bf3eb5da7f0394361d66ef03b1eae1d5616c44c46cd7b196a582ac7",
+        "bytes": 560852,
+        "sha256": "f13a862931e5288a6ea02289118e92a83338d3571c8aca1d9bafdbbd37cc4514"
+      }
     },
     {
       "moduleIds": [
@@ -9317,7 +9812,14 @@
       "bytes": 1217159,
       "sha256": "2515f6b9ab0c8e4b8ab7330bff460308ca6541fb412f20e31e0211c0fe2797ca",
       "osSha256": "3d95dd46177bd6864cb0541eb0f516837ab4c4bf9167ddae3e067f8132898899",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560974,
+        "containerSha256": "f53d5ab55791aa092376e5dff776d7bb727268dd278930d8d0fc78db23b56590",
+        "bytes": 560992,
+        "sha256": "922c1906e3aea632a82be372174c5935f3c9e346c6be53d711c4dd87f4493b28"
+      }
     },
     {
       "moduleIds": [
@@ -9660,7 +10162,14 @@
       "bytes": 1217159,
       "sha256": "5d0cb95fcdd9a631dbbf7db971d89084252a3788734de84c7df1d6b50107223c",
       "osSha256": "e74895c63a5262bfe242357c10b21059604813f13158cdd52e605dd352905042",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560886,
+        "containerSha256": "955b3fabf2b6343a2e760034e97455b6a1bbc718e376098c97a9f005088930df",
+        "bytes": 560904,
+        "sha256": "7fe1016a56cbb853c44c947d08b857fe31e8e3bcd614cad0266a08846b0f7dc5"
+      }
     },
     {
       "moduleIds": [
@@ -9747,7 +10256,14 @@
       "bytes": 1217159,
       "sha256": "8d1b5be570c67850133ba606c627fbd74bf08ad5278b2388ae9b4397d179bfe3",
       "osSha256": "1b9cf7be8fcc7131f481cf1f24b1320d9e1ccd0face08d891016aa7a0c168509",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560741,
+        "containerSha256": "5b12b2aa97e89517ef3fbdcc464bcc12aaa46e4c0c3429a9af34d667679d7235",
+        "bytes": 560760,
+        "sha256": "e541f5282a6ff7286181145804d6590a4c5a7611e346d67f6ce650c1ad744a46"
+      }
     },
     {
       "moduleIds": [
@@ -9834,7 +10350,14 @@
       "bytes": 1217159,
       "sha256": "04793ec0e04fa19d68083366078a94153d2b295a0dd54f3caacef70a1c94a965",
       "osSha256": "47680ef631233d5ea1a5aa6cb50f0659a0a0745e6dce25269fd388fedd93c2d6",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 560675,
+        "containerSha256": "779aafce36bd421cfa63133edec8f64e804c440263bfc6c363cd782ab5f2dcc4",
+        "bytes": 560692,
+        "sha256": "c65d5b201dc8c2f604b3e772f17fa0d4473317d899fb58ba8dedf4e50e09f518"
+      }
     },
     {
       "moduleIds": [
@@ -10011,7 +10534,14 @@
       "bytes": 1217159,
       "sha256": "e01a9062f5a98016e3de13268b798ed5739ca2b505654d081e5b90cf996dcb84",
       "osSha256": "ae57e9c4ca5798cfd11fc82ec02521892320c3c2ec3d544b5920cf4710f70866",
-      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278"
+      "appendSha256": "3f12b05dfd79db671e5a6ff7a3d3c496e805b36df50a922a921bfac2ef5ed278",
+      "firmware": {
+        "version": "OCTAMOD79",
+        "containerBytes": 561081,
+        "containerSha256": "ce3091374c2f7978fc1c6c17ee05393634cf112879dbca496f7d4c56a4aaa1aa",
+        "bytes": 561100,
+        "sha256": "321aaa2ae1ca4000add43e217812157d1a67fd0fbee619f1db212a9e82076261"
+      }
     },
     {
       "moduleIds": [
