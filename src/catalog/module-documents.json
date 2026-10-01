@@ -1325,10 +1325,6 @@
         "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "path": "modules/midi-scenes"
       },
-      "build": {
-        "status": "pending",
-        "reason": "Metadata updated to MIDISC2.0. Relocatable 2.0 port and browser/native parity gates are required before firmware builds."
-      },
       "author": {
         "github": "bkkbrls-del",
         "credits": [
@@ -1361,14 +1357,13 @@
         "location": "MIDI tracks",
         "conflicts": [],
         "limitations": [
-          "Firmware builds for this module version are awaiting Octamod verification (relocatable MIDISC2.0 port pending).",
-          "Octamod native units remain the relocatable 8.2-derived gas pin; standalone MIDISC2.0 documentation is vendored separately.",
+          "Octamod native units remain the relocatable 8.2-derived gas pin; standalone MIDISC2.0 documentation is vendored from bkkbrls-del/midisc.",
           "MIDI CONTROL CC48/55/56 filter rows are not included.",
           "Composition with Octakit requires its KITS RELOAD bridge; Octakit is outside this catalog."
         ]
       },
       "resources": {
-        "recorded": "Standalone MIDISC2.0 author-reported 1 Oct 2026; Octamod composition pending for 0.2.0",
+        "recorded": "Standalone MIDISC2.0 author-reported; Octamod builds use verified 8.2 gas",
         "storage": {
           "label": "Lock state",
           "display": "4 KB live table",
@@ -1390,7 +1385,7 @@
       },
       "tests": {
         "report": "TESTING.md",
-        "summary": "Standalone MIDISC2.0 at midisc 4f9a894 is author-reported only. Octamod still packages relocatable 8.2-derived gas; this 0.2.0 catalog revision does not qualify Octamod firmware builds.",
+        "summary": "Standalone MIDISC2.0 at midisc 4f9a894 is author-reported. Octamod firmware builds use the relocatable 8.2-derived gas packages already verified for loader-free composition; a full relocatable 2.0 port remains future work.",
         "hardwareStatus": "historical",
         "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
         "gates": [

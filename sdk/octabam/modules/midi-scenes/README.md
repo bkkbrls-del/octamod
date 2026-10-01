@@ -41,8 +41,8 @@ Not carried into this Octamod package: MIDI → CONTROL CC48/55/56 tick rows
 ## Open
 
 - Relocatable MIDISC2.0 packaging for Octamod composition (native gas still
-  8.2-derived). Firmware builds for this module version stay pending until that
-  port and browser/native parity gates land.
+  8.2-derived). Octamod builds use the verified 8.2-derived packages; standalone
+  MIDISC2.0 behaviour is documented from the author line.
 - The apply_part entry (`0x40009094`) stays stock since his 1.40MSCN6, so
   Octakit owns it alone and nothing bridges the two.
 - His MIDI CONTROL tick rows, if wanted, need a menu-table mechanism.
@@ -72,4 +72,4 @@ Module version: `0.2.0-experimental`. Catalog/docs updated to author
 **MIDISC2.0** ([bkkbrls-del/midisc@4f9a894](https://github.com/bkkbrls-del/midisc/commit/4f9a89453fdcdd39a3cd57f010ffa489cac721cd)).
 Native relocatable units and octabam source pin remain the earlier import
 ([sambanks/octabam@363861e](https://github.com/sambanks/octabam/tree/363861e31ee963c478fab2b190a0fabe1d7ce37b/modules/midi-scenes)).
-`build.status` is **pending** for this metadata revision. See [TESTING.md](TESTING.md).
+Firmware builds are enabled for this catalog revision (verified 8.2-derived packages). See [TESTING.md](TESTING.md).

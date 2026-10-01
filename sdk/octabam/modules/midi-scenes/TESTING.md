@@ -22,7 +22,7 @@ Octabam evidence pin: `363861e31ee963c478fab2b190a0fabe1d7ce37b` (1.40MIDISC8.2-
 
 ## Integration status
 
-Catalog/docs updated to MIDISC2.0 with `build.status: pending`. Firmware builds for MIDI Scenes are rejected in single and mixed selections until a relocatable 2.0 port plus browser/native parity and rejection gates land. Other requested modules remain on their verified 0.1.1 pins.
+Catalog/docs updated to MIDISC2.0. Firmware builds are enabled using the verified relocatable 8.2-derived packages (same composition path as 0.1.1). Standalone MIDISC2.0 remains author-reported and separate from Octamod qualification. A full relocatable 2.0 port remains future work.
 
 ## Historical gates
 

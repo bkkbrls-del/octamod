@@ -3,8 +3,8 @@ import { compiledModuleSource, validateCompiledModules } from './module-build'
 describe('source-built module identity', () => {
   it('binds all eleven compiled modules to the displayed catalog versions', () => {
     const source = compiledModuleSource()
-    expect(Object.keys(source.moduleVersions)).toHaveLength(10)
-    expect(source.moduleVersions).not.toHaveProperty('midi-scenes')
+    expect(Object.keys(source.moduleVersions)).toHaveLength(11)
+    expect(source.moduleVersions['midi-scenes']).toBe('0.2.0-experimental')
     expect(source.sourceTreeSha256).toMatch(/^[a-f0-9]{64}$/)
   })
   it('rejects stale or missing compiled versions before firmware composition', () => {

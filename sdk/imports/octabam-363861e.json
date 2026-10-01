@@ -224,9 +224,9 @@
       "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
       "sourcePath": "modules/midi-scenes/README.md",
       "sourceSha256": "6210403449aec741d1f388a525f2b3b2df083a7c762ba4f110f770c070d9b492",
-      "vendoredSha256": "bb179b1fbe2df976c239a49872e90b52ca4cacbe72e33a6359bd7fe515788df3",
+      "vendoredSha256": "b319ad44547ca9987ed5c04fbbc8083ce1bd123e8968f191e0f874330553d351",
       "importedVendoredSha256": "bb1b4b9f5babe96ad4455c9d639a1eadcbaa4dd8a7b373f0179369493c2ff078",
-      "adaptation": " Octamod 0.2.0-experimental catalog/docs for standalone MIDISC2.0; imported 8.2 octabam fingerprint retained in sourceSha256/importedVendoredSha256; native gas pin unchanged."
+      "adaptation": " Octamod 0.2.0-experimental catalog/docs for standalone MIDISC2.0; imported 8.2 octabam fingerprint retained; builds enabled on verified 8.2-derived packages; native gas pin unchanged."
     },
     {
       "path": "modules/midi-scenes/manifest.py",

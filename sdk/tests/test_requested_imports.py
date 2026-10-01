@@ -60,7 +60,7 @@ class RequestedImports(unittest.TestCase):
             self.assertTrue((SDK / 'modules' / id / 'LICENSE').is_file())
             if id == 'midi-scenes':
                 self.assertEqual(doc['version'], '0.2.0-experimental')
-                self.assertEqual(doc['build']['status'], 'pending')
+                self.assertNotIn('build', doc)
             else:
                 self.assertNotIn('build', doc)
                 self.assertEqual(doc['version'], '0.1.1-experimental')
