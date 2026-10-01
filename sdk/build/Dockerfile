@@ -2,8 +2,16 @@
 # Multi-architecture index digest of ubuntu:24.04, resolved 1 October 2026.
 FROM ubuntu:24.04@sha256:008173c23f95b170204355c12626cb5a965d779a7e1283b09e9cffbb1bf33ca3
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y --no-install-recommends python3 git cmake make g++ binutils-m68k-linux-gnu ca-certificates && rm -rf /var/lib/apt/lists/*
-RUN for tool in as ld nm objcopy; do ln -s /usr/bin/m68k-linux-gnu-$tool /usr/local/bin/m68k-elf-$tool; done
+RUN apt-get update && apt-get install -y --no-install-recommends python3 git cmake make g++ curl xz-utils ca-certificates && rm -rf /var/lib/apt/lists/*
+# The same GNU binutils release and m68k-elf target as the toolchain that produced the committed,
+# parity-verified packages. Distribution cross-binutils are older and target m68k-linux-gnu.
+ARG BINUTILS_VERSION=2.47
+ARG BINUTILS_SHA256=154ab23b60070e8f27013c22977f1129425d67d1e8acd6e13010e617811e4cff
+RUN curl -fsSLo /tmp/binutils.tar.xz "https://ftp.gnu.org/gnu/binutils/binutils-$BINUTILS_VERSION.tar.xz" \
+ && echo "$BINUTILS_SHA256  /tmp/binutils.tar.xz" | sha256sum -c - \
+ && mkdir /tmp/binutils && tar -xJf /tmp/binutils.tar.xz -C /tmp/binutils --strip-components=1 \
+ && cd /tmp/binutils && ./configure --target=m68k-elf --prefix=/usr/local --disable-nls --disable-werror --disable-gprofng --disable-gdb --disable-sim \
+ && make -j"$(nproc)" && make install && cd / && rm -rf /tmp/binutils /tmp/binutils.tar.xz
 WORKDIR /opt/toolchain
 COPY sdk/octabam/scripts/vendor.sh scripts/vendor.sh
 COPY sdk/octabam/tools/patches/dsp56300.patch tools/patches/dsp56300.patch
