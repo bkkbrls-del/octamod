@@ -5,7 +5,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { fetchOwnerApproval } from '../src/release/approval.ts'
 import { parseModuleDocument } from '../src/catalog/module-contract.ts'
-import { PACKAGE_FILES as expected, moduleSourcePaths } from './module-source.mjs'
+import { PACKAGE_FILES as expected, moduleSourcePaths, compiledModuleVersions } from './module-source.mjs'
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const args = process.argv.slice(2), folder = args[0] && resolve(args[0]), development = args.includes('--development'), checkOnly = args.includes('--check-only')
 if (!folder) throw new Error('Usage: node scripts/import-module-build.mjs artifact-directory [--development] [--check-only]')
@@ -26,7 +26,7 @@ if (!development) {
   // The compiler output is untrusted. Fetch approval independently from GitHub.
   approval = await fetchOwnerApproval(process.env.GITHUB_REPOSITORY ?? '', report.sourceCommit, Number(process.env.OCTAMOD_APPROVER_ID), process.env.GITHUB_TOKEN ?? '')
 }
-const versions = Object.fromEntries(catalog.modules.map(item => [item.id,item.version]))
+const versions = await compiledModuleVersions(root, catalog)
 if (JSON.stringify(Object.keys(report.moduleVersions).sort()) !== JSON.stringify(Object.keys(versions).sort())) throw new Error('Compiled module scope differs from the catalog')
 for (const [id,version] of Object.entries(versions)) {
   const doc = parseModuleDocument(await json(resolve(root,'sdk/octabam/modules',id,'octamod.module.json')))

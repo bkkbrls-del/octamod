@@ -2,20 +2,22 @@ import { useEffect, useRef, useState } from 'react'
 import type { RefObject } from 'react'
 import type { Configuration } from '../config/workspace'
 import { configurationVersionError } from '../config/workspace'
+import { moduleAvailabilityError } from '../catalog/availability'
+import { moduleBuildError } from '../catalog/build-support'
 import type { FirmwareInspection } from '../engine/base'
 import type { FirmwareClient } from '../engine/client'
 import type { BuildProgress, BuildReport } from '../engine/protocol'
 export type BuildView = { key: string; state: 'empty' | 'validating' | 'valid' | 'building' | 'built' | 'error'; error?: string; report?: BuildReport; phase?: BuildProgress; result?: { buffer: ArrayBuffer; sha256: string } }
 export function useFirmwareBuild(client: RefObject<FirmwareClient | null>, active: Configuration | undefined, firmware: FirmwareInspection | null) {
   const ids = active?.moduleIds ?? [], keepStock = active?.keepStockFx2 ?? true
-  const versionError=configurationVersionError(active)
+  const configurationError=moduleAvailabilityError(ids)||moduleBuildError(ids)||configurationVersionError(active)
   const key = JSON.stringify([active?.id, ids, active?.moduleVersions, keepStock, firmware?.sha256])
   const [view, setView] = useState<BuildView>({ key: '', state: 'empty' })
   const operation = useRef(0), building = useRef(false)
   useEffect(() => {
     const controller=operation, engine=client.current
     const current = ++controller.current
-    if (!firmware || !ids.length || versionError) return
+    if (!firmware || !ids.length || configurationError) return
     void engine?.validate(ids, keepStock).then(report => {
       if (operation.current === current) setView({ key, state: 'valid', report })
     }).catch(error => { if (operation.current === current) setView({ key, state: 'error', error: error.message }) })
@@ -23,7 +25,7 @@ export function useFirmwareBuild(client: RefObject<FirmwareClient | null>, activ
   // The key captures every firmware/configuration input, including chooser options.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key, client])
-  const current: BuildView = versionError ? {key,state:'error',error:versionError} : view.key === key ? view : { key, state: firmware && ids.length ? 'validating' : 'empty' }
+  const current: BuildView = configurationError ? {key,state:'error',error:configurationError} : view.key === key ? view : { key, state: firmware && ids.length ? 'validating' : 'empty' }
   async function build() {
     if (!firmware || !ids.length || !client.current || current.state !== 'valid') return
     const request = ++operation.current
@@ -39,7 +41,7 @@ export function useFirmwareBuild(client: RefObject<FirmwareClient | null>, activ
     setView({ key, state: 'valid', report: current.report })
   }
   function retry() {
-    if(versionError)return
+    if(configurationError)return
     const request = ++operation.current
     setView({ key, state: 'validating' })
     void client.current?.validate(ids, keepStock).then(report => { if (operation.current === request) setView({ key, state: 'valid', report }) }).catch(error => { if (operation.current === request) setView({ key, state: 'error', error: error.message }) })

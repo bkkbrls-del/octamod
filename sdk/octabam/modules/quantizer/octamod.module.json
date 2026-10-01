@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 2,
+  "version": "0.1.0-experimental",
+  "nativeManifest": "manifest.py",
+  "media": [],
+  "id": "quantizer",
+  "key": "SCALE QUANTIZER",
+  "name": "Scale Quantizer",
+  "category": "machines",
+  "author": {
+    "github": "timhastie",
+    "name": "Tim Hastie",
+    "credits": [
+      "Tim Hastie: octatrick-modules Scale Quantizer, v2.9",
+      "Sam Banks: octabam wrapper and port evidence"
+    ]
+  },
+  "presentation": {
+    "label": "SCALE / ROOT",
+    "family": "Sequencer",
+    "summary": "Keep pitch edits and chromatic trig keys in one of 24 scales with a selectable root.",
+    "overview": "Scale Quantizer adds SCALE, ROOT and GLIDE to PROJECT > CONTROL > SEQUENCER. Pitch turns and parameter locks move through scale degrees, and chromatic trig keys snap to the chosen scale. ROOT transposes the scale and keyboard. SCALE OFF restores stock pitch behavior.",
+    "highlights": [
+      "24 scales plus OFF",
+      "Selectable root C–B",
+      "Pitch knob, parameter locks and chromatic keys follow the scale"
+    ],
+    "usage": [
+      "Open PROJECT > CONTROL > SEQUENCER and set SCALE. OFF preserves stock pitch behavior; choose a scale to constrain notes.",
+      "Set ROOT to the key you want. Pitch edits step by scale degree; chromatic keys snap to a degree and key 1 plays the root.",
+      "SCALE, ROOT and GLIDE persist through project save/reload and battery RAM. Synth polyphony and synth glide features require SYNTH MACHINE, which is outside this import."
+    ]
+  },
+  "controls": [
+    {
+      "name": "SCALE",
+      "default": 0,
+      "count": 25,
+      "doc": "OFF restores stock pitch behavior; select a scale to constrain PTCH edits, locks and chromatic keys.",
+      "labels": [
+        "OFF",
+        "MAJOR",
+        "DORIAN",
+        "PHRYGN",
+        "LYDIAN",
+        "MIXOLYD",
+        "MINOR",
+        "LOCRIAN",
+        "PENT.MN",
+        "PENT.MJ",
+        "MEL.MIN",
+        "HRM.MIN",
+        "WHOLE",
+        "BLUES",
+        "PHRYDOM",
+        "WH.DIM",
+        "HW.DIM",
+        "HUNGMIN",
+        "HIRAJOS",
+        "IN-SEN",
+        "IWATO",
+        "PELOG",
+        "DBLHARM",
+        "SUPRLOC",
+        "LYD.DOM"
+      ]
+    },
+    {
+      "name": "ROOT",
+      "default": 0,
+      "count": 12,
+      "doc": "Root of the scale and chromatic keyboard. Ignored with SCALE OFF.",
+      "labels": [
+        "C",
+        "C#",
+        "D",
+        "D#",
+        "E",
+        "F",
+        "F#",
+        "G",
+        "G#",
+        "A",
+        "A#",
+        "B"
+      ]
+    },
+    {
+      "name": "GLIDE",
+      "default": 0,
+      "count": 128,
+      "doc": "OFF or 1–127 slide time; the track LEG setting controls legato. Synth features require the separate SYNTH MACHINE module.",
+      "labels": null
+    }
+  ],
+  "compatibility": {
+    "firmware": "1.40C",
+    "effectId": null,
+    "location": "Project sequencer",
+    "conflicts": [],
+    "limitations": [
+      "Source imported. Firmware builds for this module are awaiting Octamod verification.",
+      "Sample pitch quantization works on Flex, Static and Pickup; RATE is not a semitone control.",
+      "Synth polyphony and synth-specific tuning/glide depend on SYNTH MACHINE, which is outside this catalog.",
+      "v2.9’s last fixes have emulator evidence; the earlier MKI result does not qualify the complete current pin."
+    ]
+  },
+  "resources": {
+    "recorded": "v2.9 upstream record (pinned source)",
+    "storage": {
+      "label": "ROM footprint",
+      "display": "243 bytes",
+      "value": 243,
+      "unit": "bytes",
+      "method": "static",
+      "conditions": "Upstream v2.9 record: 192-byte core, 45-byte key stub and 6-byte scale trampoline. DRAM code, grown menus and loader overhead are additional; this is not a new local assembly measurement.",
+      "source": "README.md"
+    },
+    "processing": {
+      "label": "CPU load",
+      "display": "Not measured",
+      "value": null,
+      "unit": "bytes",
+      "method": "unmeasured",
+      "conditions": "No comparable hardware CPU utilization measurement is supplied.",
+      "source": "README.md"
+    }
+  },
+  "tests": {
+    "report": "TESTING.md",
+    "summary": "Upstream records pitch/lock/key, ROOT, save/load and warm-boot checks, and MKI operation through the v2.9 line before its last two fixes. Those last fixes are emulator-verified. This import pins octatrick-modules v2.9 and has no Octamod native/browser parity yet.",
+    "hardwareStatus": "historical",
+    "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+    "gates": []
+  },
+  "source": {
+    "repository": "https://github.com/sambanks/octabam",
+    "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+    "path": "modules/quantizer"
+  },
+  "build": {
+    "status": "pending",
+    "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
+  },
+  "license": {
+    "spdx": "MIT",
+    "file": "LICENSE",
+    "declaration": "Imported original/MIT-licensed sources with upstream copyright, author attribution and exact commit pins retained. No firmware, extracted stock routines, recordings or screenshots imported. Contributor licensing statements are retained in LICENSE; owner/reviewer verification is required before publication and is not automatic legal clearance."
+  }
+}

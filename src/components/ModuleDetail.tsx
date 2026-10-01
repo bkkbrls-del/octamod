@@ -8,11 +8,13 @@ import { DETAILS } from '../catalog/details'
 import { Icon } from './Icon'
 import { ModulePreview } from './ModulePreview'
 import { ModuleResources } from './ModuleResources'
+import { MODULE_DOCUMENTS_BY_ID } from '../catalog/documents'
 
 type DetailTab = 'Overview' | 'Screens' | 'Discussion'
 export function ModuleDetail({ module, selected, onToggle }: { module: FirmwareModule; selected: boolean; onToggle: () => void }) {
   const [tab, setTab] = useState<DetailTab>('Overview')
   const details = DETAILS[module.id]
+  const moduleDocument = MODULE_DOCUMENTS_BY_ID[module.id]
   return (
     <div className="detail-page">
       <a className="back-link" href="#library"><Icon name="back" size={15} /> All modules</a>
@@ -21,8 +23,9 @@ export function ModuleDetail({ module, selected, onToggle }: { module: FirmwareM
         <div className="detail-intro">
           <div className="detail-tags"><span className="pill">{details.family}</span><span className="subtle">{module.detail}</span></div>
           <h1 id="module-title">{module.name}</h1>
-          <a className="author-link" href={module.authorUrl} target="_blank" rel="noreferrer">by {module.author} ↗</a>
+          <a className="author-link" href={module.authorUrl} target="_blank" rel="noreferrer">by {module.authorName} ↗</a>
           <p>{module.description}</p>
+          {moduleDocument.build && <p className="service-note" role="status">{moduleDocument.build.reason}</p>}
           <div className="detail-rating"><button className="text-button" onClick={() => setTab("Discussion")}>Reviews & discussion</button></div>
           <button className={'button ' + (selected ? 'button-added' : 'button-primary')} onClick={onToggle} aria-pressed={selected}><Icon name={selected ? 'check' : 'plus'} size={16} />{selected ? 'Added to configuration' : 'Add to configuration'}</button>
         </div>
@@ -42,8 +45,9 @@ export function ModuleDetail({ module, selected, onToggle }: { module: FirmwareM
         {tab === 'Overview' && <>
           <div className="overview-grid">
             <section className="detail-section"><h2>About this module</h2><p>{details.overview}</p><ul className="feature-list">{details.highlights.map((item) => <li key={item}><Icon name="check" size={15} />{item}</li>)}</ul></section>
-            <aside className="info-panel"><h2>Module information</h2><dl><div><dt>Author</dt><dd><a href={module.authorUrl} target="_blank" rel="noreferrer">{module.author} ↗</a></dd></div><div><dt>Location</dt><dd>{module.detail}</dd></div><div><dt>Base firmware</dt><dd>OS 1.40C</dd></div><div><dt>Module version</dt><dd>{module.version}</dd></div><div><dt>Catalog</dt><dd>Experimental</dd></div></dl><a className="source-link" href={getModuleSource(module)} target="_blank" rel="noreferrer">Module on octabam <Icon name="arrow" size={14} /></a></aside>
+            <aside className="info-panel"><h2>Module information</h2><dl><div><dt>Author</dt><dd><a href={module.authorUrl} target="_blank" rel="noreferrer">{module.authorName} ↗</a></dd></div><div><dt>Location</dt><dd>{module.detail}</dd></div><div><dt>Base firmware</dt><dd>OS 1.40C</dd></div><div><dt>Module version</dt><dd>{module.version}</dd></div><div><dt>Catalog</dt><dd>Experimental</dd></div></dl><a className="source-link" href={getModuleSource(module)} target="_blank" rel="noreferrer">Module on octabam <Icon name="arrow" size={14} /></a></aside>
           </div>
+          {moduleDocument.source && <section className="detail-section"><h2>Credits</h2><ul>{moduleDocument.author.credits.map(credit=><li key={credit}>{credit}</li>)}</ul></section>}
           <IssueReport id={module.id} author={module.author} /><ModuleResources id={module.id} />
           <ModuleControls id={module.id}/>
           <ModuleCommunity id={module.id} />

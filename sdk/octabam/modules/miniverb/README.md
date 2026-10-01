@@ -1,5 +1,7 @@
 # Mini Verb
 
+Version: 0.1.1-experimental · author: [Jannik Aßfalg](https://github.com/repeat98)
+
 A full-rate stereo reverb for FX2 on its own id 0x17, beside DARK REV (it replaced DARK REV on 0x16 until 30 Sep 2026). The current v4 voice
 was accepted in the local percussion/pluck listening comparison on
 20 September 2026. Not flashed or verified on hardware.

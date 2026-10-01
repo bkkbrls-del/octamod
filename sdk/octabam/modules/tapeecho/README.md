@@ -1,5 +1,7 @@
 # Tape Echo
 
+Version: 0.1.1-experimental · author: [Jannik Aßfalg](https://github.com/repeat98)
+
 `TAPE ECHO` is on its own id `0x0f` beside FX2 **SPRING REV** (it replaced
 SPRING REV on `0x15` until 30 Sep 2026; it keeps SPRING REV's controls). It is a mono single-head tape echo
 with stereo dry output, now running on the **ColdFire CPU**, in the stock

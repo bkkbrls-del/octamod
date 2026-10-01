@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { newConfiguration, cleanName, pinModuleVersions } from '../config/workspace'
+import { isModuleAvailable } from '../catalog/availability'
 import type { Configuration } from '../config/workspace'
 import { deviceStore, openDeviceDatabase } from '../storage/device'
 import type { DeviceStore } from '../storage/device'
@@ -107,7 +108,7 @@ export function useWorkspace() {
   function renameConfiguration(name: string) { updateActive({ name: cleanName(name) }) }
   function toggleModule(id: string) {
     const current = configsRef.current.find(item => item.id === activeRef.current)
-    if (!current) return
+    if (!current || (!current.moduleIds.includes(id) && !isModuleAvailable(id))) return
     const moduleIds = current.moduleIds.includes(id) ? current.moduleIds.filter(value => value !== id) : [...current.moduleIds, id]
     const moduleVersions = Object.fromEntries(moduleIds.map(selected=>[selected,current.moduleVersions[selected]??pinModuleVersions([selected])[selected]]))
     updateActive({ moduleIds, moduleVersions })

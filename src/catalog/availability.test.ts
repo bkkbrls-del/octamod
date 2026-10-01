@@ -1,0 +1,30 @@
+import { describe, expect, it } from 'vitest'
+import { AVAILABLE_MODULES, isModuleAvailable, moduleAvailabilityError } from './availability'
+import { resolveSelection } from './modules'
+import { newConfiguration, validateConfiguration } from '../config/workspace'
+
+describe('temporary module availability', () => {
+  it('offers the requested imports alongside the four existing modules and retains their GitHub identity', () => {
+    expect(AVAILABLE_MODULES.map(module => module.id)).toEqual(['miniverb', 'tapeecho', 'euclid', 'repitch', 'analog-bassdrum', 'midi-scenes', 'usb-audio-out-tracks-main-cue', 'quantizer'])
+    for (const module of AVAILABLE_MODULES.filter(module=>['miniverb','tapeecho','euclid','repitch','analog-bassdrum'].includes(module.id))) {
+      expect(module.authorName).toBe('Jannik Aßfalg')
+      expect(module.author).toBe('repeat98')
+      expect(module.authorUrl).toBe('https://github.com/repeat98')
+    }
+    for (const id of ['spectrum', 'modulation', 'character', 'unknown']) expect(isModuleAvailable(id)).toBe(false)
+  })
+  it('keeps older configurations readable and flags their paused modules before a build', () => {
+    const saved = newConfiguration('Older configuration', ['spectrum', 'euclid', 'character'])
+    const restored = validateConfiguration(saved)
+    expect(restored.moduleIds).toEqual(saved.moduleIds)
+    expect(restored.moduleVersions).toEqual(saved.moduleVersions)
+    expect(moduleAvailabilityError(restored.moduleIds)).toContain('Spectrum, Character')
+    expect(moduleAvailabilityError(restored.moduleIds)).toContain('Remove these modules')
+    expect(resolveSelection(['spectrum', 'modulation', 'character'])).toHaveLength(3)
+  })
+  it('allows available selections and still rejects unknown catalog identities', () => {
+    expect(moduleAvailabilityError(AVAILABLE_MODULES.map(module => module.id))).toBe('')
+    expect(moduleAvailabilityError([])).toBe('')
+    expect(() => moduleAvailabilityError(['unknown'])).toThrow('Unknown module')
+  })
+})

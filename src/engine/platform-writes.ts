@@ -13,7 +13,8 @@ function call(target: number, kind: string, length: number) {
   for (let at = 6; at < length; at += 2) view.setUint16(at, 0x4e71)
   return result
 }
-export function createPlatformOsWrites(runtime: RuntimeText, ids: readonly string[]): OsWrite[] {
+/** `loader: false` leaves out the dynamic DSP loader's hooks (native static stock). */
+export function createPlatformOsWrites(runtime: RuntimeText, ids: readonly string[], { loader = true }: { loader?: boolean } = {}): OsWrite[] {
   const selected = new Set(resolveSelection(ids).map(module => module.id))
   if (metadata.schema !== 1 || metadata.revision !== CATALOG_SOURCE.revision || metadata.osBase !== OS_LOAD_ADDRESS) throw new Error('The platform write metadata does not match the catalog.')
   const text = runtime.sections.find(section => section.name === '.text')
@@ -23,6 +24,7 @@ export function createPlatformOsWrites(runtime: RuntimeText, ids: readonly strin
   for (const group of metadata.groups) {
     if (group.moduleId === 'dsp-dynload-stock') {
       if (group.key !== 'DSP DYNLOAD STOCK' || group.author !== 'repeat98') throw new Error('The platform write attribution is invalid.')
+      if (!loader) continue
     } else {
       const module = MODULES.find(module => module.id === group.moduleId)
       if (!module || module.key !== group.key || module.author !== group.author) throw new Error('The module write attribution is invalid.')

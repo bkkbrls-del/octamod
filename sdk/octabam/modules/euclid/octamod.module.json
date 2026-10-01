@@ -3,12 +3,13 @@
   "id": "euclid",
   "key": "EUCLID",
   "name": "Euclid",
-  "version": "0.1.0-experimental",
+  "version": "0.1.1-experimental",
   "category": "effects",
   "author": {
     "github": "repeat98",
+    "name": "Jannik Aßfalg",
     "credits": [
-      "repeat98",
+      "Jannik Aßfalg",
       "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
     ]
   },

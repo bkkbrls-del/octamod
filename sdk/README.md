@@ -2,7 +2,7 @@
 
 The developer entry point for the Octamod monorepo. The SDK, module source, web content and configurator stay together. It derives from [octabam](https://github.com/sambanks/octabam); original MIT copyright and component credits are retained under `octabam/LICENSE` and `octabam/THIRD_PARTY.md`.
 
-The initial import includes **Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch**. It comes from a fresh upstream clone pinned to the exact fork revision in [UPSTREAM.json](UPSTREAM.json). Other octabam modules are outside this initial catalog. Its required stock-loader infrastructure is isolated under `octabam/platform/`, outside the public module catalog. Two supported compositions and the crowded-selection rejection match the native builder byte for byte; the copied upstream Makefile is not yet a supported standalone firmware build command.
+The initial import includes **Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch**. It comes from a fresh upstream clone pinned to the exact fork revision in [UPSTREAM.json](UPSTREAM.json). On 1 October 2026, the owner expanded scope to Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer. Their latest source import and author pins are recorded in [imports/octabam-363861e.json](imports/octabam-363861e.json). USB MIDI is included as an internal dependency. Further octabam modules remain outside scope. Its required stock-loader infrastructure is isolated under `octabam/platform/`, outside the public module catalog. Two supported compositions and the crowded-selection rejection match the native builder byte for byte; the copied upstream Makefile is not yet a supported standalone firmware build command.
 
 ## Start without firmware or native compilation
 
@@ -23,7 +23,7 @@ npm run modules:generate
 npm run check
 ```
 
-The seven frontend pages read the generated catalog from these folders. Fields include controls, practical uses, compatibility, resource measurement methods/conditions, evidence revision, authors, licences and real media provenance. Read [the module contract](../docs/MODULE_REPOSITORIES.md) and [contribution rules](../CONTRIBUTING.md).
+The eleven frontend pages read the generated catalog from these folders. Fields include controls, practical uses, compatibility, resource measurement methods/conditions, evidence revision, authors, licences and real media provenance. Read [the module contract](../docs/MODULE_REPOSITORIES.md) and [contribution rules](../CONTRIBUTING.md).
 
 ## Native development
 
@@ -41,10 +41,18 @@ With a locally patched toolchain and your own ignored original 1.40C extraction:
 python3 scripts/verify-sdk-native.py --raw-os /local/path/section_3_MAIN_OS.bin --vendor /local/path/vendor
 ```
 
-This command works in a temporary SDK copy, verifies exactly the seven public modules and the internal loader, compares two complete native-image hashes and the overcrowding rejection, then removes the temporary firmware-containing outputs. It does not run audio renders, stress tests or the emulator. It produces proof of composition, not hardware qualification or a flashable download. The copied upstream Makefile remains a reference until portable SDK setup and local packaging are finished. See [verification.json](verification.json) for the recorded identities.
+The recorded verification used a temporary SDK copy, verified the original seven public modules and the internal loader, compares two complete native-image hashes and the overcrowding rejection, then removes the temporary firmware-containing outputs. It does not run audio renders, stress tests or the emulator. It produces proof of composition, not hardware qualification or a flashable download. The expanded source tree still needs native integration; the verifier rejects pending imports before evaluating their source. The copied upstream Makefile remains a reference until portable SDK setup and local packaging are finished. See [verification.json](verification.json) for the recorded identities.
 
 ## Versions and approval
 
 Every module has a semantic version. Code, native declarations, web descriptions, controls, evidence or media changes require a strictly greater version. Patch versions suit compatible fixes; minor versions suit compatible additions; major versions identify changed stored parameter layouts, IDs or behavior requiring migration. Never reuse an already released version for different contents.
 
 **The owner merging the PR is the approval.** There is no second website approval step. Require owner review and passing checks on the current PR revision before merge. Automation builds the merged source commit and records module versions, source and artifact identities. A failed build keeps the previous release available. Protect main against unreviewed direct changes before enabling publication.
+
+## Requested source imports
+
+The four additions have `0.1.0-experimental` manifests, exact per-module `source` pins and `build.status: pending`. They appear in the local library, comparison and saved configurations, but compatibility and the browser composer refuse firmware builds containing them. The release compiler rebuilds the original seven at their current catalog versions and binds its record to the entire SDK source inventory. Pending module manifests are excluded from its disposable compilation tree and are never evaluated; only the original loader platform declarations are registered for compilation. The importer and frontend-only release stamp use the same verified-module scope. This permits publishing their catalog pages and attributed source while firmware builds remain blocked until the additions are integrated and independently verified.
+
+MIDI Scenes vendors only its twelve required GNU assembly units, README and MIT licence from 1.40MIDISC8.2. Quantizer vendors only its v2.9 implementation, documentation and MIT licence. Neither imports the other modules in its author's repository. USB MIDI source is under `octabam/platform/usb-midi/` and registered internally; it is not a public catalog entry. The chosen USB Audio module sends twenty output channels at high speed, with no USB audio input.
+
+Import validation is static: `npm run sdk:check` checks the recorded source hashes, stock guards, author pins and required dependency files without evaluating imported Python. Every embedded stock expectation in the new declarations was replaced with an address/length/hash guard; no stock routines or firmware outputs were copied. Each TESTING.md separates upstream historical evidence from pending Octamod composition, packaging and hardware qualification. No firmware/DSP gates run as part of this import.

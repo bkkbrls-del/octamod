@@ -1,5 +1,7 @@
 # Euclid
 
+Version: 0.1.1-experimental · author: [Jannik Aßfalg](https://github.com/repeat98)
+
 A stereo Euclidean modulation effect for either FX slot. It follows the
 Octatrack transport, track speed and swing grid. A 1–64-step rhythm drives
 one of five destinations: 12 dB/octave low-pass, band-pass, high-pass,

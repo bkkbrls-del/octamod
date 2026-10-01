@@ -4,7 +4,9 @@ import { decodeFirmware, encodeFirmware, type DecodedFirmware } from './elek'
 import { recoverStockDsp } from './stock-dsp'
 import { composeOs } from './compose-os'
 import { defaultChoosers } from './choosers'
+import { explainBuildFailure } from './build-errors'
 import { checkSelection } from '../catalog/compatibility'
+import { moduleAvailabilityError } from '../catalog/availability'
 import { CATALOG_SOURCE, resolveSelection } from '../catalog/modules'
 import { FIRMWARE_VERSION, type BuildReport, type EngineRequest, type EngineResponse } from './protocol'
 export function createEngineSession(reply: (response: EngineResponse, transfer?: Transferable[]) => void) {
@@ -23,6 +25,8 @@ export function createEngineSession(reply: (response: EngineResponse, transfer?:
       const original = base, current = generation
       if (!original) throw new Error('Choose and verify your base firmware first.')
       const modules = resolveSelection(request.moduleIds)
+      const unavailable = moduleAvailabilityError(request.moduleIds)
+      if (unavailable) throw new Error(unavailable)
       if (!modules.length) throw new Error('Add at least one module before building custom firmware.')
       if (typeof request.keepStockFx2 !== 'boolean') throw new Error('Choose whether to keep the stock FX2 effects.')
       const claims = checkSelection(request.moduleIds)
@@ -48,7 +52,7 @@ export function createEngineSession(reply: (response: EngineResponse, transfer?:
       reply({ id: request.id, type: 'built', report, buffer, sha256 }, [buffer])
     } catch (error) {
       const detail=error instanceof Error?error.message:'The firmware could not be prepared.'
-      const message=/does not fit|do not fit|exceeds its reserved region|need more space/.test(detail)?'These modules and stock FX2 effects do not fit together. Turn off Keep stock FX2 effects or remove a module, then check again.':detail
+      const message=explainBuildFailure(detail,'keepStockFx2' in request ? request.keepStockFx2 : undefined)
       reply({ id: request.id, type: 'error', message })
     }
   }

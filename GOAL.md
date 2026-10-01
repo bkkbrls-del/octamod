@@ -15,7 +15,7 @@ Build the definitive Octatrack firmware configurator: a polished, accessible web
 
 ## Accepted repository and hosting structure
 
-The initial catalog and SDK module integration are limited to **Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch**, plus their required internal build/platform infrastructure. Do not import the rest of octabam's catalog.
+The catalog and SDK module scope is **Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch**, plus **Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer**, requested on 1 October 2026. Include their required internal build/platform infrastructure, including USB MIDI for USB Audio. Do not import the rest of octabam's catalog. The four additions are source imports pending Octamod browser/native verification; historical proof for the initial seven does not cover them.
 
 Use **one Octamod repository** for the React frontend, backend, developer SDK, module source, documentation and release tooling. The Octamod SDK is an octabam-derived, pinned, attributed source subtree and clear developer entry point in that repository. Do not create a separate SDK repository by default.
 

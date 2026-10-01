@@ -71,6 +71,36 @@ export function ModulePreview({ id, compact = false }: { id: string; compact?: b
           })}
           <text x="25" y="178">TEMPO ↓</text><text x="229" y="178">PITCH ↓</text>
         </g>}
+        {id === 'analog-bassdrum' && <g>
+          <path className="signal-ghost" d="M28 97H292" />
+          <path className="signal-main" d={Array.from({length:121},(_,i)=>{
+            const x=28+i*2.2, y=97+Math.sin(i*.48)*64*Math.exp(-i/30)
+            return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)
+          }).join(' ')} />
+          <text x="25" y="177">808</text><text x="261" y="177">909</text>
+        </g>}
+        {id === 'midi-scenes' && <g>
+          {[0,1,2,3,4].map(row=><g key={row}>
+            <path className="signal-ghost" d={'M48 '+(47+row*22)+'H272'} />
+            <circle className="signal-secondary" cx="48" cy={47+row*22} r="4" />
+            <circle className="signal-secondary" cx="272" cy={47+row*22} r="4" />
+            <path className="signal-main" d={'M48 '+(47+row*22)+'L272 '+(135-row*22)} />
+          </g>)}
+          <text x="25" y="177">SCENE A</text><text x="243" y="177">SCENE B</text>
+        </g>}
+        {id === 'usb-audio-out-tracks-main-cue' && <g>
+          {Array.from({length:10},(_,i)=><g key={i}>
+            <path className={i<8?'signal-secondary':'signal-main'} d={'M'+(42+i*25)+' 136V'+(54+Math.abs(Math.sin(i*1.3))*42)} />
+            <circle className="signal-dot" cx={42+i*25} cy="142" r="3" />
+          </g>)}
+          <text x="25" y="177">TRACKS 1–8</text><text x="219" y="177">MAIN / CUE</text>
+        </g>}
+        {id === 'quantizer' && <g>
+          <path className="signal-ghost" d="M28 139 291 43" />
+          <path className="signal-main" d="M28 140H65V125H103V111H141V96H179V82H217V67H254V52H291" />
+          {[28,65,103,141,179,217,254,291].map((x,i)=><circle key={x} className="signal-dot" cx={x} cy={140-i*14.6} r="3" />)}
+          <text x="25" y="177">ROOT</text><text x="222" y="177">24 SCALES</text>
+        </g>}
       </svg>
       <div className="preview-controls">{DETAILS[id].controls.slice(0, 3).map((control) => <span key={control}>{control}</span>)}</div>
     </div>

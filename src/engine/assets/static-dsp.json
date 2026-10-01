@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
+  "sourceSha256": "164f31224bf61181e3f50e7dec40df9afcae5b16dbf6e4c0d0cc5e986af0a84e",
+  "noneId": 0,
+  "modules": [
+    {
+      "id": "spectrum",
+      "key": "SPECTRUM",
+      "fxId": 10,
+      "priority": 12
+    },
+    {
+      "id": "modulation",
+      "key": "MODULATION",
+      "fxId": 11,
+      "priority": 14
+    },
+    {
+      "id": "character",
+      "key": "CHARACTER",
+      "fxId": 26,
+      "priority": 13
+    },
+    {
+      "id": "miniverb",
+      "key": "MINIVERB",
+      "fxId": 23,
+      "priority": 15
+    },
+    {
+      "id": "tapeecho",
+      "key": "TAPE ECHO",
+      "fxId": 15,
+      "priority": 14
+    },
+    {
+      "id": "euclid",
+      "key": "EUCLID",
+      "fxId": 29,
+      "priority": 16
+    }
+  ],
+  "customIds": [
+    6,
+    7,
+    9,
+    10,
+    11,
+    14,
+    15,
+    23,
+    26,
+    29
+  ],
+  "payloads": [
+    {
+      "core": 0,
+      "tag": "A",
+      "nullInit": 1992,
+      "nullProc": 1993
+    },
+    {
+      "core": 1,
+      "tag": "B",
+      "nullInit": 1416,
+      "nullProc": 1417
+    }
+  ]
+}

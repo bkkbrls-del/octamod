@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "version": "0.1.0-experimental",
+  "nativeManifest": "manifest.py",
+  "media": [],
+  "id": "midi-scenes",
+  "key": "MIDI SCENES",
+  "name": "MIDI Scenes",
+  "category": "scenes",
+  "author": {
+    "github": "bkkbrls-del",
+    "credits": [
+      "bkkbrls-del/midisc: MIDI scene locks, version 1.40MIDISC8.2",
+      "Sam Banks: relocatable octabam port"
+    ]
+  },
+  "presentation": {
+    "label": "SCENE MORPH",
+    "family": "Scenes",
+    "summary": "Lock MIDI track parameters to scenes and morph them with the crossfader.",
+    "overview": "MIDI Scenes brings scene locks to MIDI tracks. Hold a scene and edit MIDI parameters, then morph between scenes with the crossfader. Locks follow Part and project save/reload and scene clear, copy and paste.",
+    "highlights": [
+      "Scene A/B locks on MIDI tracks",
+      "Crossfader morphing with step parameter locks",
+      "Part and project save/reload support"
+    ],
+    "usage": [
+      "Hold scene A or B and turn a MIDI track parameter to create its scene lock. The lock indicator shows which scene holds values.",
+      "Move the crossfader to morph between the two sides. An empty side uses a trig lock when present, otherwise the underlying track value.",
+      "Use the scene clear, copy and paste actions and Part Save/Reload. The upstream MIDI CONTROL CC48/55/56 filtering options are disabled."
+    ]
+  },
+  "controls": [],
+  "compatibility": {
+    "firmware": "1.40C",
+    "effectId": null,
+    "location": "MIDI tracks",
+    "conflicts": [],
+    "limitations": [
+      "Source imported. Firmware builds for this module are awaiting Octamod verification.",
+      "MIDI CONTROL CC48/55/56 filter rows are not included.",
+      "Composition with Octakit requires its KITS RELOAD bridge; Octakit is outside this catalog."
+    ]
+  },
+  "resources": {
+    "recorded": "14 Sep 2026 hardware; 1.40MIDISC8.2 source pin",
+    "storage": {
+      "label": "Lock state",
+      "display": "4 KB live table",
+      "value": 4096,
+      "unit": "bytes",
+      "method": "static",
+      "conditions": "The upstream description records a 4,096-byte scene-lock table and 288 bytes per Part window for freeze/sparse storage; linked code and final firmware size are additional.",
+      "source": "README.md"
+    },
+    "processing": {
+      "label": "CPU load",
+      "display": "Not measured",
+      "value": null,
+      "unit": "bytes",
+      "method": "unmeasured",
+      "conditions": "No comparable hardware CPU utilization measurement is supplied.",
+      "source": "README.md"
+    }
+  },
+  "tests": {
+    "report": "TESTING.md",
+    "summary": "The octabam port records hardware operation in OKMS1 with Octakit on 14 September. This import pins 1.40MIDISC8.2 and its regenerated GNU assembly. That earlier hardware result does not qualify this later pin or an Octamod composition.",
+    "hardwareStatus": "historical",
+    "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+    "gates": [
+      "tools/verify/verify_midiscenes.py"
+    ]
+  },
+  "source": {
+    "repository": "https://github.com/sambanks/octabam",
+    "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+    "path": "modules/midi-scenes"
+  },
+  "build": {
+    "status": "pending",
+    "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
+  },
+  "license": {
+    "spdx": "MIT",
+    "file": "LICENSE",
+    "declaration": "Imported original/MIT-licensed sources with upstream copyright, author attribution and exact commit pins retained. No firmware, extracted stock routines, recordings or screenshots imported. Contributor licensing statements are retained in LICENSE; owner/reviewer verification is required before publication and is not automatic legal clearance."
+  }
+}

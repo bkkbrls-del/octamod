@@ -1,10 +1,10 @@
 # Octamod
 
-A React / TypeScript web configurator for octabam, with a GitHub Pages frontend and a separate Cloudflare community API. Firmware stays on the user's device. No deployment has been performed.
+A React / TypeScript web configurator for octabam, with a GitHub Pages frontend and a separate Cloudflare community API. Firmware stays on the user's device.
 
 The frontend, backend and octabam-derived developer SDK belong in one repository. The owner may self-host the backend later; storage adapters for that option remain pending. See [accepted decisions](docs/DECISIONS.md) and the complete [active project goal](GOAL.md).
 
-The browser composes real firmware for the fixed seven-module catalog. **Downloads are paused** because upstream octabam's first hardware test of the dynamic DSP loader, which every composed image contains, failed (see `docs/VERIFICATION.md`). Complete OS/container/upgrade bytes match native proofs, including actual-browser checks and rejection/cancellation behavior. Read [verification and remaining work](docs/VERIFICATION.md). Hardware qualification, approved source-to-package automation, the complete native SDK setup and real licensed captures still need work.
+The browser composes real firmware with the dynamic DSP loader disabled. Native composition proofs cover the original seven modules; Spectrum, Modulation and Character are temporarily paused in the public library. **Downloads remain paused pending owner approval** of this loader-free build. All 256 selection/stock-FX2 profiles were checked against native output: 74 byte-identical images and 182 matching refusals. Four representative complete container/upgrade files and two actual-browser builds also match native identities. Read [verification and remaining work](docs/VERIFICATION.md). Hardware qualification, the complete native SDK setup and real licensed captures still need work. Approved releases rebuild authored packages in isolation and require them to reproduce the locally verified packages. The catalog also includes Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer as source imports awaiting Octamod firmware verification.
 
 ## Run locally
 
@@ -36,17 +36,17 @@ Only this fingerprint is distributed. No stock firmware is included.
 
 The catalog follows repeat98/octamad commit b8deefc88b2c3e5f3c6158e364eb741df1924e1d. Module links point to upstream sambanks/octabam; measurement links remain pinned to the fork revision.
 
-Control descriptions and starting values are extracted from the pinned module manifests. native-metadata.json records lightweight declaration / ledger results for the 127 nonempty selections of the seven catalog modules, including the native platform dependencies. Configuration does not run native stress tests, emulator gates or the octabam test suite.
+Control descriptions and starting values are extracted from the pinned module manifests. native-metadata.json records lightweight declaration / ledger results for the 127 nonempty selections of the original seven modules, including the native platform dependencies. Configuration does not run native stress tests, emulator gates or the octabam test suite.
 
-These declaration checks do not prove final memory placement or hardware safety. The current dynamic-loader catalog is not hardware-qualified. Historical hardware records and emulator evidence are labelled separately. Tape Echo's pinned record specifically reports six instances working and a seventh freezing the unit.
+These declaration checks do not prove final memory placement or hardware safety. The complete catalog is not hardware-qualified. Historical hardware records and emulator evidence are labelled separately. Tape Echo's pinned record specifically reports six instances working and a seventh freezing the unit.
 
-The module-set browser includes four actual native test configurations from the pinned tree, with source links and historical evidence. Starting a configuration copies the selected modules. Chooser settings preserve stock effects by default; compact FX2 is available when more space is needed.
+The module-set browser includes four actual native test configurations from the pinned tree, with source links and historical evidence. Starting a configuration copies the selected modules. Chooser settings preserve stock effects by default; with stock FX2 kept, only Repitch can be built. Turn stock FX2 off to make room for other modules. All stock FX1 effects remain available, and selections that exceed the available space are refused.
 
 Module thumbnails are original SVG illustrations. Actual licensed screenshots/audio belong in module source folders and are submitted through PRs. No real captures have been published yet; illustrations are not screenshots or measurements.
 
 ## Module source and versions
 
-Only Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch are included initially. Source and website metadata live in `sdk/octabam/modules/<id>/`; the [SDK](sdk/README.md) comes from a fresh, pinned, attributed octabam clone. Required platform integration passes native byte parity; portable setup and approved source-build releases remain pending. See [the strict folder contract](docs/MODULE_REPOSITORIES.md).
+Spectrum, Modulation, Character, Mini Verb, Tape Echo, Euclid and Repitch are the original modules. The requested additions are Analog BD, MIDI Scenes, USB Audio (tracks + MAIN/CUE) and Scale Quantizer, with internal USB MIDI source. The four additions have pending build status and exact newer upstream pins; prior firmware parity evidence does not cover them. Source and website metadata live in `sdk/octabam/modules/<id>/`; the [SDK](sdk/README.md) comes from a fresh, pinned, attributed octabam clone. The original platform integration passes native byte parity and has an approved source-build release pipeline; the four new imports still require integration and parity checks. See [the strict folder contract](docs/MODULE_REPOSITORIES.md).
 
 `octamod.module.json` schema 2 requires a semantic version, credits, descriptions, controls, compatibility, resource evidence, test provenance, licence and media declarations. `sdk/catalog.json` pins included versions; `npm run modules:generate` derives the frontend catalog. `npm run modules:check -- --base origin/main` rejects any module-folder update without a greater version. PR CI validates against the exact base commit without executing native manifests.
 
@@ -178,7 +178,7 @@ node scripts/verify-module-menus-native.mjs /path/to/your/OCTATRACK_OS1.40C.bin
 /path/to/octamad-worktree/.venv/bin/python3 scripts/export-module-menus.py /path/to/octamad-worktree /tmp/module-menu-assets --app /path/to/octamod
 ```
 
-The complete OS composer now adds the FX1 / FX2 chooser lists, descriptor and cursor tables, viewport sizes and all list references, then combines these with the resident DSP payloads, authored menu / ROM code, runtime platform patches and appended boot loader. Defaults preserve every stock effect, put Spectrum / Modulation / Character on FX1, keep Mini Verb and CPU Tape Echo on FX2, and offer Euclid on both. A compact FX2 chooser is also representable while retaining the stock FX1 list. Duplicate / missing effects and wrong-slot selections are rejected. The all-seven-module selection with every stock FX2 row exceeds native menu capacity; both composers reject it without changing the original image.
+The retained dynamic-loader composition path adds the FX1 / FX2 chooser lists, descriptor and cursor tables, viewport sizes and all list references, then combines these with the resident DSP payloads, authored menu / ROM code, runtime platform patches and appended boot loader. Defaults preserve every stock effect, put Spectrum / Modulation / Character on FX1, keep Mini Verb and CPU Tape Echo on FX2, and offer Euclid on both. A compact FX2 chooser is also representable while retaining the stock FX1 list. Duplicate / missing effects and wrong-slot selections are rejected. The all-seven-module selection with every stock FX2 row exceeds native menu capacity; both composers reject it without changing the original image.
 
 Eight complete OS images, including stock-preserving and compact chooser profiles, match the unmodified native builder byte for byte. Packaging identities use the same original card `.bin` as the app: a temporary C oracle calls the native firmware tool’s unchanged ELEK rebuild / version functions, then the native ELUP wrapper. The original card and SysEx containers have different trailing padding; comparing against a different stock transport is not a same-input packaging proof. Only source identities, format facts and output fingerprints are retained. The exporter removes temporary stock containers and images. Reproduce the complete comparisons with:
 
@@ -187,7 +187,13 @@ node scripts/verify-composition-native.mjs /path/to/your/OCTATRACK_OS1.40C.bin
 /path/to/octamad-worktree/.venv/bin/python3 scripts/export-composition-proofs.py /path/to/octamad-worktree /tmp/composition-assets --app /path/to/octamod --stock-bin /path/to/your/OCTATRACK_OS1.40C.bin
 ```
 
-The final same-input packaging comparison passes for all eight profiles, including complete OS, ELEK container and flashable ELUP bytes. The actual browser worker also matched native full-file identities for two supported configurations, rejected overflowing stock-preserving placement, and supported cancellation/rebuild and download invalidation. Real download is enabled for the fixed catalog and supported stock/compact chooser options. Custom choosers that free the stock curve bank still require a separate X-table placement profile and are not offered by this UI.
+The historical dynamic-loader same-input packaging comparison passed for all eight profiles, including complete OS, ELEK container and flashable ELUP bytes; rerun it before enabling that path again. The actual browser worker also matched native full-file identities for two supported configurations, rejected overflowing stock-preserving placement, and supported cancellation/rebuild and download invalidation. Downloads remain paused. The active loader-free path keeps stock DSP code resident, places selected modules in the space of stock effects omitted from both menus and adds a sample-memory runtime only when Tape Echo or Euclid is selected. All 256 supported selection profiles have native composition/refusal proofs and every accepted profile has native packaging fingerprints. Verify all OS/refusal cases plus representative full files locally with:
+
+```bash
+node scripts/verify-static-composition-native.mjs /path/to/your/OCTATRACK_OS1.40C.bin --packing=representative
+```
+
+Omit the final option for exhaustive full-file comparisons. Only identities and format facts are committed; the user's firmware and generated images stay local. Custom choosers that free the stock curve bank still require a separate X-table placement profile and are not offered by this UI.
 
 Keep download enabled only while real composition and native byte-parity/rejection evidence match the shipped catalog and engine. Keep packaging and conflict checks in the user build; do not run the full octabam test suite per configuration.
 
@@ -206,7 +212,7 @@ functions/        Cloudflare Pages entrypoint
 migrations/       D1 schema
 public/_headers   Cloudflare fallback security headers; no analytics or third-party fonts
 public/licenses/  licenses for adapted source and documentation
-sdk/              pinned native source, seven module folders, templates and SDK guide
+sdk/              pinned native source, eleven module folders, internal dependencies, templates and SDK guide
 ```
 
 npm run check runs lint, small domain / API tests, type checks and a production build. API tests use an in-memory SQLite database and synthetic media, never real firmware. CPU-heavy octabam checks remain paused.

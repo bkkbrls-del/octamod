@@ -4,6 +4,7 @@
 import { readdir, readFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 import { resolve } from 'node:path'
+import { parseModuleDocument } from '../src/catalog/module-contract.ts'
 export const PACKAGE_FILES = ['dsp-packages.json','coldfire-packages.json','resident-dsp.json','rom-packages.json','bootstrap-package.json','menu-recipes.json','descriptor-recipes.json','platform-writes.json']
 export const SOURCE_GROUPS = ['modules','platform','tools','dsp']
 const sha = bytes => createHash('sha256').update(bytes).digest('hex')
@@ -15,4 +16,17 @@ export async function moduleSourceFingerprint(root) {
   const native=resolve(root,'sdk/octabam'),sources={}
   for(const path of (await moduleSourcePaths(root)).sort((a,b)=>a<b?-1:a>b?1:0))sources[path]=sha(await readFile(resolve(native,path)))
   return sha(JSON.stringify(sources))
+}
+
+/** Verified firmware package scope. Pending catalog imports remain bound by the full source inventory. */
+export async function compiledModuleVersions(root, catalog) {
+  const versions = {}, seen = new Set()
+  for (const module of catalog.modules) {
+    if (!/^[a-z][a-z0-9-]*$/.test(module.id) || seen.has(module.id)) throw new Error('Invalid catalog module id: ' + module.id)
+    seen.add(module.id)
+    const document = parseModuleDocument(JSON.parse(await readFile(resolve(root, 'sdk/octabam/modules', module.id, 'octamod.module.json'), 'utf8')))
+    if (document.id !== module.id || document.version !== module.version) throw new Error('Stale catalog module version: ' + module.id)
+    if (document.build?.status !== 'pending') versions[module.id] = module.version
+  }
+  return versions
 }

@@ -445,12 +445,13 @@
       "id": "miniverb",
       "key": "MINIVERB",
       "name": "Mini Verb",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "effects",
       "author": {
         "github": "repeat98",
+        "name": "Jannik Aßfalg",
         "credits": [
-          "repeat98",
+          "Jannik Aßfalg",
           "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
         ]
       },
@@ -568,12 +569,13 @@
       "id": "tapeecho",
       "key": "TAPE ECHO",
       "name": "Tape Echo",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "effects",
       "author": {
         "github": "repeat98",
+        "name": "Jannik Aßfalg",
         "credits": [
-          "repeat98",
+          "Jannik Aßfalg",
           "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
         ]
       },
@@ -692,12 +694,13 @@
       "id": "euclid",
       "key": "EUCLID",
       "name": "Euclid",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "effects",
       "author": {
         "github": "repeat98",
+        "name": "Jannik Aßfalg",
         "credits": [
-          "repeat98",
+          "Jannik Aßfalg",
           "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
         ]
       },
@@ -1068,12 +1071,13 @@
       "id": "repitch",
       "key": "REPITCH",
       "name": "Repitch",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "category": "playback",
       "author": {
         "github": "repeat98",
+        "name": "Jannik Aßfalg",
         "credits": [
-          "repeat98",
+          "Jannik Aßfalg",
           "octabam: Sam Banks; additional source attribution in SDK THIRD_PARTY.md"
         ]
       },
@@ -1138,6 +1142,517 @@
         "spdx": "MIT",
         "file": "LICENSE",
         "declaration": "Original module sources retain upstream authorship and permissive licences. See ../../THIRD_PARTY.md for component-specific credits and terms. No rights or hardware qualification are newly asserted by this import."
+      },
+      "media": []
+    },
+    {
+      "schemaVersion": 2,
+      "id": "analog-bassdrum",
+      "key": "ANALOG BD",
+      "name": "Analog BD",
+      "version": "0.1.0-experimental",
+      "category": "machines",
+      "source": {
+        "repository": "https://github.com/sambanks/octabam",
+        "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+        "path": "modules/analog-bassdrum"
+      },
+      "build": {
+        "status": "pending",
+        "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
+      },
+      "author": {
+        "github": "repeat98",
+        "name": "Jannik Aßfalg",
+        "credits": [
+          "repeat98: original 808/909 fixed-point engines and machine integration",
+          "Sam Banks: octabam composition infrastructure"
+        ]
+      },
+      "nativeManifest": "manifest.py",
+      "presentation": {
+        "label": "808 / 909",
+        "family": "Drum synthesis",
+        "summary": "Play an original 808 or 909 bass drum as a track machine, with both effect slots available.",
+        "overview": "Analog BD adds a track machine with two circuit-informed bass drum engines. Choose 808 or 909 from its engine browser and shape the sound on the SRC page. Synthesis runs before the stock AMP stage and both track effects.",
+        "highlights": [
+          "808 and 909 engines without embedded recordings",
+          "Independent patches on all eight tracks",
+          "Both track effect slots remain available"
+        ],
+        "usage": [
+          "Assign ANALOG BD in the track machine chooser or SRC SETUP. Double-tap the track to open its engine browser; choose 808 or 909 with UP/DOWN or LEVEL and confirm with YES.",
+          "Shape the drum on SRC. The 808 has TONE and SWEEP; the 909 has TUNE and TDEP. Set accent, LPF and desk bands in SRC SETUP; AMP controls track volume.",
+          "Keep a separate project copy for stock firmware: saving an Analog BD project without this module can clamp its controls. Eight voices do not guarantee enough processing room for every effect combination."
+        ]
+      },
+      "controls": [
+        {
+          "name": "PITCH",
+          "default": 64,
+          "count": 128,
+          "doc": "808 body pitch; 909 body frequency spans approximately 30–100 Hz.",
+          "labels": null
+        },
+        {
+          "name": "DECAY",
+          "default": 80,
+          "count": 128,
+          "doc": "Body decay, with a different response for each model.",
+          "labels": null
+        },
+        {
+          "name": "TONE / TUNE",
+          "default": 80,
+          "count": 128,
+          "doc": "808 transient tone; 909 pitch-envelope duration.",
+          "labels": null
+        },
+        {
+          "name": "ATK",
+          "default": 64,
+          "count": 128,
+          "doc": "Transient strength and shape.",
+          "labels": null
+        },
+        {
+          "name": "SWEEP / TDEP",
+          "default": 64,
+          "count": 128,
+          "doc": "808 pitch excursion; 909 pitch-envelope amount.",
+          "labels": null
+        },
+        {
+          "name": "SAT",
+          "default": 0,
+          "count": 128,
+          "doc": "Drive into the shared Mackie desk stage.",
+          "labels": null
+        },
+        {
+          "name": "ACCNT",
+          "default": 64,
+          "count": 128,
+          "doc": "Accent in SRC SETUP.",
+          "labels": null
+        },
+        {
+          "name": "LPF",
+          "default": 127,
+          "count": 128,
+          "doc": "Output low-pass: OFF at 0, ORIG around 6.57 kHz at 64, 18 kHz at the assignment default 127.",
+          "labels": null
+        },
+        {
+          "name": "LOW",
+          "default": 64,
+          "count": 128,
+          "doc": "Desk low band; 64 is neutral.",
+          "labels": null
+        },
+        {
+          "name": "HIGH",
+          "default": 64,
+          "count": 128,
+          "doc": "Desk high band; 64 is neutral.",
+          "labels": null
+        }
+      ],
+      "compatibility": {
+        "firmware": "1.40C",
+        "effectId": null,
+        "location": "Track machine",
+        "conflicts": [
+          "synth",
+          "machinedrum",
+          "poly"
+        ],
+        "limitations": [
+          "Source imported. Firmware builds for this module are awaiting Octamod verification.",
+          "SPRING REV is excluded from the upstream standalone remix; its shared DARK helper must be restored from local firmware.",
+          "The current browser and eight-track changes are not hardware-qualified. Eight 909s with DJ EQ in both slots failed with silent output.",
+          "Saving this project on stock firmware can overwrite synth settings."
+        ]
+      },
+      "resources": {
+        "recorded": "30 Sep 2026 (upstream record)",
+        "storage": {
+          "label": "DSP code",
+          "display": "1,000 P words",
+          "value": 1000,
+          "unit": "P words",
+          "method": "static",
+          "conditions": "Original engine/glue uses 1,000 P words plus a 35-word stock helper recovered locally; this is not final firmware size.",
+          "source": "CPU.md"
+        },
+        "processing": {
+          "label": "DSP execution",
+          "display": "808: 220.94 · 909: 326.13",
+          "value": null,
+          "unit": "instructions/sample",
+          "method": "emulator",
+          "conditions": "Standalone peak executed instructions per sample under the upstream host, not hardware cycles or utilization. Combined effects share the budget.",
+          "source": "CPU.md"
+        }
+      },
+      "tests": {
+        "report": "TESTING.md",
+        "summary": "Upstream records exact render/state and source/AMP/effects checks on both cores. ANALOGBD1 ran on an MKI; the current engine browser, louder output and eight-track revision still await hardware qualification. No Octamod native/browser parity has been run for this import.",
+        "hardwareStatus": "historical",
+        "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+        "gates": [
+          "tools/verify/verify_analog_bassdrum.py",
+          "tools/harness/bd808.py",
+          "tools/harness/bd909.py",
+          "tools/harness/verify_analog_bd_exact.py",
+          "tools/harness/verify_analog_bd_levels.py",
+          "tools/verify/verify_analog_bassdrum_cf.py",
+          "tools/verify/verify_analog_bassdrum_port.py",
+          "tools/verify/verify_analog_bassdrum_ui.py"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "file": "LICENSE",
+        "declaration": "Imported original/MIT-licensed sources with upstream copyright, author attribution and exact commit pins retained. No firmware, extracted stock routines, recordings or screenshots imported. Contributor licensing statements are retained in LICENSE; owner/reviewer verification is required before publication and is not automatic legal clearance."
+      },
+      "media": []
+    },
+    {
+      "schemaVersion": 2,
+      "id": "midi-scenes",
+      "key": "MIDI SCENES",
+      "name": "MIDI Scenes",
+      "version": "0.1.0-experimental",
+      "category": "scenes",
+      "source": {
+        "repository": "https://github.com/sambanks/octabam",
+        "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+        "path": "modules/midi-scenes"
+      },
+      "build": {
+        "status": "pending",
+        "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
+      },
+      "author": {
+        "github": "bkkbrls-del",
+        "credits": [
+          "bkkbrls-del/midisc: MIDI scene locks, version 1.40MIDISC8.2",
+          "Sam Banks: relocatable octabam port"
+        ]
+      },
+      "nativeManifest": "manifest.py",
+      "presentation": {
+        "label": "SCENE MORPH",
+        "family": "Scenes",
+        "summary": "Lock MIDI track parameters to scenes and morph them with the crossfader.",
+        "overview": "MIDI Scenes brings scene locks to MIDI tracks. Hold a scene and edit MIDI parameters, then morph between scenes with the crossfader. Locks follow Part and project save/reload and scene clear, copy and paste.",
+        "highlights": [
+          "Scene A/B locks on MIDI tracks",
+          "Crossfader morphing with step parameter locks",
+          "Part and project save/reload support"
+        ],
+        "usage": [
+          "Hold scene A or B and turn a MIDI track parameter to create its scene lock. The lock indicator shows which scene holds values.",
+          "Move the crossfader to morph between the two sides. An empty side uses a trig lock when present, otherwise the underlying track value.",
+          "Use the scene clear, copy and paste actions and Part Save/Reload. The upstream MIDI CONTROL CC48/55/56 filtering options are disabled."
+        ]
+      },
+      "controls": [],
+      "compatibility": {
+        "firmware": "1.40C",
+        "effectId": null,
+        "location": "MIDI tracks",
+        "conflicts": [],
+        "limitations": [
+          "Source imported. Firmware builds for this module are awaiting Octamod verification.",
+          "MIDI CONTROL CC48/55/56 filter rows are not included.",
+          "Composition with Octakit requires its KITS RELOAD bridge; Octakit is outside this catalog."
+        ]
+      },
+      "resources": {
+        "recorded": "14 Sep 2026 hardware; 1.40MIDISC8.2 source pin",
+        "storage": {
+          "label": "Lock state",
+          "display": "4 KB live table",
+          "value": 4096,
+          "unit": "bytes",
+          "method": "static",
+          "conditions": "The upstream description records a 4,096-byte scene-lock table and 288 bytes per Part window for freeze/sparse storage; linked code and final firmware size are additional.",
+          "source": "README.md"
+        },
+        "processing": {
+          "label": "CPU load",
+          "display": "Not measured",
+          "value": null,
+          "unit": "bytes",
+          "method": "unmeasured",
+          "conditions": "No comparable hardware CPU utilization measurement is supplied.",
+          "source": "README.md"
+        }
+      },
+      "tests": {
+        "report": "TESTING.md",
+        "summary": "The octabam port records hardware operation in OKMS1 with Octakit on 14 September. This import pins 1.40MIDISC8.2 and its regenerated GNU assembly. That earlier hardware result does not qualify this later pin or an Octamod composition.",
+        "hardwareStatus": "historical",
+        "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+        "gates": [
+          "tools/verify/verify_midiscenes.py"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "file": "LICENSE",
+        "declaration": "Imported original/MIT-licensed sources with upstream copyright, author attribution and exact commit pins retained. No firmware, extracted stock routines, recordings or screenshots imported. Contributor licensing statements are retained in LICENSE; owner/reviewer verification is required before publication and is not automatic legal clearance."
+      },
+      "media": []
+    },
+    {
+      "schemaVersion": 2,
+      "id": "usb-audio-out-tracks-main-cue",
+      "key": "USB AUDIO OUT TRACKS MAIN CUE",
+      "name": "USB Audio",
+      "version": "0.1.0-experimental",
+      "category": "midi-usb",
+      "source": {
+        "repository": "https://github.com/sambanks/octabam",
+        "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+        "path": "modules/usb-audio-out-tracks-main-cue"
+      },
+      "build": {
+        "status": "pending",
+        "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
+      },
+      "author": {
+        "github": "markandrus",
+        "name": "Mark Roberts",
+        "credits": [
+          "Mark Roberts (markandrus/octemu): USB audio and MIDI implementation, MIT",
+          "Bryan T (bryantysinger): MAIN/CUE channels and hardware alignment findings",
+          "Sam Banks: octabam port, layouts and stream alignment"
+        ]
+      },
+      "nativeManifest": "manifest.py",
+      "presentation": {
+        "label": "20 CHANNELS",
+        "family": "USB audio",
+        "summary": "Record eight stereo tracks, MAIN and CUE over USB at 44.1 kHz and 24 bits.",
+        "overview": "This is octabam’s 20-channel USB output implementation. At high speed it sends each track after its effects and before its fader, plus the final MAIN and CUE buses. At full speed it sends the tracks’ stereo sum. Required USB MIDI support is included in the SDK source.",
+        "highlights": [
+          "20 channels at high speed: eight tracks plus MAIN and CUE",
+          "44.1 kHz, 24-bit class-compliant UAC2 output",
+          "Recorded hardware evidence on both MKI and MKII"
+        ],
+        "usage": [
+          "Connect the Octatrack’s USB port to your recording host and choose its USB audio input. Use high-speed USB for all twenty channels.",
+          "Channels 1–16 are track 1–8 stereo pairs, 17–18 MAIN, and 19–20 CUE. Track channels are post-effects and pre-fader; MAIN/CUE include the mixdown.",
+          "Allow the stream to settle before recording: upstream reports reordered startup samples around 0.5–1.5 seconds after opening. Full-speed USB carries a stereo track sum."
+        ]
+      },
+      "controls": [],
+      "compatibility": {
+        "firmware": "1.40C",
+        "effectId": null,
+        "location": "USB",
+        "conflicts": [
+          "usb-audio-out-main",
+          "usb-audio-out-main-cue",
+          "usb-audio-out-master",
+          "usb-audio-out-tracks"
+        ],
+        "limitations": [
+          "Source imported. Firmware builds for this module are awaiting Octamod verification.",
+          "USB output only. Host-to-Octatrack USB input variants are outside this import.",
+          "Requires the included internal USB MIDI dependency. Only one USB output layout can be composed.",
+          "Windows and Linux hosts have not been measured in this record.",
+          "A startup sample-reordering burst remains open. Master-on MAIN remains 32 samples behind track taps; toggling master can leave up to 32 stale CUE frames."
+        ]
+      },
+      "resources": {
+        "recorded": "29 Sep 2026 (upstream record)",
+        "storage": {
+          "label": "Audio rings",
+          "display": "88 KB + DMA buffers",
+          "value": 90112,
+          "unit": "bytes",
+          "method": "static",
+          "conditions": "Two rings: 1,024 × 80 bytes plus 1,024 × 8 bytes = 90,112 bytes (88 KiB). Four 32-byte dTDs and four 960-byte packet buffers add 3,968 bytes, before code and MIDI state.",
+          "source": "README.md"
+        },
+        "processing": {
+          "label": "CPU load",
+          "display": "Not measured",
+          "value": null,
+          "unit": "bytes",
+          "method": "unmeasured",
+          "conditions": "Upstream records sustained hardware captures and MIDI traffic, not a comparable hardware CPU utilization percentage.",
+          "source": "README.md"
+        }
+      },
+      "tests": {
+        "report": "TESTING.md",
+        "summary": "Selected for the broadest recorded hardware evidence: MKI and MKII, sustained multi-track 24-bit captures and high MIDI receive traffic. The latest source includes track/MAIN alignment and a hardware-tested master-on CUE correction; startup artifacts and unmeasured host/platform cases remain. This import has no Octamod browser/native parity yet.",
+        "hardwareStatus": "historical",
+        "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+        "gates": [
+          "tools/verify/verify_usb.py",
+          "tools/verify/verify_usb_align.py"
+        ]
+      },
+      "license": {
+        "spdx": "MIT",
+        "file": "LICENSE",
+        "declaration": "Imported original/MIT-licensed sources with upstream copyright, author attribution and exact commit pins retained. No firmware, extracted stock routines, recordings or screenshots imported. Contributor licensing statements are retained in LICENSE; owner/reviewer verification is required before publication and is not automatic legal clearance."
+      },
+      "media": []
+    },
+    {
+      "schemaVersion": 2,
+      "id": "quantizer",
+      "key": "SCALE QUANTIZER",
+      "name": "Scale Quantizer",
+      "version": "0.1.0-experimental",
+      "category": "machines",
+      "source": {
+        "repository": "https://github.com/sambanks/octabam",
+        "revision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+        "path": "modules/quantizer"
+      },
+      "build": {
+        "status": "pending",
+        "reason": "Source imported. Firmware builds for this module are awaiting Octamod verification."
+      },
+      "author": {
+        "github": "timhastie",
+        "name": "Tim Hastie",
+        "credits": [
+          "Tim Hastie: octatrick-modules Scale Quantizer, v2.9",
+          "Sam Banks: octabam wrapper and port evidence"
+        ]
+      },
+      "nativeManifest": "manifest.py",
+      "presentation": {
+        "label": "SCALE / ROOT",
+        "family": "Sequencer",
+        "summary": "Keep pitch edits and chromatic trig keys in one of 24 scales with a selectable root.",
+        "overview": "Scale Quantizer adds SCALE, ROOT and GLIDE to PROJECT > CONTROL > SEQUENCER. Pitch turns and parameter locks move through scale degrees, and chromatic trig keys snap to the chosen scale. ROOT transposes the scale and keyboard. SCALE OFF restores stock pitch behavior.",
+        "highlights": [
+          "24 scales plus OFF",
+          "Selectable root C–B",
+          "Pitch knob, parameter locks and chromatic keys follow the scale"
+        ],
+        "usage": [
+          "Open PROJECT > CONTROL > SEQUENCER and set SCALE. OFF preserves stock pitch behavior; choose a scale to constrain notes.",
+          "Set ROOT to the key you want. Pitch edits step by scale degree; chromatic keys snap to a degree and key 1 plays the root.",
+          "SCALE, ROOT and GLIDE persist through project save/reload and battery RAM. Synth polyphony and synth glide features require SYNTH MACHINE, which is outside this import."
+        ]
+      },
+      "controls": [
+        {
+          "name": "SCALE",
+          "default": 0,
+          "count": 25,
+          "doc": "OFF restores stock pitch behavior; select a scale to constrain PTCH edits, locks and chromatic keys.",
+          "labels": [
+            "OFF",
+            "MAJOR",
+            "DORIAN",
+            "PHRYGN",
+            "LYDIAN",
+            "MIXOLYD",
+            "MINOR",
+            "LOCRIAN",
+            "PENT.MN",
+            "PENT.MJ",
+            "MEL.MIN",
+            "HRM.MIN",
+            "WHOLE",
+            "BLUES",
+            "PHRYDOM",
+            "WH.DIM",
+            "HW.DIM",
+            "HUNGMIN",
+            "HIRAJOS",
+            "IN-SEN",
+            "IWATO",
+            "PELOG",
+            "DBLHARM",
+            "SUPRLOC",
+            "LYD.DOM"
+          ]
+        },
+        {
+          "name": "ROOT",
+          "default": 0,
+          "count": 12,
+          "doc": "Root of the scale and chromatic keyboard. Ignored with SCALE OFF.",
+          "labels": [
+            "C",
+            "C#",
+            "D",
+            "D#",
+            "E",
+            "F",
+            "F#",
+            "G",
+            "G#",
+            "A",
+            "A#",
+            "B"
+          ]
+        },
+        {
+          "name": "GLIDE",
+          "default": 0,
+          "count": 128,
+          "doc": "OFF or 1–127 slide time; the track LEG setting controls legato. Synth features require the separate SYNTH MACHINE module.",
+          "labels": null
+        }
+      ],
+      "compatibility": {
+        "firmware": "1.40C",
+        "effectId": null,
+        "location": "Project sequencer",
+        "conflicts": [],
+        "limitations": [
+          "Source imported. Firmware builds for this module are awaiting Octamod verification.",
+          "Sample pitch quantization works on Flex, Static and Pickup; RATE is not a semitone control.",
+          "Synth polyphony and synth-specific tuning/glide depend on SYNTH MACHINE, which is outside this catalog.",
+          "v2.9’s last fixes have emulator evidence; the earlier MKI result does not qualify the complete current pin."
+        ]
+      },
+      "resources": {
+        "recorded": "v2.9 upstream record (pinned source)",
+        "storage": {
+          "label": "ROM footprint",
+          "display": "243 bytes",
+          "value": 243,
+          "unit": "bytes",
+          "method": "static",
+          "conditions": "Upstream v2.9 record: 192-byte core, 45-byte key stub and 6-byte scale trampoline. DRAM code, grown menus and loader overhead are additional; this is not a new local assembly measurement.",
+          "source": "README.md"
+        },
+        "processing": {
+          "label": "CPU load",
+          "display": "Not measured",
+          "value": null,
+          "unit": "bytes",
+          "method": "unmeasured",
+          "conditions": "No comparable hardware CPU utilization measurement is supplied.",
+          "source": "README.md"
+        }
+      },
+      "tests": {
+        "report": "TESTING.md",
+        "summary": "Upstream records pitch/lock/key, ROOT, save/load and warm-boot checks, and MKI operation through the v2.9 line before its last two fixes. Those last fixes are emulator-verified. This import pins octatrick-modules v2.9 and has no Octamod native/browser parity yet.",
+        "hardwareStatus": "historical",
+        "evidenceRevision": "363861e31ee963c478fab2b190a0fabe1d7ce37b",
+        "gates": []
+      },
+      "license": {
+        "spdx": "MIT",
+        "file": "LICENSE",
+        "declaration": "Imported original/MIT-licensed sources with upstream copyright, author attribution and exact commit pins retained. No firmware, extracted stock routines, recordings or screenshots imported. Contributor licensing statements are retained in LICENSE; owner/reviewer verification is required before publication and is not automatic legal clearance."
       },
       "media": []
     }

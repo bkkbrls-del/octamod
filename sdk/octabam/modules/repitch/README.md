@@ -1,5 +1,7 @@
 # Repitch
 
+Version: 0.1.1-experimental · author: [Jannik Aßfalg](https://github.com/repeat98)
+
 Adds a fifth timestretch value, REPITCH: the track follows the project
 tempo by playback speed instead of grains (`speed = project BPM / sample
 BPM`), live, like a turntable. A 120 BPM loop plays untouched at 120 BPM
