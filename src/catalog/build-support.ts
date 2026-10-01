@@ -1,5 +1,5 @@
-import { MODULE_DOCUMENTS_BY_ID } from './documents'
-import { resolveSelection } from './modules'
+import { MODULE_DOCUMENTS_BY_ID } from './documents.ts'
+import { resolveSelection } from './modules.ts'
 
 export function moduleBuildPending(id: string) {
   return MODULE_DOCUMENTS_BY_ID[id]?.build?.status === 'pending'

@@ -2,20 +2,20 @@
   "schema": 1,
   "revision": "b8deefc88b2c3e5f3c6158e364eb741df1924e1d",
   "license": "/licenses/octabam.txt",
-  "sourceCommit": null,
+  "sourceCommit": "98190bbe4f514899c9f7b2ad49ca5cb1df9f85b2",
   "moduleVersions": {
     "spectrum": "0.1.0-experimental",
     "modulation": "0.1.0-experimental",
     "character": "0.1.0-experimental",
-    "miniverb": "0.1.0-experimental",
-    "tapeecho": "0.1.0-experimental",
-    "euclid": "0.1.0-experimental",
-    "repitch": "0.1.0-experimental"
+    "miniverb": "0.1.1-experimental",
+    "tapeecho": "0.1.1-experimental",
+    "euclid": "0.1.1-experimental",
+    "repitch": "0.1.1-experimental"
   },
   "packages": [
     {
       "id": "euclid",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "key": "EUCLID",
       "author": "repeat98",
       "sources": {
@@ -55,7 +55,7 @@
     },
     {
       "id": "miniverb",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "key": "MINIVERB",
       "author": "repeat98",
       "sources": {
@@ -187,7 +187,7 @@
     },
     {
       "id": "tapeecho",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "key": "TAPE ECHO",
       "author": "repeat98",
       "sources": {

@@ -1,4 +1,4 @@
-import { MODULES, resolveSelection } from './modules'
+import { MODULES, resolveSelection } from './modules.ts'
 
 // Temporary frontend suspension. Keep the full source catalog and saved pins intact.
 export const PAUSED_MODULE_IDS: readonly string[] = ['spectrum', 'modulation', 'character']

@@ -159,7 +159,7 @@
     {
       "label": "euclid",
       "moduleId": "euclid",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "key": "EUCLID",
       "author": "repeat98",
       "cpu": "54455",
@@ -176,7 +176,7 @@
     {
       "label": "tapeecho",
       "moduleId": "tapeecho",
-      "version": "0.1.0-experimental",
+      "version": "0.1.1-experimental",
       "key": "TAPE ECHO",
       "author": "repeat98",
       "cpu": "54455",
@@ -191,14 +191,14 @@
       "sha256": "0bd2782079a4890b6506cd44cd8d9f0db917bfc96e71b03821c05c9c555b4ba2"
     }
   ],
-  "sourceCommit": null,
+  "sourceCommit": "98190bbe4f514899c9f7b2ad49ca5cb1df9f85b2",
   "moduleVersions": {
     "spectrum": "0.1.0-experimental",
     "modulation": "0.1.0-experimental",
     "character": "0.1.0-experimental",
-    "miniverb": "0.1.0-experimental",
-    "tapeecho": "0.1.0-experimental",
-    "euclid": "0.1.0-experimental",
-    "repitch": "0.1.0-experimental"
+    "miniverb": "0.1.1-experimental",
+    "tapeecho": "0.1.1-experimental",
+    "euclid": "0.1.1-experimental",
+    "repitch": "0.1.1-experimental"
   }
 }
